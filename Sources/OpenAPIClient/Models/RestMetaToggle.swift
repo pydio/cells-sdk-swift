@@ -9,9 +9,9 @@ import Foundation
 
 public final class RestMetaToggle: Codable, JSONEncodable, Hashable {
 
-    public var value: Bool?
+    public var value: Bool
 
-    public init(value: Bool? = nil) {
+    public init(value: Bool) {
         self.value = value
     }
 
@@ -23,7 +23,7 @@ public final class RestMetaToggle: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(value, forKey: .value)
+        try container.encode(value, forKey: .value)
     }
 
     public static func == (lhs: RestMetaToggle, rhs: RestMetaToggle) -> Bool {
@@ -32,7 +32,7 @@ public final class RestMetaToggle: Codable, JSONEncodable, Hashable {
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(value?.hashValue)
+        hasher.combine(value.hashValue)
         
     }
 }

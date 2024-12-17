@@ -7,9 +7,9 @@ Name | Type | Description | Notes
 **canStop** | **Bool** |  | [optional] 
 **endTime** | **Int** |  | [optional] 
 **hasProgress** | **Bool** |  | [optional] 
-**jobUuid** | **String** |  | [optional] 
+**jobUuid** | **String** |  | 
 **label** | **String** |  | [optional] 
-**name** | **String** |  | [optional] 
+**name** | **String** |  | 
 **progress** | **Float** |  | [optional] 
 **startTime** | **Int** |  | [optional] 
 **status** | [**JobsTaskStatus**](JobsTaskStatus.md) |  | [optional] 

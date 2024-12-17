@@ -7,6 +7,7 @@
 
 import Foundation
 
+/** Representation of a file or folder */
 public final class RestNode: Codable, JSONEncodable, Hashable {
 
     public var activities: [ActivityObject]?
@@ -23,18 +24,20 @@ public final class RestNode: Codable, JSONEncodable, Hashable {
     public var isRecycled: Bool?
     public var metadata: [RestJsonMeta]?
     public var mode: RestMode?
+    /** Date instead of TS ? */
     public var modified: String?
-    public var path: String?
+    public var path: String
     public var previews: [RestFilePreview]?
+    public var revisionMeta: RestRevisionMeta?
     public var shares: [RestShareLink]?
     public var size: String?
     public var storageETag: String?
     public var subscriptions: [ActivitySubscription]?
     public var type: TreeNodeType?
     public var userMetadata: [RestUserMeta]?
-    public var uuid: String?
+    public var uuid: String
 
-    public init(activities: [ActivityObject]? = nil, contentLock: RestLockInfo? = nil, contentType: String? = nil, contentsHash: String? = nil, contextWorkspace: RestContextWorkspace? = nil, dataSourceFeatures: RestDataSourceFeatures? = nil, folderMeta: [RestCountMeta]? = nil, hashingMethod: String? = nil, imageMeta: RestImageMeta? = nil, isBookmarked: Bool? = nil, isRecycleBin: Bool? = nil, isRecycled: Bool? = nil, metadata: [RestJsonMeta]? = nil, mode: RestMode? = nil, modified: String? = nil, path: String? = nil, previews: [RestFilePreview]? = nil, shares: [RestShareLink]? = nil, size: String? = nil, storageETag: String? = nil, subscriptions: [ActivitySubscription]? = nil, type: TreeNodeType? = nil, userMetadata: [RestUserMeta]? = nil, uuid: String? = nil) {
+    public init(activities: [ActivityObject]? = nil, contentLock: RestLockInfo? = nil, contentType: String? = nil, contentsHash: String? = nil, contextWorkspace: RestContextWorkspace? = nil, dataSourceFeatures: RestDataSourceFeatures? = nil, folderMeta: [RestCountMeta]? = nil, hashingMethod: String? = nil, imageMeta: RestImageMeta? = nil, isBookmarked: Bool? = nil, isRecycleBin: Bool? = nil, isRecycled: Bool? = nil, metadata: [RestJsonMeta]? = nil, mode: RestMode? = nil, modified: String? = nil, path: String, previews: [RestFilePreview]? = nil, revisionMeta: RestRevisionMeta? = nil, shares: [RestShareLink]? = nil, size: String? = nil, storageETag: String? = nil, subscriptions: [ActivitySubscription]? = nil, type: TreeNodeType? = nil, userMetadata: [RestUserMeta]? = nil, uuid: String) {
         self.activities = activities
         self.contentLock = contentLock
         self.contentType = contentType
@@ -52,6 +55,7 @@ public final class RestNode: Codable, JSONEncodable, Hashable {
         self.modified = modified
         self.path = path
         self.previews = previews
+        self.revisionMeta = revisionMeta
         self.shares = shares
         self.size = size
         self.storageETag = storageETag
@@ -79,6 +83,7 @@ public final class RestNode: Codable, JSONEncodable, Hashable {
         case modified = "Modified"
         case path = "Path"
         case previews = "Previews"
+        case revisionMeta = "RevisionMeta"
         case shares = "Shares"
         case size = "Size"
         case storageETag = "StorageETag"
@@ -107,15 +112,16 @@ public final class RestNode: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(metadata, forKey: .metadata)
         try container.encodeIfPresent(mode, forKey: .mode)
         try container.encodeIfPresent(modified, forKey: .modified)
-        try container.encodeIfPresent(path, forKey: .path)
+        try container.encode(path, forKey: .path)
         try container.encodeIfPresent(previews, forKey: .previews)
+        try container.encodeIfPresent(revisionMeta, forKey: .revisionMeta)
         try container.encodeIfPresent(shares, forKey: .shares)
         try container.encodeIfPresent(size, forKey: .size)
         try container.encodeIfPresent(storageETag, forKey: .storageETag)
         try container.encodeIfPresent(subscriptions, forKey: .subscriptions)
         try container.encodeIfPresent(type, forKey: .type)
         try container.encodeIfPresent(userMetadata, forKey: .userMetadata)
-        try container.encodeIfPresent(uuid, forKey: .uuid)
+        try container.encode(uuid, forKey: .uuid)
     }
 
     public static func == (lhs: RestNode, rhs: RestNode) -> Bool {
@@ -136,6 +142,7 @@ public final class RestNode: Codable, JSONEncodable, Hashable {
         lhs.modified == rhs.modified &&
         lhs.path == rhs.path &&
         lhs.previews == rhs.previews &&
+        lhs.revisionMeta == rhs.revisionMeta &&
         lhs.shares == rhs.shares &&
         lhs.size == rhs.size &&
         lhs.storageETag == rhs.storageETag &&
@@ -162,15 +169,16 @@ public final class RestNode: Codable, JSONEncodable, Hashable {
         hasher.combine(metadata?.hashValue)
         hasher.combine(mode?.hashValue)
         hasher.combine(modified?.hashValue)
-        hasher.combine(path?.hashValue)
+        hasher.combine(path.hashValue)
         hasher.combine(previews?.hashValue)
+        hasher.combine(revisionMeta?.hashValue)
         hasher.combine(shares?.hashValue)
         hasher.combine(size?.hashValue)
         hasher.combine(storageETag?.hashValue)
         hasher.combine(subscriptions?.hashValue)
         hasher.combine(type?.hashValue)
         hasher.combine(userMetadata?.hashValue)
-        hasher.combine(uuid?.hashValue)
+        hasher.combine(uuid.hashValue)
         
     }
 }

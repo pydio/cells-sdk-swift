@@ -13,15 +13,15 @@ public final class RestBackgroundAction: Codable, JSONEncodable, Hashable {
     public var canStop: Bool?
     public var endTime: Int?
     public var hasProgress: Bool?
-    public var jobUuid: String?
+    public var jobUuid: String
     public var label: String?
-    public var name: String?
+    public var name: String
     public var progress: Float?
     public var startTime: Int?
     public var status: JobsTaskStatus?
     public var statusMessage: String?
 
-    public init(canPause: Bool? = nil, canStop: Bool? = nil, endTime: Int? = nil, hasProgress: Bool? = nil, jobUuid: String? = nil, label: String? = nil, name: String? = nil, progress: Float? = nil, startTime: Int? = nil, status: JobsTaskStatus? = nil, statusMessage: String? = nil) {
+    public init(canPause: Bool? = nil, canStop: Bool? = nil, endTime: Int? = nil, hasProgress: Bool? = nil, jobUuid: String, label: String? = nil, name: String, progress: Float? = nil, startTime: Int? = nil, status: JobsTaskStatus? = nil, statusMessage: String? = nil) {
         self.canPause = canPause
         self.canStop = canStop
         self.endTime = endTime
@@ -57,9 +57,9 @@ public final class RestBackgroundAction: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(canStop, forKey: .canStop)
         try container.encodeIfPresent(endTime, forKey: .endTime)
         try container.encodeIfPresent(hasProgress, forKey: .hasProgress)
-        try container.encodeIfPresent(jobUuid, forKey: .jobUuid)
+        try container.encode(jobUuid, forKey: .jobUuid)
         try container.encodeIfPresent(label, forKey: .label)
-        try container.encodeIfPresent(name, forKey: .name)
+        try container.encode(name, forKey: .name)
         try container.encodeIfPresent(progress, forKey: .progress)
         try container.encodeIfPresent(startTime, forKey: .startTime)
         try container.encodeIfPresent(status, forKey: .status)
@@ -86,9 +86,9 @@ public final class RestBackgroundAction: Codable, JSONEncodable, Hashable {
         hasher.combine(canStop?.hashValue)
         hasher.combine(endTime?.hashValue)
         hasher.combine(hasProgress?.hashValue)
-        hasher.combine(jobUuid?.hashValue)
+        hasher.combine(jobUuid.hashValue)
         hasher.combine(label?.hashValue)
-        hasher.combine(name?.hashValue)
+        hasher.combine(name.hashValue)
         hasher.combine(progress?.hashValue)
         hasher.combine(startTime?.hashValue)
         hasher.combine(status?.hashValue)

@@ -10,11 +10,11 @@ import Foundation
 public final class RestIncomingNode: Codable, JSONEncodable, Hashable {
 
     public var contentType: String?
-    public var locator: RestNodeLocator?
+    public var locator: RestNodeLocator
     public var templateUuid: String?
-    public var type: TreeNodeType?
+    public var type: TreeNodeType
 
-    public init(contentType: String? = nil, locator: RestNodeLocator? = nil, templateUuid: String? = nil, type: TreeNodeType? = nil) {
+    public init(contentType: String? = nil, locator: RestNodeLocator, templateUuid: String? = nil, type: TreeNodeType) {
         self.contentType = contentType
         self.locator = locator
         self.templateUuid = templateUuid
@@ -33,9 +33,9 @@ public final class RestIncomingNode: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(contentType, forKey: .contentType)
-        try container.encodeIfPresent(locator, forKey: .locator)
+        try container.encode(locator, forKey: .locator)
         try container.encodeIfPresent(templateUuid, forKey: .templateUuid)
-        try container.encodeIfPresent(type, forKey: .type)
+        try container.encode(type, forKey: .type)
     }
 
     public static func == (lhs: RestIncomingNode, rhs: RestIncomingNode) -> Bool {
@@ -48,9 +48,9 @@ public final class RestIncomingNode: Codable, JSONEncodable, Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(contentType?.hashValue)
-        hasher.combine(locator?.hashValue)
+        hasher.combine(locator.hashValue)
         hasher.combine(templateUuid?.hashValue)
-        hasher.combine(type?.hashValue)
+        hasher.combine(type.hashValue)
         
     }
 }

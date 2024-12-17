@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **createPassword** | **String** |  | [optional] 
-**link** | [**RestShareLink**](RestShareLink.md) |  | [optional] 
+**link** | [**RestShareLink**](RestShareLink.md) |  | 
 **passwordEnabled** | **Bool** |  | [optional] 
 **updateCustomHash** | **String** |  | [optional] 
 **updatePassword** | **String** |  | [optional] 

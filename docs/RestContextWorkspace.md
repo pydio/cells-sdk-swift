@@ -12,9 +12,9 @@ Name | Type | Description | Notes
 **quotaUsage** | **String** |  | [optional] 
 **scope** | [**IdmWorkspaceScope**](IdmWorkspaceScope.md) |  | [optional] 
 **skipRecycle** | **Bool** |  | [optional] 
-**slug** | **String** |  | [optional] 
+**slug** | **String** |  | 
 **syncable** | **Bool** |  | [optional] 
-**uuid** | **String** |  | [optional] 
+**uuid** | **String** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -7,6 +7,7 @@
 
 import Foundation
 
+/** Current workspace information, maybe published on the root node of a workspace */
 public final class RestContextWorkspace: Codable, JSONEncodable, Hashable {
 
     public var description: String?
@@ -18,11 +19,11 @@ public final class RestContextWorkspace: Codable, JSONEncodable, Hashable {
     public var quotaUsage: String?
     public var scope: IdmWorkspaceScope?
     public var skipRecycle: Bool?
-    public var slug: String?
+    public var slug: String
     public var syncable: Bool?
-    public var uuid: String?
+    public var uuid: String
 
-    public init(description: String? = nil, isRoot: Bool? = nil, isVirtualRoot: Bool? = nil, label: String? = nil, permissions: String? = nil, quota: String? = nil, quotaUsage: String? = nil, scope: IdmWorkspaceScope? = nil, skipRecycle: Bool? = nil, slug: String? = nil, syncable: Bool? = nil, uuid: String? = nil) {
+    public init(description: String? = nil, isRoot: Bool? = nil, isVirtualRoot: Bool? = nil, label: String? = nil, permissions: String? = nil, quota: String? = nil, quotaUsage: String? = nil, scope: IdmWorkspaceScope? = nil, skipRecycle: Bool? = nil, slug: String, syncable: Bool? = nil, uuid: String) {
         self.description = description
         self.isRoot = isRoot
         self.isVirtualRoot = isVirtualRoot
@@ -65,9 +66,9 @@ public final class RestContextWorkspace: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(quotaUsage, forKey: .quotaUsage)
         try container.encodeIfPresent(scope, forKey: .scope)
         try container.encodeIfPresent(skipRecycle, forKey: .skipRecycle)
-        try container.encodeIfPresent(slug, forKey: .slug)
+        try container.encode(slug, forKey: .slug)
         try container.encodeIfPresent(syncable, forKey: .syncable)
-        try container.encodeIfPresent(uuid, forKey: .uuid)
+        try container.encode(uuid, forKey: .uuid)
     }
 
     public static func == (lhs: RestContextWorkspace, rhs: RestContextWorkspace) -> Bool {
@@ -96,9 +97,9 @@ public final class RestContextWorkspace: Codable, JSONEncodable, Hashable {
         hasher.combine(quotaUsage?.hashValue)
         hasher.combine(scope?.hashValue)
         hasher.combine(skipRecycle?.hashValue)
-        hasher.combine(slug?.hashValue)
+        hasher.combine(slug.hashValue)
         hasher.combine(syncable?.hashValue)
-        hasher.combine(uuid?.hashValue)
+        hasher.combine(uuid.hashValue)
         
     }
 }

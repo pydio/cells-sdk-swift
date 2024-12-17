@@ -9,10 +9,10 @@ import Foundation
 
 public final class RestCreateRequest: Codable, JSONEncodable, Hashable {
 
-    public var inputs: [RestIncomingNode]?
+    public var inputs: [RestIncomingNode]
     public var recursive: Bool?
 
-    public init(inputs: [RestIncomingNode]? = nil, recursive: Bool? = nil) {
+    public init(inputs: [RestIncomingNode], recursive: Bool? = nil) {
         self.inputs = inputs
         self.recursive = recursive
     }
@@ -26,7 +26,7 @@ public final class RestCreateRequest: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(inputs, forKey: .inputs)
+        try container.encode(inputs, forKey: .inputs)
         try container.encodeIfPresent(recursive, forKey: .recursive)
     }
 
@@ -37,7 +37,7 @@ public final class RestCreateRequest: Codable, JSONEncodable, Hashable {
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(inputs?.hashValue)
+        hasher.combine(inputs.hashValue)
         hasher.combine(recursive?.hashValue)
         
     }

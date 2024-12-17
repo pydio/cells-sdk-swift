@@ -85,7 +85,6 @@ public final class ActivityObject: Codable, JSONEncodable, Hashable {
         self.cc = cc
         self.closed = closed
         self.content = content
-        self.context = context
         self.current = current
         self.deleted = deleted
         self.duration = duration
@@ -217,7 +216,6 @@ public final class ActivityObject: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(cc, forKey: .cc)
         try container.encodeIfPresent(closed, forKey: .closed)
         try container.encodeIfPresent(content, forKey: .content)
-        try container.encodeIfPresent(context, forKey: .context)
         try container.encodeIfPresent(current, forKey: .current)
         try container.encodeIfPresent(deleted, forKey: .deleted)
         try container.encodeIfPresent(duration, forKey: .duration)
@@ -282,7 +280,6 @@ public final class ActivityObject: Codable, JSONEncodable, Hashable {
         lhs.cc == rhs.cc &&
         lhs.closed == rhs.closed &&
         lhs.content == rhs.content &&
-        lhs.context == rhs.context &&
         lhs.current == rhs.current &&
         lhs.deleted == rhs.deleted &&
         lhs.duration == rhs.duration &&
@@ -348,7 +345,6 @@ public final class ActivityObject: Codable, JSONEncodable, Hashable {
         hasher.combine(cc?.hashValue)
         hasher.combine(closed?.hashValue)
         hasher.combine(content?.hashValue)
-        hasher.combine(context?.hashValue)
         hasher.combine(current?.hashValue)
         hasher.combine(deleted?.hashValue)
         hasher.combine(duration?.hashValue)

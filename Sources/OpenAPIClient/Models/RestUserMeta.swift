@@ -10,11 +10,11 @@ import Foundation
 public final class RestUserMeta: Codable, JSONEncodable, Hashable {
 
     public var editable: Bool?
-    public var jsonValue: String?
-    public var namespace: String?
+    public var jsonValue: String
+    public var namespace: String
     public var nodeUuid: String?
 
-    public init(editable: Bool? = nil, jsonValue: String? = nil, namespace: String? = nil, nodeUuid: String? = nil) {
+    public init(editable: Bool? = nil, jsonValue: String, namespace: String, nodeUuid: String? = nil) {
         self.editable = editable
         self.jsonValue = jsonValue
         self.namespace = namespace
@@ -33,8 +33,8 @@ public final class RestUserMeta: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(editable, forKey: .editable)
-        try container.encodeIfPresent(jsonValue, forKey: .jsonValue)
-        try container.encodeIfPresent(namespace, forKey: .namespace)
+        try container.encode(jsonValue, forKey: .jsonValue)
+        try container.encode(namespace, forKey: .namespace)
         try container.encodeIfPresent(nodeUuid, forKey: .nodeUuid)
     }
 
@@ -48,8 +48,8 @@ public final class RestUserMeta: Codable, JSONEncodable, Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(editable?.hashValue)
-        hasher.combine(jsonValue?.hashValue)
-        hasher.combine(namespace?.hashValue)
+        hasher.combine(jsonValue.hashValue)
+        hasher.combine(namespace.hashValue)
         hasher.combine(nodeUuid?.hashValue)
         
     }

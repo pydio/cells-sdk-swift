@@ -94,6 +94,7 @@ Class | Method | HTTP request | Description
  - [RestPerformActionResponse](docs/RestPerformActionResponse.md)
  - [RestPublicLinkDeleteSuccess](docs/RestPublicLinkDeleteSuccess.md)
  - [RestPublicLinkRequest](docs/RestPublicLinkRequest.md)
+ - [RestRevisionMeta](docs/RestRevisionMeta.md)
  - [RestSelection](docs/RestSelection.md)
  - [RestShareLink](docs/RestShareLink.md)
  - [RestShareLinkAccessType](docs/RestShareLinkAccessType.md)
@@ -123,7 +124,14 @@ Class | Method | HTTP request | Description
 <a id="documentation-for-authorization"></a>
 ## Documentation For Authorization
 
-Endpoints do not require authorization.
+
+Authentication schemes defined for the API:
+<a id="Bearer"></a>
+### Bearer
+
+- **Type**: API key
+- **API key parameter name**: Authorization
+- **Location**: HTTP header
 
 
 # How do I migrate from the Swift 5 generator to the swift 6 generator?

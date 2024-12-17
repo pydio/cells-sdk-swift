@@ -16,7 +16,6 @@ Name | Type | Description | Notes
 **cc** | [**ActivityObject**](ActivityObject.md) |  | [optional] 
 **closed** | **Date** |  | [optional] 
 **content** | [**ActivityObject**](ActivityObject.md) |  | [optional] 
-**context** | [**ActivityObject**](ActivityObject.md) |  | [optional] 
 **current** | [**ActivityObject**](ActivityObject.md) |  | [optional] 
 **deleted** | **Date** |  | [optional] 
 **duration** | **Date** |  | [optional] 

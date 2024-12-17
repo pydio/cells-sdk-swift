@@ -37,6 +37,9 @@ open class NodeServiceAPI {
     /**
      Retrieve information about an action running in background
      - GET /n/action/{Name}/{JobUuid}
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter name: (path)  
      - parameter jobUuid: (path)  
      - parameter apiConfiguration: The configuration for the http request.
@@ -63,7 +66,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestBackgroundAction>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -81,6 +84,9 @@ open class NodeServiceAPI {
     /**
      Update/delete user meta in batch. Passed UserMetas must contain a NodeUuid
      - PATCH /n/meta/batch
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter body: (body)  
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestBatchUpdateMetaList> 
@@ -100,7 +106,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestBatchUpdateMetaList>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -132,6 +138,9 @@ open class NodeServiceAPI {
     /**
      Send control commands to a background job
      - PATCH /n/action/{Name}/{JobUuid}
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter name: (path)  
      - parameter jobUuid: (path)  
      - parameter command: (body)  
@@ -159,7 +168,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestBackgroundAction>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -177,6 +186,9 @@ open class NodeServiceAPI {
     /**
      Create one or many files (empty or hydrated from a TemplateUuid) or folders
      - POST /n/nodes/create
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter body: (body)  
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNodeCollection> 
@@ -196,7 +208,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestNodeCollection>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -215,6 +227,9 @@ open class NodeServiceAPI {
     /**
      Create a public link on a given node
      - POST /n/node/{Uuid}/link
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter uuid: (path)  
      - parameter publicLinkRequest: (body)  
      - parameter apiConfiguration: The configuration for the http request.
@@ -238,7 +253,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestShareLink>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -256,6 +271,9 @@ open class NodeServiceAPI {
     /**
      Create and persist a temporary selection of nodes, that can be used by other actions
      - POST /n/selection
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter body: (body) Request to create a selection from a list of nodes. 
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestSelection> 
@@ -275,7 +293,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestSelection>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -293,6 +311,9 @@ open class NodeServiceAPI {
     /**
      Remove a public link
      - DELETE /n/link/{LinkUuid}
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter linkUuid: (path)  
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestPublicLinkDeleteSuccess> 
@@ -315,7 +336,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestPublicLinkDeleteSuccess>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -334,6 +355,9 @@ open class NodeServiceAPI {
     /**
      Load a node by its Uuid
      - GET /n/node/{Uuid}
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter uuid: (path)  
      - parameter path: (query)  (optional)
      - parameter apiConfiguration: The configuration for the http request.
@@ -360,7 +384,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestNode>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -378,6 +402,9 @@ open class NodeServiceAPI {
     /**
      Load public link information by Uuid
      - GET /n/link/{LinkUuid}
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter linkUuid: (path)  
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestShareLink> 
@@ -400,7 +427,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestShareLink>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -415,26 +442,29 @@ open class NodeServiceAPI {
      List values for a given namespace
      
      - parameter namespace: (path) List persisted values for this namespace 
-     - parameter operationOperation: (query)  (optional, default to .put)
-     - parameter operationValues: (query)  (optional)
+     - parameter operationOperation: (query)  
+     - parameter operationValues: (query)  
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RestNamespaceValuesResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func listNamespaceValues(namespace: String, operationOperation: OperationOperation_listNamespaceValues? = nil, operationValues: [String]? = nil, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestNamespaceValuesResponse {
+    open class func listNamespaceValues(namespace: String, operationOperation: OperationOperation_listNamespaceValues, operationValues: [String], apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestNamespaceValuesResponse {
         return try await listNamespaceValuesWithRequestBuilder(namespace: namespace, operationOperation: operationOperation, operationValues: operationValues, apiConfiguration: apiConfiguration).execute().body
     }
 
     /**
      List values for a given namespace
      - GET /n/meta/namespace/{Namespace}
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter namespace: (path) List persisted values for this namespace 
-     - parameter operationOperation: (query)  (optional, default to .put)
-     - parameter operationValues: (query)  (optional)
+     - parameter operationOperation: (query)  
+     - parameter operationValues: (query)  
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNamespaceValuesResponse> 
      */
-    open class func listNamespaceValuesWithRequestBuilder(namespace: String, operationOperation: OperationOperation_listNamespaceValues? = nil, operationValues: [String]? = nil, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestNamespaceValuesResponse> {
+    open class func listNamespaceValuesWithRequestBuilder(namespace: String, operationOperation: OperationOperation_listNamespaceValues, operationValues: [String], apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestNamespaceValuesResponse> {
         var localVariablePath = "/n/meta/namespace/{Namespace}"
         let namespacePreEscape = "\(APIHelper.mapValueToPathItem(namespace))"
         let namespacePostEscape = namespacePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -444,8 +474,8 @@ open class NodeServiceAPI {
 
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-            "Operation.Operation": (wrappedValue: operationOperation?.encodeToJSON(codableHelper: apiConfiguration.codableHelper), isExplode: false),
-            "Operation.Values": (wrappedValue: operationValues?.encodeToJSON(codableHelper: apiConfiguration.codableHelper), isExplode: true),
+            "Operation.Operation": (wrappedValue: operationOperation.encodeToJSON(codableHelper: apiConfiguration.codableHelper), isExplode: false),
+            "Operation.Values": (wrappedValue: operationValues.encodeToJSON(codableHelper: apiConfiguration.codableHelper), isExplode: true),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [
@@ -456,7 +486,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestNamespaceValuesResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -473,6 +503,9 @@ open class NodeServiceAPI {
     /**
      List defined meta namespaces
      - GET /n/meta/namespace
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestUserMetaNamespaceCollection> 
      */
@@ -491,7 +524,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestUserMetaNamespaceCollection>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -510,6 +543,9 @@ open class NodeServiceAPI {
     /**
      List all known versions of a node
      - GET /n/node/{Uuid}/versions
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter uuid: (path)  
      - parameter path: (query)  (optional)
      - parameter apiConfiguration: The configuration for the http request.
@@ -536,7 +572,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestNodeCollection>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -554,6 +590,9 @@ open class NodeServiceAPI {
     /**
      Generic request to either list (using Locators) or search (using Query) for nodes
      - POST /n/nodes
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter body: (body)  
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNodeCollection> 
@@ -573,7 +612,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestNodeCollection>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -592,6 +631,9 @@ open class NodeServiceAPI {
     /**
      PatchNode is used to update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
      - PATCH /n/node/{Uuid}
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter uuid: (path)  
      - parameter nodeUpdates: (body)  
      - parameter apiConfiguration: The configuration for the http request.
@@ -615,7 +657,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestNode>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -647,6 +689,9 @@ open class NodeServiceAPI {
     /**
      Trigger an action on the tree. Returns a JobInfo describing a background task.
      - POST /n/action/{Name}
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter name: (path)  
      - parameter parameters: (body)  
      - parameter jobUuid: (query)  (optional)
@@ -674,7 +719,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestPerformActionResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -692,6 +737,9 @@ open class NodeServiceAPI {
     /**
      Search a list of meta by node Id or by User id and by namespace
      - POST /n/meta/find
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter body: (body)  
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestUserMetaList> 
@@ -711,7 +759,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestUserMetaList>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -729,6 +777,9 @@ open class NodeServiceAPI {
     /**
      List available templates for hydrating empty files
      - GET /n/templates
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter templateType: (query)  (optional)
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestListTemplatesResponse> 
@@ -751,7 +802,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestListTemplatesResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -770,6 +821,9 @@ open class NodeServiceAPI {
     /**
      Add/delete a values for a given namespace
      - PATCH /n/meta/namespace/{Namespace}
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter namespace: (path) List persisted values for this namespace 
      - parameter operation: (body)  
      - parameter apiConfiguration: The configuration for the http request.
@@ -793,7 +847,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestNamespaceValuesResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -812,6 +866,9 @@ open class NodeServiceAPI {
     /**
      Update public link settings
      - PATCH /n/link/{LinkUuid}
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter linkUuid: (path)  
      - parameter publicLinkRequest: (body)  
      - parameter apiConfiguration: The configuration for the http request.
@@ -835,7 +892,7 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestShareLink>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
@@ -853,6 +910,9 @@ open class NodeServiceAPI {
     /**
      Special API for Bookmarks, will load userMeta and the associated nodes, and return as a node list
      - GET /n/nodes/bookmarks
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
      - parameter all: (query)  (optional)
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNodeCollection> 
@@ -875,6 +935,6 @@ open class NodeServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<RestNodeCollection>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false, apiConfiguration: apiConfiguration)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 }

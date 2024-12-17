@@ -10,19 +10,19 @@ import Foundation
 public final class RestPerformActionResponse: Codable, JSONEncodable, Hashable {
 
     public var affectedNodes: [RestNode]?
+    public var backgroundActions: [RestBackgroundAction]?
     public var status: RestActionStatus?
-    public var tasks: [RestBackgroundAction]?
 
-    public init(affectedNodes: [RestNode]? = nil, status: RestActionStatus? = nil, tasks: [RestBackgroundAction]? = nil) {
+    public init(affectedNodes: [RestNode]? = nil, backgroundActions: [RestBackgroundAction]? = nil, status: RestActionStatus? = nil) {
         self.affectedNodes = affectedNodes
+        self.backgroundActions = backgroundActions
         self.status = status
-        self.tasks = tasks
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case affectedNodes = "AffectedNodes"
+        case backgroundActions = "BackgroundActions"
         case status = "Status"
-        case tasks = "Tasks"
     }
 
     // Encodable protocol methods
@@ -30,21 +30,21 @@ public final class RestPerformActionResponse: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(affectedNodes, forKey: .affectedNodes)
+        try container.encodeIfPresent(backgroundActions, forKey: .backgroundActions)
         try container.encodeIfPresent(status, forKey: .status)
-        try container.encodeIfPresent(tasks, forKey: .tasks)
     }
 
     public static func == (lhs: RestPerformActionResponse, rhs: RestPerformActionResponse) -> Bool {
         lhs.affectedNodes == rhs.affectedNodes &&
-        lhs.status == rhs.status &&
-        lhs.tasks == rhs.tasks
+        lhs.backgroundActions == rhs.backgroundActions &&
+        lhs.status == rhs.status
         
     }
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(affectedNodes?.hashValue)
+        hasher.combine(backgroundActions?.hashValue)
         hasher.combine(status?.hashValue)
-        hasher.combine(tasks?.hashValue)
         
     }
 }

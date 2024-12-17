@@ -10,12 +10,12 @@ import Foundation
 public final class RestPublicLinkRequest: Codable, JSONEncodable, Hashable {
 
     public var createPassword: String?
-    public var link: RestShareLink?
+    public var link: RestShareLink
     public var passwordEnabled: Bool?
     public var updateCustomHash: String?
     public var updatePassword: String?
 
-    public init(createPassword: String? = nil, link: RestShareLink? = nil, passwordEnabled: Bool? = nil, updateCustomHash: String? = nil, updatePassword: String? = nil) {
+    public init(createPassword: String? = nil, link: RestShareLink, passwordEnabled: Bool? = nil, updateCustomHash: String? = nil, updatePassword: String? = nil) {
         self.createPassword = createPassword
         self.link = link
         self.passwordEnabled = passwordEnabled
@@ -36,7 +36,7 @@ public final class RestPublicLinkRequest: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(createPassword, forKey: .createPassword)
-        try container.encodeIfPresent(link, forKey: .link)
+        try container.encode(link, forKey: .link)
         try container.encodeIfPresent(passwordEnabled, forKey: .passwordEnabled)
         try container.encodeIfPresent(updateCustomHash, forKey: .updateCustomHash)
         try container.encodeIfPresent(updatePassword, forKey: .updatePassword)
@@ -53,7 +53,7 @@ public final class RestPublicLinkRequest: Codable, JSONEncodable, Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(createPassword?.hashValue)
-        hasher.combine(link?.hashValue)
+        hasher.combine(link.hashValue)
         hasher.combine(passwordEnabled?.hashValue)
         hasher.combine(updateCustomHash?.hashValue)
         hasher.combine(updatePassword?.hashValue)

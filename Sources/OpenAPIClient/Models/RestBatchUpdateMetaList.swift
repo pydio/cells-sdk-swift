@@ -9,9 +9,9 @@ import Foundation
 
 public final class RestBatchUpdateMetaList: Codable, JSONEncodable, Hashable {
 
-    public var updates: [RestMetaUpdate]?
+    public var updates: [RestMetaUpdate]
 
-    public init(updates: [RestMetaUpdate]? = nil) {
+    public init(updates: [RestMetaUpdate]) {
         self.updates = updates
     }
 
@@ -23,7 +23,7 @@ public final class RestBatchUpdateMetaList: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(updates, forKey: .updates)
+        try container.encode(updates, forKey: .updates)
     }
 
     public static func == (lhs: RestBatchUpdateMetaList, rhs: RestBatchUpdateMetaList) -> Bool {
@@ -32,7 +32,7 @@ public final class RestBatchUpdateMetaList: Codable, JSONEncodable, Hashable {
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(updates?.hashValue)
+        hasher.combine(updates.hashValue)
         
     }
 }

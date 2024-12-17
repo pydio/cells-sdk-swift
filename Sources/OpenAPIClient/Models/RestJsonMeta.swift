@@ -9,10 +9,10 @@ import Foundation
 
 public final class RestJsonMeta: Codable, JSONEncodable, Hashable {
 
-    public var namespace: String?
-    public var value: String?
+    public var namespace: String
+    public var value: String
 
-    public init(namespace: String? = nil, value: String? = nil) {
+    public init(namespace: String, value: String) {
         self.namespace = namespace
         self.value = value
     }
@@ -26,8 +26,8 @@ public final class RestJsonMeta: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(namespace, forKey: .namespace)
-        try container.encodeIfPresent(value, forKey: .value)
+        try container.encode(namespace, forKey: .namespace)
+        try container.encode(value, forKey: .value)
     }
 
     public static func == (lhs: RestJsonMeta, rhs: RestJsonMeta) -> Bool {
@@ -37,8 +37,8 @@ public final class RestJsonMeta: Codable, JSONEncodable, Hashable {
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(namespace?.hashValue)
-        hasher.combine(value?.hashValue)
+        hasher.combine(namespace.hashValue)
+        hasher.combine(value.hashValue)
         
     }
 }

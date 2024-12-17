@@ -9,10 +9,10 @@ import Foundation
 
 public final class RestNamespaceValuesOperation: Codable, JSONEncodable, Hashable {
 
-    public var operation: RestNsOp?
-    public var values: [String]?
+    public var operation: RestNsOp
+    public var values: [String]
 
-    public init(operation: RestNsOp? = nil, values: [String]? = nil) {
+    public init(operation: RestNsOp, values: [String]) {
         self.operation = operation
         self.values = values
     }
@@ -26,8 +26,8 @@ public final class RestNamespaceValuesOperation: Codable, JSONEncodable, Hashabl
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(operation, forKey: .operation)
-        try container.encodeIfPresent(values, forKey: .values)
+        try container.encode(operation, forKey: .operation)
+        try container.encode(values, forKey: .values)
     }
 
     public static func == (lhs: RestNamespaceValuesOperation, rhs: RestNamespaceValuesOperation) -> Bool {
@@ -37,8 +37,8 @@ public final class RestNamespaceValuesOperation: Codable, JSONEncodable, Hashabl
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(operation?.hashValue)
-        hasher.combine(values?.hashValue)
+        hasher.combine(operation.hashValue)
+        hasher.combine(values.hashValue)
         
     }
 }

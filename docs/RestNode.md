@@ -17,16 +17,17 @@ Name | Type | Description | Notes
 **isRecycled** | **Bool** |  | [optional] 
 **metadata** | [RestJsonMeta] |  | [optional] 
 **mode** | [**RestMode**](RestMode.md) |  | [optional] 
-**modified** | **String** |  | [optional] 
-**path** | **String** |  | [optional] 
+**modified** | **String** | Date instead of TS ? | [optional] 
+**path** | **String** |  | 
 **previews** | [RestFilePreview] |  | [optional] 
+**revisionMeta** | [**RestRevisionMeta**](RestRevisionMeta.md) |  | [optional] 
 **shares** | [RestShareLink] |  | [optional] 
 **size** | **String** |  | [optional] 
 **storageETag** | **String** |  | [optional] 
 **subscriptions** | [ActivitySubscription] |  | [optional] 
 **type** | [**TreeNodeType**](TreeNodeType.md) |  | [optional] 
 **userMetadata** | [RestUserMeta] |  | [optional] 
-**uuid** | **String** |  | [optional] 
+**uuid** | **String** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

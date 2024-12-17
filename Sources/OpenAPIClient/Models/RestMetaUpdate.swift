@@ -9,10 +9,10 @@ import Foundation
 
 public final class RestMetaUpdate: Codable, JSONEncodable, Hashable {
 
-    public var operation: MetaUpdateOp?
-    public var userMeta: RestUserMeta?
+    public var operation: MetaUpdateOp
+    public var userMeta: RestUserMeta
 
-    public init(operation: MetaUpdateOp? = nil, userMeta: RestUserMeta? = nil) {
+    public init(operation: MetaUpdateOp, userMeta: RestUserMeta) {
         self.operation = operation
         self.userMeta = userMeta
     }
@@ -26,8 +26,8 @@ public final class RestMetaUpdate: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(operation, forKey: .operation)
-        try container.encodeIfPresent(userMeta, forKey: .userMeta)
+        try container.encode(operation, forKey: .operation)
+        try container.encode(userMeta, forKey: .userMeta)
     }
 
     public static func == (lhs: RestMetaUpdate, rhs: RestMetaUpdate) -> Bool {
@@ -37,8 +37,8 @@ public final class RestMetaUpdate: Codable, JSONEncodable, Hashable {
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(operation?.hashValue)
-        hasher.combine(userMeta?.hashValue)
+        hasher.combine(operation.hashValue)
+        hasher.combine(userMeta.hashValue)
         
     }
 }

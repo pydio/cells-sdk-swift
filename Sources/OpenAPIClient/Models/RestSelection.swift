@@ -10,10 +10,10 @@ import Foundation
 /** Request to create a selection from a list of nodes. */
 public final class RestSelection: Codable, JSONEncodable, Hashable {
 
-    public var nodes: [RestNode]?
+    public var nodes: [RestNode]
     public var uuid: String?
 
-    public init(nodes: [RestNode]? = nil, uuid: String? = nil) {
+    public init(nodes: [RestNode], uuid: String? = nil) {
         self.nodes = nodes
         self.uuid = uuid
     }
@@ -27,7 +27,7 @@ public final class RestSelection: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(nodes, forKey: .nodes)
+        try container.encode(nodes, forKey: .nodes)
         try container.encodeIfPresent(uuid, forKey: .uuid)
     }
 
@@ -38,7 +38,7 @@ public final class RestSelection: Codable, JSONEncodable, Hashable {
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(nodes?.hashValue)
+        hasher.combine(nodes.hashValue)
         hasher.combine(uuid?.hashValue)
         
     }

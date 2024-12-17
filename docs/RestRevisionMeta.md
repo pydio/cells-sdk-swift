@@ -1,11 +1,10 @@
-# RestPerformActionResponse
+# RestRevisionMeta
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**affectedNodes** | [RestNode] |  | [optional] 
-**backgroundActions** | [RestBackgroundAction] |  | [optional] 
-**status** | [**RestActionStatus**](RestActionStatus.md) |  | [optional] 
+**description** | **String** |  | [optional] 
+**uuid** | **String** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

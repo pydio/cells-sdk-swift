@@ -60,6 +60,7 @@ Sources/OpenAPIClient/Models/RestPagination.swift
 Sources/OpenAPIClient/Models/RestPerformActionResponse.swift
 Sources/OpenAPIClient/Models/RestPublicLinkDeleteSuccess.swift
 Sources/OpenAPIClient/Models/RestPublicLinkRequest.swift
+Sources/OpenAPIClient/Models/RestRevisionMeta.swift
 Sources/OpenAPIClient/Models/RestSelection.swift
 Sources/OpenAPIClient/Models/RestShareLink.swift
 Sources/OpenAPIClient/Models/RestShareLinkAccessType.swift
@@ -128,6 +129,7 @@ docs/RestPagination.md
 docs/RestPerformActionResponse.md
 docs/RestPublicLinkDeleteSuccess.md
 docs/RestPublicLinkRequest.md
+docs/RestRevisionMeta.md
 docs/RestSelection.md
 docs/RestShareLink.md
 docs/RestShareLinkAccessType.md
