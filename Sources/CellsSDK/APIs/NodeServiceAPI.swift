@@ -30,7 +30,7 @@ open class NodeServiceAPI {
      - returns: RestBackgroundAction
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func backgroundActionInfo(name: Name_backgroundActionInfo, jobUuid: String, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestBackgroundAction {
+    open class func backgroundActionInfo(name: Name_backgroundActionInfo, jobUuid: String, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestBackgroundAction {
         return try await backgroundActionInfoWithRequestBuilder(name: name, jobUuid: jobUuid, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -45,7 +45,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestBackgroundAction> 
      */
-    open class func backgroundActionInfoWithRequestBuilder(name: Name_backgroundActionInfo, jobUuid: String, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestBackgroundAction> {
+    open class func backgroundActionInfoWithRequestBuilder(name: Name_backgroundActionInfo, jobUuid: String, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestBackgroundAction> {
         var localVariablePath = "/n/action/{Name}/{JobUuid}"
         let namePreEscape = "\(name.rawValue)"
         let namePostEscape = namePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -77,7 +77,7 @@ open class NodeServiceAPI {
      - returns: RestBatchUpdateMetaList
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func batchUpdateMeta(body: RestBatchUpdateMetaList, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestBatchUpdateMetaList {
+    open class func batchUpdateMeta(body: RestBatchUpdateMetaList, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestBatchUpdateMetaList {
         return try await batchUpdateMetaWithRequestBuilder(body: body, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -91,7 +91,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestBatchUpdateMetaList> 
      */
-    open class func batchUpdateMetaWithRequestBuilder(body: RestBatchUpdateMetaList, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestBatchUpdateMetaList> {
+    open class func batchUpdateMetaWithRequestBuilder(body: RestBatchUpdateMetaList, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestBatchUpdateMetaList> {
         let localVariablePath = "/n/meta/batch"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body, codableHelper: apiConfiguration.codableHelper)
@@ -131,7 +131,7 @@ open class NodeServiceAPI {
      - returns: RestBackgroundAction
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func controlBackgroundAction(name: Name_controlBackgroundAction, jobUuid: String, command: JobsCtrlCommand, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestBackgroundAction {
+    open class func controlBackgroundAction(name: Name_controlBackgroundAction, jobUuid: String, command: JobsCtrlCommand, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestBackgroundAction {
         return try await controlBackgroundActionWithRequestBuilder(name: name, jobUuid: jobUuid, command: command, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -147,7 +147,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestBackgroundAction> 
      */
-    open class func controlBackgroundActionWithRequestBuilder(name: Name_controlBackgroundAction, jobUuid: String, command: JobsCtrlCommand, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestBackgroundAction> {
+    open class func controlBackgroundActionWithRequestBuilder(name: Name_controlBackgroundAction, jobUuid: String, command: JobsCtrlCommand, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestBackgroundAction> {
         var localVariablePath = "/n/action/{Name}/{JobUuid}"
         let namePreEscape = "\(name.rawValue)"
         let namePostEscape = namePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -179,7 +179,7 @@ open class NodeServiceAPI {
      - returns: RestNodeCollection
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func create(body: RestCreateRequest, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestNodeCollection {
+    open class func create(body: RestCreateRequest, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNodeCollection {
         return try await createWithRequestBuilder(body: body, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -193,7 +193,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNodeCollection> 
      */
-    open class func createWithRequestBuilder(body: RestCreateRequest, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestNodeCollection> {
+    open class func createWithRequestBuilder(body: RestCreateRequest, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNodeCollection> {
         let localVariablePath = "/n/nodes/create"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body, codableHelper: apiConfiguration.codableHelper)
@@ -212,6 +212,46 @@ open class NodeServiceAPI {
     }
 
     /**
+     Apply some pre-validation checks on node name before sending an upload
+     
+     - parameter body: (body) Request for pre-checking nodes before uploading or creating them. 
+     - parameter apiConfiguration: The configuration for the http request.
+     - returns: RestCreateCheckResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func createCheck(body: RestCreateCheckRequest, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestCreateCheckResponse {
+        return try await createCheckWithRequestBuilder(body: body, apiConfiguration: apiConfiguration).execute().body
+    }
+
+    /**
+     Apply some pre-validation checks on node name before sending an upload
+     - POST /n/nodes/create/precheck
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
+     - parameter body: (body) Request for pre-checking nodes before uploading or creating them. 
+     - parameter apiConfiguration: The configuration for the http request.
+     - returns: RequestBuilder<RestCreateCheckResponse> 
+     */
+    open class func createCheckWithRequestBuilder(body: RestCreateCheckRequest, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestCreateCheckResponse> {
+        let localVariablePath = "/n/nodes/create/precheck"
+        let localVariableURLString = apiConfiguration.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body, codableHelper: apiConfiguration.codableHelper)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<RestCreateCheckResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
+    }
+
+    /**
      Create a public link on a given node
      
      - parameter uuid: (path)  
@@ -220,7 +260,7 @@ open class NodeServiceAPI {
      - returns: RestShareLink
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func createPublicLink(uuid: String, publicLinkRequest: RestPublicLinkRequest, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestShareLink {
+    open class func createPublicLink(uuid: String, publicLinkRequest: RestPublicLinkRequest, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestShareLink {
         return try await createPublicLinkWithRequestBuilder(uuid: uuid, publicLinkRequest: publicLinkRequest, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -235,7 +275,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestShareLink> 
      */
-    open class func createPublicLinkWithRequestBuilder(uuid: String, publicLinkRequest: RestPublicLinkRequest, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestShareLink> {
+    open class func createPublicLinkWithRequestBuilder(uuid: String, publicLinkRequest: RestPublicLinkRequest, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestShareLink> {
         var localVariablePath = "/n/node/{Uuid}/link"
         let uuidPreEscape = "\(APIHelper.mapValueToPathItem(uuid))"
         let uuidPostEscape = uuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -264,7 +304,7 @@ open class NodeServiceAPI {
      - returns: RestSelection
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func createSelection(body: RestSelection, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestSelection {
+    open class func createSelection(body: RestSelection, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestSelection {
         return try await createSelectionWithRequestBuilder(body: body, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -278,7 +318,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestSelection> 
      */
-    open class func createSelectionWithRequestBuilder(body: RestSelection, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestSelection> {
+    open class func createSelectionWithRequestBuilder(body: RestSelection, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestSelection> {
         let localVariablePath = "/n/selection"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body, codableHelper: apiConfiguration.codableHelper)
@@ -304,7 +344,7 @@ open class NodeServiceAPI {
      - returns: RestPublicLinkDeleteSuccess
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func deletePublicLink(linkUuid: String, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestPublicLinkDeleteSuccess {
+    open class func deletePublicLink(linkUuid: String, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestPublicLinkDeleteSuccess {
         return try await deletePublicLinkWithRequestBuilder(linkUuid: linkUuid, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -318,7 +358,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestPublicLinkDeleteSuccess> 
      */
-    open class func deletePublicLinkWithRequestBuilder(linkUuid: String, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestPublicLinkDeleteSuccess> {
+    open class func deletePublicLinkWithRequestBuilder(linkUuid: String, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestPublicLinkDeleteSuccess> {
         var localVariablePath = "/n/link/{LinkUuid}"
         let linkUuidPreEscape = "\(APIHelper.mapValueToPathItem(linkUuid))"
         let linkUuidPostEscape = linkUuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -348,7 +388,7 @@ open class NodeServiceAPI {
      - returns: RestNode
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getByUuid(uuid: String, path: String? = nil, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestNode {
+    open class func getByUuid(uuid: String, path: String? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNode {
         return try await getByUuidWithRequestBuilder(uuid: uuid, path: path, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -363,7 +403,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNode> 
      */
-    open class func getByUuidWithRequestBuilder(uuid: String, path: String? = nil, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestNode> {
+    open class func getByUuidWithRequestBuilder(uuid: String, path: String? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNode> {
         var localVariablePath = "/n/node/{Uuid}"
         let uuidPreEscape = "\(APIHelper.mapValueToPathItem(uuid))"
         let uuidPostEscape = uuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -395,7 +435,7 @@ open class NodeServiceAPI {
      - returns: RestShareLink
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getPublicLink(linkUuid: String, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestShareLink {
+    open class func getPublicLink(linkUuid: String, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestShareLink {
         return try await getPublicLinkWithRequestBuilder(linkUuid: linkUuid, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -409,7 +449,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestShareLink> 
      */
-    open class func getPublicLinkWithRequestBuilder(linkUuid: String, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestShareLink> {
+    open class func getPublicLinkWithRequestBuilder(linkUuid: String, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestShareLink> {
         var localVariablePath = "/n/link/{LinkUuid}"
         let linkUuidPreEscape = "\(APIHelper.mapValueToPathItem(linkUuid))"
         let linkUuidPostEscape = linkUuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -448,7 +488,7 @@ open class NodeServiceAPI {
      - returns: RestNamespaceValuesResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func listNamespaceValues(namespace: String, operationOperation: OperationOperation_listNamespaceValues, operationValues: [String], apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestNamespaceValuesResponse {
+    open class func listNamespaceValues(namespace: String, operationOperation: OperationOperation_listNamespaceValues, operationValues: [String], apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNamespaceValuesResponse {
         return try await listNamespaceValuesWithRequestBuilder(namespace: namespace, operationOperation: operationOperation, operationValues: operationValues, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -464,7 +504,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNamespaceValuesResponse> 
      */
-    open class func listNamespaceValuesWithRequestBuilder(namespace: String, operationOperation: OperationOperation_listNamespaceValues, operationValues: [String], apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestNamespaceValuesResponse> {
+    open class func listNamespaceValuesWithRequestBuilder(namespace: String, operationOperation: OperationOperation_listNamespaceValues, operationValues: [String], apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNamespaceValuesResponse> {
         var localVariablePath = "/n/meta/namespace/{Namespace}"
         let namespacePreEscape = "\(APIHelper.mapValueToPathItem(namespace))"
         let namespacePostEscape = namespacePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -496,7 +536,7 @@ open class NodeServiceAPI {
      - returns: RestUserMetaNamespaceCollection
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func listNamespaces(apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestUserMetaNamespaceCollection {
+    open class func listNamespaces(apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestUserMetaNamespaceCollection {
         return try await listNamespacesWithRequestBuilder(apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -509,7 +549,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestUserMetaNamespaceCollection> 
      */
-    open class func listNamespacesWithRequestBuilder(apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestUserMetaNamespaceCollection> {
+    open class func listNamespacesWithRequestBuilder(apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestUserMetaNamespaceCollection> {
         let localVariablePath = "/n/meta/namespace"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -536,7 +576,7 @@ open class NodeServiceAPI {
      - returns: RestNodeCollection
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func listVersions(uuid: String, path: String? = nil, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestNodeCollection {
+    open class func listVersions(uuid: String, path: String? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNodeCollection {
         return try await listVersionsWithRequestBuilder(uuid: uuid, path: path, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -551,7 +591,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNodeCollection> 
      */
-    open class func listVersionsWithRequestBuilder(uuid: String, path: String? = nil, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestNodeCollection> {
+    open class func listVersionsWithRequestBuilder(uuid: String, path: String? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNodeCollection> {
         var localVariablePath = "/n/node/{Uuid}/versions"
         let uuidPreEscape = "\(APIHelper.mapValueToPathItem(uuid))"
         let uuidPostEscape = uuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -583,7 +623,7 @@ open class NodeServiceAPI {
      - returns: RestNodeCollection
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func lookup(body: RestLookupRequest, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestNodeCollection {
+    open class func lookup(body: RestLookupRequest, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNodeCollection {
         return try await lookupWithRequestBuilder(body: body, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -597,7 +637,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNodeCollection> 
      */
-    open class func lookupWithRequestBuilder(body: RestLookupRequest, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestNodeCollection> {
+    open class func lookupWithRequestBuilder(body: RestLookupRequest, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNodeCollection> {
         let localVariablePath = "/n/nodes"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body, codableHelper: apiConfiguration.codableHelper)
@@ -624,7 +664,7 @@ open class NodeServiceAPI {
      - returns: RestNode
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchNode(uuid: String, nodeUpdates: RestNodeUpdates, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestNode {
+    open class func patchNode(uuid: String, nodeUpdates: RestNodeUpdates, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNode {
         return try await patchNodeWithRequestBuilder(uuid: uuid, nodeUpdates: nodeUpdates, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -639,7 +679,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNode> 
      */
-    open class func patchNodeWithRequestBuilder(uuid: String, nodeUpdates: RestNodeUpdates, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestNode> {
+    open class func patchNodeWithRequestBuilder(uuid: String, nodeUpdates: RestNodeUpdates, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNode> {
         var localVariablePath = "/n/node/{Uuid}"
         let uuidPreEscape = "\(APIHelper.mapValueToPathItem(uuid))"
         let uuidPostEscape = uuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -682,7 +722,7 @@ open class NodeServiceAPI {
      - returns: RestPerformActionResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func performAction(name: Name_performAction, parameters: RestActionParameters, jobUuid: String? = nil, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestPerformActionResponse {
+    open class func performAction(name: Name_performAction, parameters: RestActionParameters, jobUuid: String? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestPerformActionResponse {
         return try await performActionWithRequestBuilder(name: name, parameters: parameters, jobUuid: jobUuid, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -698,7 +738,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestPerformActionResponse> 
      */
-    open class func performActionWithRequestBuilder(name: Name_performAction, parameters: RestActionParameters, jobUuid: String? = nil, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestPerformActionResponse> {
+    open class func performActionWithRequestBuilder(name: Name_performAction, parameters: RestActionParameters, jobUuid: String? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestPerformActionResponse> {
         var localVariablePath = "/n/action/{Name}"
         let namePreEscape = "\(name.rawValue)"
         let namePostEscape = namePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -730,7 +770,7 @@ open class NodeServiceAPI {
      - returns: RestUserMetaList
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func searchMeta(body: IdmSearchUserMetaRequest, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestUserMetaList {
+    open class func searchMeta(body: IdmSearchUserMetaRequest, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestUserMetaList {
         return try await searchMetaWithRequestBuilder(body: body, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -744,7 +784,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestUserMetaList> 
      */
-    open class func searchMetaWithRequestBuilder(body: IdmSearchUserMetaRequest, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestUserMetaList> {
+    open class func searchMetaWithRequestBuilder(body: IdmSearchUserMetaRequest, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestUserMetaList> {
         let localVariablePath = "/n/meta/find"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body, codableHelper: apiConfiguration.codableHelper)
@@ -770,7 +810,7 @@ open class NodeServiceAPI {
      - returns: RestListTemplatesResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func templates(templateType: String? = nil, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestListTemplatesResponse {
+    open class func templates(templateType: String? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestListTemplatesResponse {
         return try await templatesWithRequestBuilder(templateType: templateType, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -784,7 +824,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestListTemplatesResponse> 
      */
-    open class func templatesWithRequestBuilder(templateType: String? = nil, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestListTemplatesResponse> {
+    open class func templatesWithRequestBuilder(templateType: String? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestListTemplatesResponse> {
         let localVariablePath = "/n/templates"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -814,7 +854,7 @@ open class NodeServiceAPI {
      - returns: RestNamespaceValuesResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func updateNamespaceValues(namespace: String, operation: RestNamespaceValuesOperation, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestNamespaceValuesResponse {
+    open class func updateNamespaceValues(namespace: String, operation: RestNamespaceValuesOperation, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNamespaceValuesResponse {
         return try await updateNamespaceValuesWithRequestBuilder(namespace: namespace, operation: operation, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -829,7 +869,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNamespaceValuesResponse> 
      */
-    open class func updateNamespaceValuesWithRequestBuilder(namespace: String, operation: RestNamespaceValuesOperation, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestNamespaceValuesResponse> {
+    open class func updateNamespaceValuesWithRequestBuilder(namespace: String, operation: RestNamespaceValuesOperation, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNamespaceValuesResponse> {
         var localVariablePath = "/n/meta/namespace/{Namespace}"
         let namespacePreEscape = "\(APIHelper.mapValueToPathItem(namespace))"
         let namespacePostEscape = namespacePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -859,7 +899,7 @@ open class NodeServiceAPI {
      - returns: RestShareLink
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func updatePublicLink(linkUuid: String, publicLinkRequest: RestPublicLinkRequest, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestShareLink {
+    open class func updatePublicLink(linkUuid: String, publicLinkRequest: RestPublicLinkRequest, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestShareLink {
         return try await updatePublicLinkWithRequestBuilder(linkUuid: linkUuid, publicLinkRequest: publicLinkRequest, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -874,7 +914,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestShareLink> 
      */
-    open class func updatePublicLinkWithRequestBuilder(linkUuid: String, publicLinkRequest: RestPublicLinkRequest, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestShareLink> {
+    open class func updatePublicLinkWithRequestBuilder(linkUuid: String, publicLinkRequest: RestPublicLinkRequest, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestShareLink> {
         var localVariablePath = "/n/link/{LinkUuid}"
         let linkUuidPreEscape = "\(APIHelper.mapValueToPathItem(linkUuid))"
         let linkUuidPostEscape = linkUuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -903,7 +943,7 @@ open class NodeServiceAPI {
      - returns: RestNodeCollection
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func userBookmarks(all: Bool? = nil, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) async throws(ErrorResponse) -> RestNodeCollection {
+    open class func userBookmarks(all: Bool? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNodeCollection {
         return try await userBookmarksWithRequestBuilder(all: all, apiConfiguration: apiConfiguration).execute().body
     }
 
@@ -917,7 +957,7 @@ open class NodeServiceAPI {
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNodeCollection> 
      */
-    open class func userBookmarksWithRequestBuilder(all: Bool? = nil, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) -> RequestBuilder<RestNodeCollection> {
+    open class func userBookmarksWithRequestBuilder(all: Bool? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNodeCollection> {
         let localVariablePath = "/n/nodes/bookmarks"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil

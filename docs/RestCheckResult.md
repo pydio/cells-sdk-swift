@@ -1,13 +1,12 @@
-# RestIncomingNode
+# RestCheckResult
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**contentType** | **String** |  | [optional] 
-**knownSize** | **String** |  | [optional] 
-**locator** | [**RestNodeLocator**](RestNodeLocator.md) |  | 
-**templateUuid** | **String** |  | [optional] 
-**type** | [**TreeNodeType**](TreeNodeType.md) |  | 
+**exists** | **Bool** |  | [optional] 
+**inputLocator** | [**RestNodeLocator**](RestNodeLocator.md) |  | [optional] 
+**nextPath** | **String** |  | [optional] 
+**node** | [**RestNode**](RestNode.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

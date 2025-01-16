@@ -1,6 +1,6 @@
-name: OpenAPIClient
+name: CellsSDK
 targets:
-  OpenAPIClient:
+  CellsSDK:
     type: framework
     platform: iOS
     deploymentTarget: "11.0"

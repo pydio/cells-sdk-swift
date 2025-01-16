@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import OpenAPIClient // Import your generated SDK
+import CellsSDK
 
 func printNodeAsJSON(node: RestNode) {
     let encoder = JSONEncoder()
@@ -21,16 +21,25 @@ func printNodeAsJSON(node: RestNode) {
     }
 }
 
-class OpenApiClientTests: XCTestCase {
+class CellsSDKTests: XCTestCase {
     @MainActor func testLookup() throws {
-        let basePath = "http://local.pydio:8383/a"
-        let secretKey = "7s33M-RAYDmiNvXLIS5LIMlyeeju9dYb9MJgK-2js64.89z8xHJc7UmDC9U9fFj-JzZIhQ6AuPXJzPbrDn74kT8" //         // Create an instance of the API client
-        let apiConfig = OpenAPIClientAPIConfiguration(basePath: basePath, customHeaders: ["Authorization" : "Bearer "+secretKey]) // Adjust as needed
+        let baseURL = (ProcessInfo.processInfo.environment["API_URL"] ?? "") + "/a"
+        let secretKey = ProcessInfo.processInfo.environment["API_TOKEN"] ?? ""
+        let rootPath = ProcessInfo.processInfo.environment["API_ROOT_PATH"] ?? "/common-files"
+        
+        if baseURL == "" || secretKey == "" {
+            XCTFail("Skipping testLookup as environment variables API_URL and API_SECRET_KEY must be set")
+            return
+        }
+        
+        // Create an instance of the API client
+        // Must be performed on http, or on trusted certif https
+        let apiConfig = CellsSDKAPIConfiguration(basePath: baseURL, customHeaders: ["Authorization" : "Bearer "+secretKey]) // Adjust as needed
  
         // Define an expectation for the async call
         let expectation = self.expectation(description: "Fetch resources from API")
         let request = RestLookupRequest()
-        let locator = RestNodeLocator(path:"/structured/*")
+        let locator = RestNodeLocator(path:rootPath + "/*")
         request.locators = RestNodeLocators(many: [locator])
         let requestBuilder = NodeServiceAPI.lookupWithRequestBuilder(body: request, apiConfiguration: apiConfig)
         

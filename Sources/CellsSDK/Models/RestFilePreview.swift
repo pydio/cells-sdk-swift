@@ -9,21 +9,27 @@ import Foundation
 
 public final class RestFilePreview: Codable, JSONEncodable, Hashable {
 
+    public var bucket: String?
     public var contentType: String?
     public var dimension: Int?
+    public var key: String?
     public var processing: Bool?
     public var url: String?
 
-    public init(contentType: String? = nil, dimension: Int? = nil, processing: Bool? = nil, url: String? = nil) {
+    public init(bucket: String? = nil, contentType: String? = nil, dimension: Int? = nil, key: String? = nil, processing: Bool? = nil, url: String? = nil) {
+        self.bucket = bucket
         self.contentType = contentType
         self.dimension = dimension
+        self.key = key
         self.processing = processing
         self.url = url
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
+        case bucket = "Bucket"
         case contentType = "ContentType"
         case dimension = "Dimension"
+        case key = "Key"
         case processing = "Processing"
         case url = "Url"
     }
@@ -32,23 +38,29 @@ public final class RestFilePreview: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(bucket, forKey: .bucket)
         try container.encodeIfPresent(contentType, forKey: .contentType)
         try container.encodeIfPresent(dimension, forKey: .dimension)
+        try container.encodeIfPresent(key, forKey: .key)
         try container.encodeIfPresent(processing, forKey: .processing)
         try container.encodeIfPresent(url, forKey: .url)
     }
 
     public static func == (lhs: RestFilePreview, rhs: RestFilePreview) -> Bool {
+        lhs.bucket == rhs.bucket &&
         lhs.contentType == rhs.contentType &&
         lhs.dimension == rhs.dimension &&
+        lhs.key == rhs.key &&
         lhs.processing == rhs.processing &&
         lhs.url == rhs.url
         
     }
 
     public func hash(into hasher: inout Hasher) {
+        hasher.combine(bucket?.hashValue)
         hasher.combine(contentType?.hashValue)
         hasher.combine(dimension?.hashValue)
+        hasher.combine(key?.hashValue)
         hasher.combine(processing?.hashValue)
         hasher.combine(url?.hashValue)
         

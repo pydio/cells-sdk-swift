@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name = 'OpenAPIClient'
+  s.name = 'CellsSDK'
   s.ios.deployment_target = '12.0'
   s.osx.deployment_target = '10.13'
   s.tvos.deployment_target = '12.0'
@@ -9,6 +9,6 @@ Pod::Spec.new do |s|
   s.authors = 'OpenAPI Generator'
   s.license = 'Proprietary'
   s.homepage = 'https://github.com/OpenAPITools/openapi-generator'
-  s.summary = 'OpenAPIClient Swift SDK'
-  s.source_files = 'Sources/OpenAPIClient/**/*.swift'
+  s.summary = 'CellsSDK Swift SDK'
+  s.source_files = 'Sources/CellsSDK/**/*.swift'
 end

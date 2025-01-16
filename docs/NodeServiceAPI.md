@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**batchUpdateMeta**](NodeServiceAPI.md#batchupdatemeta) | **PATCH** /n/meta/batch | Update/delete user meta in batch. Passed UserMetas must contain a NodeUuid
 [**controlBackgroundAction**](NodeServiceAPI.md#controlbackgroundaction) | **PATCH** /n/action/{Name}/{JobUuid} | Send control commands to a background job
 [**create**](NodeServiceAPI.md#create) | **POST** /n/nodes/create | Create one or many files (empty or hydrated from a TemplateUuid) or folders
+[**createCheck**](NodeServiceAPI.md#createcheck) | **POST** /n/nodes/create/precheck | Apply some pre-validation checks on node name before sending an upload
 [**createPublicLink**](NodeServiceAPI.md#createpubliclink) | **POST** /n/node/{Uuid}/link | Create a public link on a given node
 [**createSelection**](NodeServiceAPI.md#createselection) | **POST** /n/selection | Create and persist a temporary selection of nodes, that can be used by other actions
 [**deletePublicLink**](NodeServiceAPI.md#deletepubliclink) | **DELETE** /n/link/{LinkUuid} | Remove a public link
@@ -36,7 +37,7 @@ Retrieve information about an action running in background
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let name = "name_example" // String | 
 let jobUuid = "jobUuid_example" // String | 
@@ -86,7 +87,7 @@ Update/delete user meta in batch. Passed UserMetas must contain a NodeUuid
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let body = restBatchUpdateMetaList(updates: [restMetaUpdate(operation: MetaUpdateOp(), userMeta: restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example"))]) // RestBatchUpdateMetaList | 
 
@@ -134,7 +135,7 @@ Send control commands to a background job
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let name = "name_example" // String | 
 let jobUuid = "jobUuid_example" // String | 
@@ -186,9 +187,9 @@ Create one or many files (empty or hydrated from a TemplateUuid) or folders
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
-let body = restCreateRequest(inputs: [restIncomingNode(contentType: "contentType_example", locator: restNodeLocator(path: "path_example", uuid: "uuid_example"), templateUuid: "templateUuid_example", type: treeNodeType())], recursive: false) // RestCreateRequest | 
+let body = restCreateRequest(inputs: [restIncomingNode(contentType: "contentType_example", knownSize: "knownSize_example", locator: restNodeLocator(path: "path_example", uuid: "uuid_example"), templateUuid: "templateUuid_example", type: treeNodeType())], recursive: false) // RestCreateRequest | 
 
 // Create one or many files (empty or hydrated from a TemplateUuid) or folders
 NodeServiceAPI.create(body: body) { (response, error) in
@@ -224,6 +225,54 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **createCheck**
+```swift
+    open class func createCheck(body: RestCreateCheckRequest, completion: @escaping (_ data: RestCreateCheckResponse?, _ error: Error?) -> Void)
+```
+
+Apply some pre-validation checks on node name before sending an upload
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import CellsSDK
+
+let body = restCreateCheckRequest(findAvailablePath: false, inputs: [restIncomingNode(contentType: "contentType_example", knownSize: "knownSize_example", locator: restNodeLocator(path: "path_example", uuid: "uuid_example"), templateUuid: "templateUuid_example", type: treeNodeType())]) // RestCreateCheckRequest | Request for pre-checking nodes before uploading or creating them.
+
+// Apply some pre-validation checks on node name before sending an upload
+NodeServiceAPI.createCheck(body: body) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**RestCreateCheckRequest**](RestCreateCheckRequest.md) | Request for pre-checking nodes before uploading or creating them. | 
+
+### Return type
+
+[**RestCreateCheckResponse**](RestCreateCheckResponse.md)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **createPublicLink**
 ```swift
     open class func createPublicLink(uuid: String, publicLinkRequest: RestPublicLinkRequest, completion: @escaping (_ data: RestShareLink?, _ error: Error?) -> Void)
@@ -234,7 +283,7 @@ Create a public link on a given node
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let uuid = "uuid_example" // String | 
 let publicLinkRequest = restPublicLinkRequest(createPassword: "createPassword_example", link: restShareLink(accessEnd: "accessEnd_example", accessStart: "accessStart_example", currentDownloads: "currentDownloads_example", description: "description_example", label: "label_example", linkHash: "linkHash_example", linkUrl: "linkUrl_example", maxDownloads: "maxDownloads_example", passwordRequired: false, permissions: [restShareLinkAccessType()], policies: [serviceResourcePolicy(action: serviceResourcePolicyAction(), effect: serviceResourcePolicyPolicyEffect(), jsonConditions: "jsonConditions_example", resource: "resource_example", subject: "subject_example", id: "id_example")], policiesContextEditable: false, restrictToTargetUsers: false, rootNodes: [treeNode(appearsIn: [treeWorkspaceRelativePath(path: "path_example", wsLabel: "wsLabel_example", wsScope: "wsScope_example", wsSlug: "wsSlug_example", wsUuid: "wsUuid_example")], commits: [treeChangeLog(data: 123, description: "description_example", event: treeNodeChangeEvent(metadata: "TODO", optimistic: false, silent: false, source: nil, target: nil, type: treeNodeChangeEventEventType()), location: nil, mTime: "mTime_example", ownerUuid: "ownerUuid_example", size: "size_example", uuid: "uuid_example")], etag: "etag_example", mTime: "mTime_example", metaStore: "TODO", mode: 123, modeString: "modeString_example", path: "path_example", size: "size_example", type: treeNodeType(), uuid: "uuid_example")], targetUsers: "TODO", userLogin: "userLogin_example", userUuid: "userUuid_example", uuid: "uuid_example", viewTemplateName: "viewTemplateName_example"), passwordEnabled: false, updateCustomHash: "updateCustomHash_example", updatePassword: "updatePassword_example") // RestPublicLinkRequest | 
@@ -284,9 +333,9 @@ Create and persist a temporary selection of nodes, that can be used by other act
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
-let body = restSelection(nodes: [restNode(activities: [activityObject(context: "context_example", accuracy: 123, actor: nil, altitude: 123, anyOf: nil, attachment: nil, attributedTo: nil, audience: nil, bcc: nil, bto: nil, cc: nil, closed: Date(), content: nil, current: nil, deleted: Date(), duration: Date(), endTime: Date(), first: nil, formerType: activityObjectType(), generator: nil, height: 123, href: "href_example", hreflang: "hreflang_example", icon: nil, id: "id_example", image: nil, inReplyTo: nil, instrument: nil, items: [nil], last: nil, latitude: 123, location: nil, longitude: 123, markdown: "markdown_example", mediaType: "mediaType_example", name: "name_example", next: nil, object: nil, oneOf: nil, origin: nil, partOf: nil, prev: nil, preview: nil, published: Date(), radius: 123, rel: "rel_example", relationship: nil, replies: nil, result: nil, startTime: Date(), subject: nil, summary: "summary_example", tag: nil, target: nil, to: nil, totalItems: 123, type: nil, units: "units_example", updated: Date(), url: nil, width: 123)], contentLock: restLockInfo(isLocked: false, owner: "owner_example"), contentType: "contentType_example", contentsHash: "contentsHash_example", contextWorkspace: restContextWorkspace(description: "description_example", isRoot: false, isVirtualRoot: false, label: "label_example", permissions: "permissions_example", quota: "quota_example", quotaUsage: "quotaUsage_example", scope: idmWorkspaceScope(), skipRecycle: false, slug: "slug_example", syncable: false, uuid: "uuid_example"), dataSourceFeatures: restDataSourceFeatures(encrypted: false, versioned: false), folderMeta: [restCountMeta(namespace: "namespace_example", value: 123)], hashingMethod: "hashingMethod_example", imageMeta: restImageMeta(height: 123, jsonEXIF: "jsonEXIF_example", orientation: 123, width: 123), isBookmarked: false, isRecycleBin: false, isRecycled: false, metadata: [restJsonMeta(namespace: "namespace_example", value: "value_example")], mode: restMode(), modified: "modified_example", path: "path_example", previews: [restFilePreview(contentType: "contentType_example", dimension: 123, processing: false, url: "url_example")], revisionMeta: restRevisionMeta(description: "description_example", uuid: "uuid_example"), shares: [restShareLink(accessEnd: "accessEnd_example", accessStart: "accessStart_example", currentDownloads: "currentDownloads_example", description: "description_example", label: "label_example", linkHash: "linkHash_example", linkUrl: "linkUrl_example", maxDownloads: "maxDownloads_example", passwordRequired: false, permissions: [restShareLinkAccessType()], policies: [serviceResourcePolicy(action: serviceResourcePolicyAction(), effect: serviceResourcePolicyPolicyEffect(), jsonConditions: "jsonConditions_example", resource: "resource_example", subject: "subject_example", id: "id_example")], policiesContextEditable: false, restrictToTargetUsers: false, rootNodes: [treeNode(appearsIn: [treeWorkspaceRelativePath(path: "path_example", wsLabel: "wsLabel_example", wsScope: "wsScope_example", wsSlug: "wsSlug_example", wsUuid: "wsUuid_example")], commits: [treeChangeLog(data: 123, description: "description_example", event: treeNodeChangeEvent(metadata: "TODO", optimistic: false, silent: false, source: nil, target: nil, type: treeNodeChangeEventEventType()), location: nil, mTime: "mTime_example", ownerUuid: "ownerUuid_example", size: "size_example", uuid: "uuid_example")], etag: "etag_example", mTime: "mTime_example", metaStore: "TODO", mode: 123, modeString: "modeString_example", path: "path_example", size: "size_example", type: treeNodeType(), uuid: "uuid_example")], targetUsers: "TODO", userLogin: "userLogin_example", userUuid: "userUuid_example", uuid: "uuid_example", viewTemplateName: "viewTemplateName_example")], size: "size_example", storageETag: "storageETag_example", subscriptions: [activitySubscription(events: ["events_example"], objectId: "objectId_example", objectType: activityOwnerType(), userId: "userId_example")], type: nil, userMetadata: [restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example")], uuid: "uuid_example")], uuid: "uuid_example") // RestSelection | Request to create a selection from a list of nodes.
+let body = restSelection(nodes: [restNode(activities: [activityObject(context: "context_example", accuracy: 123, actor: nil, altitude: 123, anyOf: nil, attachment: nil, attributedTo: nil, audience: nil, bcc: nil, bto: nil, cc: nil, closed: Date(), content: nil, current: nil, deleted: Date(), duration: Date(), endTime: Date(), first: nil, formerType: activityObjectType(), generator: nil, height: 123, href: "href_example", hreflang: "hreflang_example", icon: nil, id: "id_example", image: nil, inReplyTo: nil, instrument: nil, items: [nil], last: nil, latitude: 123, location: nil, longitude: 123, markdown: "markdown_example", mediaType: "mediaType_example", name: "name_example", next: nil, object: nil, oneOf: nil, origin: nil, partOf: nil, prev: nil, preview: nil, published: Date(), radius: 123, rel: "rel_example", relationship: nil, replies: nil, result: nil, startTime: Date(), subject: nil, summary: "summary_example", tag: nil, target: nil, to: nil, totalItems: 123, type: nil, units: "units_example", updated: Date(), url: nil, width: 123)], contentLock: restLockInfo(isLocked: false, owner: "owner_example"), contentType: "contentType_example", contentsHash: "contentsHash_example", contextWorkspace: restContextWorkspace(description: "description_example", isRoot: false, isVirtualRoot: false, label: "label_example", permissions: "permissions_example", quota: "quota_example", quotaUsage: "quotaUsage_example", scope: idmWorkspaceScope(), skipRecycle: false, slug: "slug_example", syncable: false, uuid: "uuid_example"), dataSourceFeatures: restDataSourceFeatures(encrypted: false, versioned: false), folderMeta: [restCountMeta(namespace: "namespace_example", value: 123)], hashingMethod: "hashingMethod_example", imageMeta: restImageMeta(height: 123, jsonEXIF: "jsonEXIF_example", orientation: 123, width: 123), isBookmarked: false, isRecycleBin: false, isRecycled: false, metadata: [restJsonMeta(namespace: "namespace_example", value: "value_example")], mode: restMode(), modified: "modified_example", path: "path_example", previews: [restFilePreview(bucket: "bucket_example", contentType: "contentType_example", dimension: 123, key: "key_example", processing: false, url: "url_example")], revisionMeta: restRevisionMeta(description: "description_example", uuid: "uuid_example"), shares: [restShareLink(accessEnd: "accessEnd_example", accessStart: "accessStart_example", currentDownloads: "currentDownloads_example", description: "description_example", label: "label_example", linkHash: "linkHash_example", linkUrl: "linkUrl_example", maxDownloads: "maxDownloads_example", passwordRequired: false, permissions: [restShareLinkAccessType()], policies: [serviceResourcePolicy(action: serviceResourcePolicyAction(), effect: serviceResourcePolicyPolicyEffect(), jsonConditions: "jsonConditions_example", resource: "resource_example", subject: "subject_example", id: "id_example")], policiesContextEditable: false, restrictToTargetUsers: false, rootNodes: [treeNode(appearsIn: [treeWorkspaceRelativePath(path: "path_example", wsLabel: "wsLabel_example", wsScope: "wsScope_example", wsSlug: "wsSlug_example", wsUuid: "wsUuid_example")], commits: [treeChangeLog(data: 123, description: "description_example", event: treeNodeChangeEvent(metadata: "TODO", optimistic: false, silent: false, source: nil, target: nil, type: treeNodeChangeEventEventType()), location: nil, mTime: "mTime_example", ownerUuid: "ownerUuid_example", size: "size_example", uuid: "uuid_example")], etag: "etag_example", mTime: "mTime_example", metaStore: "TODO", mode: 123, modeString: "modeString_example", path: "path_example", size: "size_example", type: treeNodeType(), uuid: "uuid_example")], targetUsers: "TODO", userLogin: "userLogin_example", userUuid: "userUuid_example", uuid: "uuid_example", viewTemplateName: "viewTemplateName_example")], size: "size_example", storageETag: "storageETag_example", subscriptions: [activitySubscription(events: ["events_example"], objectId: "objectId_example", objectType: activityOwnerType(), userId: "userId_example")], type: nil, userMetadata: [restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example")], uuid: "uuid_example")], uuid: "uuid_example") // RestSelection | Request to create a selection from a list of nodes.
 
 // Create and persist a temporary selection of nodes, that can be used by other actions
 NodeServiceAPI.createSelection(body: body) { (response, error) in
@@ -332,7 +381,7 @@ Remove a public link
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let linkUuid = "linkUuid_example" // String | 
 
@@ -380,7 +429,7 @@ Load a node by its Uuid
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let uuid = "uuid_example" // String | 
 let path = "path_example" // String |  (optional)
@@ -430,7 +479,7 @@ Load public link information by Uuid
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let linkUuid = "linkUuid_example" // String | 
 
@@ -478,7 +527,7 @@ List values for a given namespace
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let namespace = "namespace_example" // String | List persisted values for this namespace
 let operationOperation = "operationOperation_example" // String |  (default to .put)
@@ -530,7 +579,7 @@ List defined meta namespaces
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 
 // List defined meta namespaces
@@ -574,7 +623,7 @@ List all known versions of a node
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let uuid = "uuid_example" // String | 
 let path = "path_example" // String |  (optional)
@@ -624,7 +673,7 @@ Generic request to either list (using Locators) or search (using Query) for node
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let body = restLookupRequest(limit: "limit_example", locators: restNodeLocators(many: [restNodeLocator(path: "path_example", uuid: "uuid_example")]), offset: "offset_example", query: treeQuery(content: "content_example", durationDate: "durationDate_example", eTag: "eTag_example", _extension: "_extension_example", fileName: "fileName_example", fileNameOrContent: "fileNameOrContent_example", freeString: "freeString_example", geoQuery: treeGeoQuery(bottomRight: treeGeoPoint(lat: 123, lon: 123), center: nil, distance: "distance_example", topLeft: nil), maxDate: "maxDate_example", maxSize: "maxSize_example", minDate: "minDate_example", minSize: "minSize_example", not: false, pathDepth: 123, pathPrefix: ["pathPrefix_example"], paths: ["paths_example"], type: treeNodeType(), uUIDs: ["uUIDs_example"]), sortDirDesc: false, sortField: "sortField_example", statFlags: [123]) // RestLookupRequest | 
 
@@ -672,7 +721,7 @@ PatchNode is used to update a node specific meta. It is used for reserved meta a
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let uuid = "uuid_example" // String | 
 let nodeUpdates = restNodeUpdates(bookmark: restMetaToggle(value: false), contentLock: nil, metaUpdates: [restMetaUpdate(operation: MetaUpdateOp(), userMeta: restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example"))]) // RestNodeUpdates | 
@@ -722,7 +771,7 @@ Trigger an action on the tree. Returns a JobInfo describing a background task.
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let name = "name_example" // String | 
 let parameters = restActionParameters(awaitStatus: jobsTaskStatus(), awaitTimeout: "awaitTimeout_example", jsonParameters: "jsonParameters_example", nodes: [restNodeLocator(path: "path_example", uuid: "uuid_example")], selectionUuid: "selectionUuid_example", targetNode: nil) // RestActionParameters | 
@@ -774,7 +823,7 @@ Search a list of meta by node Id or by User id and by namespace
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let body = idmSearchUserMetaRequest(metaUuids: ["metaUuids_example"], namespace: "namespace_example", nodeUuids: ["nodeUuids_example"], resourceQuery: serviceResourcePolicyQuery(action: serviceResourcePolicyAction(), any: false, empty: false, leftIdentifier: "leftIdentifier_example", subjects: ["subjects_example"]), resourceSubjectOwner: "resourceSubjectOwner_example") // IdmSearchUserMetaRequest | 
 
@@ -822,7 +871,7 @@ List available templates for hydrating empty files
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let templateType = "templateType_example" // String |  (optional)
 
@@ -870,7 +919,7 @@ Add/delete a values for a given namespace
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let namespace = "namespace_example" // String | List persisted values for this namespace
 let operation = restNamespaceValuesOperation(operation: restNsOp(), values: ["values_example"]) // RestNamespaceValuesOperation | 
@@ -920,7 +969,7 @@ Update public link settings
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let linkUuid = "linkUuid_example" // String | 
 let publicLinkRequest = restPublicLinkRequest(createPassword: "createPassword_example", link: restShareLink(accessEnd: "accessEnd_example", accessStart: "accessStart_example", currentDownloads: "currentDownloads_example", description: "description_example", label: "label_example", linkHash: "linkHash_example", linkUrl: "linkUrl_example", maxDownloads: "maxDownloads_example", passwordRequired: false, permissions: [restShareLinkAccessType()], policies: [serviceResourcePolicy(action: serviceResourcePolicyAction(), effect: serviceResourcePolicyPolicyEffect(), jsonConditions: "jsonConditions_example", resource: "resource_example", subject: "subject_example", id: "id_example")], policiesContextEditable: false, restrictToTargetUsers: false, rootNodes: [treeNode(appearsIn: [treeWorkspaceRelativePath(path: "path_example", wsLabel: "wsLabel_example", wsScope: "wsScope_example", wsSlug: "wsSlug_example", wsUuid: "wsUuid_example")], commits: [treeChangeLog(data: 123, description: "description_example", event: treeNodeChangeEvent(metadata: "TODO", optimistic: false, silent: false, source: nil, target: nil, type: treeNodeChangeEventEventType()), location: nil, mTime: "mTime_example", ownerUuid: "ownerUuid_example", size: "size_example", uuid: "uuid_example")], etag: "etag_example", mTime: "mTime_example", metaStore: "TODO", mode: 123, modeString: "modeString_example", path: "path_example", size: "size_example", type: treeNodeType(), uuid: "uuid_example")], targetUsers: "TODO", userLogin: "userLogin_example", userUuid: "userUuid_example", uuid: "uuid_example", viewTemplateName: "viewTemplateName_example"), passwordEnabled: false, updateCustomHash: "updateCustomHash_example", updatePassword: "updatePassword_example") // RestPublicLinkRequest | 
@@ -970,7 +1019,7 @@ Special API for Bookmarks, will load userMeta and the associated nodes, and retu
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import OpenAPIClient
+import CellsSDK
 
 let all = true // Bool |  (optional)
 

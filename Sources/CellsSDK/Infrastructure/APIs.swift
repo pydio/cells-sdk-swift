@@ -9,7 +9,7 @@ import Foundation
 import FoundationNetworking
 #endif
 
-open class OpenAPIClientAPIConfiguration: @unchecked Sendable {
+open class CellsSDKAPIConfiguration: @unchecked Sendable {
     public var basePath: String
     public var customHeaders: [String: String]
     public var credential: URLCredential?
@@ -44,7 +44,7 @@ open class OpenAPIClientAPIConfiguration: @unchecked Sendable {
         self.interceptor = interceptor
     }
 
-    public static let shared = OpenAPIClientAPIConfiguration()
+    public static let shared = CellsSDKAPIConfiguration()
 }
 
 open class RequestBuilder<T>: @unchecked Sendable {
@@ -55,12 +55,12 @@ open class RequestBuilder<T>: @unchecked Sendable {
     public let URLString: String
     public let requestTask: RequestTask = RequestTask()
     public let requiresAuthentication: Bool
-    public let apiConfiguration: OpenAPIClientAPIConfiguration
+    public let apiConfiguration: CellsSDKAPIConfiguration
 
     /// Optional block to obtain a reference to the request's progress instance when available.
     public var onProgressReady: ((Progress) -> Void)?
 
-    required public init(method: String, URLString: String, parameters: [String: Any]?, headers: [String: String] = [:], requiresAuthentication: Bool, apiConfiguration: OpenAPIClientAPIConfiguration = OpenAPIClientAPIConfiguration.shared) {
+    required public init(method: String, URLString: String, parameters: [String: Any]?, headers: [String: String] = [:], requiresAuthentication: Bool, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) {
         self.method = method
         self.URLString = URLString
         self.parameters = parameters
