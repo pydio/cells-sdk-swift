@@ -7,6 +7,11 @@
 
 import XCTest
 import CellsSDK
+import AWSClientRuntime
+import AWSSDKIdentity
+import AWSS3
+import Smithy
+import ClientRuntime
 
 func printNodeAsJSON(node: RestNode) {
     let encoder = JSONEncoder()
@@ -25,7 +30,7 @@ class CellsSDKTests: XCTestCase {
     @MainActor func testLookup() throws {
         let baseURL = (ProcessInfo.processInfo.environment["API_URL"] ?? "") + "/a"
         let secretKey = ProcessInfo.processInfo.environment["API_TOKEN"] ?? ""
-        let rootPath = ProcessInfo.processInfo.environment["API_ROOT_PATH"] ?? "/common-files"
+        let rootPath = ProcessInfo.processInfo.environment["API_ROOT_PATH"] ?? "common-files"
         
         if baseURL == "" || secretKey == "" {
             XCTFail("Skipping testLookup as environment variables API_URL and API_SECRET_KEY must be set")
@@ -62,5 +67,52 @@ class CellsSDKTests: XCTestCase {
                 
         // Wait for the async call to complete
         waitForExpectations(timeout: 3) // Adjust timeout as needed
+    }
+    
+    @MainActor func testUpload() throws {
+        let baseURL = (ProcessInfo.processInfo.environment["API_URL"] ?? "")
+        let secretKey = ProcessInfo.processInfo.environment["API_TOKEN"] ?? ""
+        let rootPath = ProcessInfo.processInfo.environment["API_ROOT_PATH"] ?? "common-files"
+
+        let identity = try StaticAWSCredentialIdentityResolver(AWSCredentialIdentity(accessKey: secretKey, secret: "gatewaysecret"))
+        let BUCKET = "io"
+        let TEST_KEY = "random-ios.txt"
+
+        let configuration = try S3Client.S3ClientConfiguration()
+        configuration.region = "us-east-1"
+        configuration.signingRegion = "us-east-1"
+        configuration.forcePathStyle = true
+        configuration.endpoint = baseURL
+        
+        configuration.awsCredentialIdentityResolver = identity
+
+        let client = S3Client(config: configuration)
+        
+
+        let data: Data? = "The random data contents".data(using: .utf8)
+        let dataStream = ByteStream.data(data)
+
+        let input = PutObjectInput(
+            body: dataStream,
+            bucket: BUCKET,
+            key: rootPath + "/" + TEST_KEY
+        )
+        let expectation = self.expectation(description: "Upload a basic file")
+
+        Task {
+            do {
+                await SDKLoggingSystem().initialize(logLevel: .trace)
+                _ = try await client.putObject(input: input)
+            }
+            catch {
+                print("ERROR: ", dump(error, name: "Putting an object."))
+                XCTFail("Error: \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        // Wait for the async call to complete
+        waitForExpectations(timeout: 5) // Adjust timeout as needed
+
     }
 }
