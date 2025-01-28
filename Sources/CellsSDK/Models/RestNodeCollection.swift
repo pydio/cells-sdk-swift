@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestNodeCollection: Codable, JSONEncodable, Hashable {
+public struct RestNodeCollection: Sendable, Codable, JSONEncodable, Hashable {
 
     public var facets: [TreeSearchFacet]?
     public var nodes: [RestNode]
@@ -32,20 +32,6 @@ public final class RestNodeCollection: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(facets, forKey: .facets)
         try container.encode(nodes, forKey: .nodes)
         try container.encodeIfPresent(pagination, forKey: .pagination)
-    }
-
-    public static func == (lhs: RestNodeCollection, rhs: RestNodeCollection) -> Bool {
-        lhs.facets == rhs.facets &&
-        lhs.nodes == rhs.nodes &&
-        lhs.pagination == rhs.pagination
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(facets?.hashValue)
-        hasher.combine(nodes.hashValue)
-        hasher.combine(pagination?.hashValue)
-        
     }
 }
 

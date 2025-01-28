@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestUserMeta: Codable, JSONEncodable, Hashable {
+public struct RestUserMeta: Sendable, Codable, JSONEncodable, Hashable {
 
     public var editable: Bool?
     public var jsonValue: String
@@ -36,22 +36,6 @@ public final class RestUserMeta: Codable, JSONEncodable, Hashable {
         try container.encode(jsonValue, forKey: .jsonValue)
         try container.encode(namespace, forKey: .namespace)
         try container.encodeIfPresent(nodeUuid, forKey: .nodeUuid)
-    }
-
-    public static func == (lhs: RestUserMeta, rhs: RestUserMeta) -> Bool {
-        lhs.editable == rhs.editable &&
-        lhs.jsonValue == rhs.jsonValue &&
-        lhs.namespace == rhs.namespace &&
-        lhs.nodeUuid == rhs.nodeUuid
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(editable?.hashValue)
-        hasher.combine(jsonValue.hashValue)
-        hasher.combine(namespace.hashValue)
-        hasher.combine(nodeUuid?.hashValue)
-        
     }
 }
 

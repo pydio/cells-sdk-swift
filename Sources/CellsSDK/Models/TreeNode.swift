@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class TreeNode: Codable, JSONEncodable, Hashable {
+public struct TreeNode: Sendable, Codable, JSONEncodable, Hashable {
 
     public var appearsIn: [TreeWorkspaceRelativePath]?
     public var commits: [TreeChangeLog]?
@@ -65,36 +65,6 @@ public final class TreeNode: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(size, forKey: .size)
         try container.encodeIfPresent(type, forKey: .type)
         try container.encodeIfPresent(uuid, forKey: .uuid)
-    }
-
-    public static func == (lhs: TreeNode, rhs: TreeNode) -> Bool {
-        lhs.appearsIn == rhs.appearsIn &&
-        lhs.commits == rhs.commits &&
-        lhs.etag == rhs.etag &&
-        lhs.mTime == rhs.mTime &&
-        lhs.metaStore == rhs.metaStore &&
-        lhs.mode == rhs.mode &&
-        lhs.modeString == rhs.modeString &&
-        lhs.path == rhs.path &&
-        lhs.size == rhs.size &&
-        lhs.type == rhs.type &&
-        lhs.uuid == rhs.uuid
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(appearsIn?.hashValue)
-        hasher.combine(commits?.hashValue)
-        hasher.combine(etag?.hashValue)
-        hasher.combine(mTime?.hashValue)
-        hasher.combine(metaStore?.hashValue)
-        hasher.combine(mode?.hashValue)
-        hasher.combine(modeString?.hashValue)
-        hasher.combine(path?.hashValue)
-        hasher.combine(size?.hashValue)
-        hasher.combine(type?.hashValue)
-        hasher.combine(uuid?.hashValue)
-        
     }
 }
 

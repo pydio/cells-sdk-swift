@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestBackgroundAction: Codable, JSONEncodable, Hashable {
+public struct RestBackgroundAction: Sendable, Codable, JSONEncodable, Hashable {
 
     public var canPause: Bool?
     public var canStop: Bool?
@@ -64,36 +64,6 @@ public final class RestBackgroundAction: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(startTime, forKey: .startTime)
         try container.encodeIfPresent(status, forKey: .status)
         try container.encodeIfPresent(statusMessage, forKey: .statusMessage)
-    }
-
-    public static func == (lhs: RestBackgroundAction, rhs: RestBackgroundAction) -> Bool {
-        lhs.canPause == rhs.canPause &&
-        lhs.canStop == rhs.canStop &&
-        lhs.endTime == rhs.endTime &&
-        lhs.hasProgress == rhs.hasProgress &&
-        lhs.jobUuid == rhs.jobUuid &&
-        lhs.label == rhs.label &&
-        lhs.name == rhs.name &&
-        lhs.progress == rhs.progress &&
-        lhs.startTime == rhs.startTime &&
-        lhs.status == rhs.status &&
-        lhs.statusMessage == rhs.statusMessage
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(canPause?.hashValue)
-        hasher.combine(canStop?.hashValue)
-        hasher.combine(endTime?.hashValue)
-        hasher.combine(hasProgress?.hashValue)
-        hasher.combine(jobUuid.hashValue)
-        hasher.combine(label?.hashValue)
-        hasher.combine(name.hashValue)
-        hasher.combine(progress?.hashValue)
-        hasher.combine(startTime?.hashValue)
-        hasher.combine(status?.hashValue)
-        hasher.combine(statusMessage?.hashValue)
-        
     }
 }
 

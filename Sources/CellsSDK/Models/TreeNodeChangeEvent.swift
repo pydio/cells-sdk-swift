@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class TreeNodeChangeEvent: Codable, JSONEncodable, Hashable {
+public struct TreeNodeChangeEvent: Sendable, Codable, JSONEncodable, Hashable {
 
     public var metadata: [String: String]?
     public var optimistic: Bool?
@@ -44,26 +44,6 @@ public final class TreeNodeChangeEvent: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(source, forKey: .source)
         try container.encodeIfPresent(target, forKey: .target)
         try container.encodeIfPresent(type, forKey: .type)
-    }
-
-    public static func == (lhs: TreeNodeChangeEvent, rhs: TreeNodeChangeEvent) -> Bool {
-        lhs.metadata == rhs.metadata &&
-        lhs.optimistic == rhs.optimistic &&
-        lhs.silent == rhs.silent &&
-        lhs.source == rhs.source &&
-        lhs.target == rhs.target &&
-        lhs.type == rhs.type
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(metadata?.hashValue)
-        hasher.combine(optimistic?.hashValue)
-        hasher.combine(silent?.hashValue)
-        hasher.combine(source?.hashValue)
-        hasher.combine(target?.hashValue)
-        hasher.combine(type?.hashValue)
-        
     }
 }
 

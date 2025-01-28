@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestFilePreview: Codable, JSONEncodable, Hashable {
+public struct RestFilePreview: Sendable, Codable, JSONEncodable, Hashable {
 
     public var bucket: String?
     public var contentType: String?
@@ -44,26 +44,6 @@ public final class RestFilePreview: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(key, forKey: .key)
         try container.encodeIfPresent(processing, forKey: .processing)
         try container.encodeIfPresent(url, forKey: .url)
-    }
-
-    public static func == (lhs: RestFilePreview, rhs: RestFilePreview) -> Bool {
-        lhs.bucket == rhs.bucket &&
-        lhs.contentType == rhs.contentType &&
-        lhs.dimension == rhs.dimension &&
-        lhs.key == rhs.key &&
-        lhs.processing == rhs.processing &&
-        lhs.url == rhs.url
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(bucket?.hashValue)
-        hasher.combine(contentType?.hashValue)
-        hasher.combine(dimension?.hashValue)
-        hasher.combine(key?.hashValue)
-        hasher.combine(processing?.hashValue)
-        hasher.combine(url?.hashValue)
-        
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestActionParameters: Codable, JSONEncodable, Hashable {
+public struct RestActionParameters: Sendable, Codable, JSONEncodable, Hashable {
 
     public var awaitStatus: JobsTaskStatus?
     public var awaitTimeout: String?
@@ -44,26 +44,6 @@ public final class RestActionParameters: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(nodes, forKey: .nodes)
         try container.encodeIfPresent(selectionUuid, forKey: .selectionUuid)
         try container.encodeIfPresent(targetNode, forKey: .targetNode)
-    }
-
-    public static func == (lhs: RestActionParameters, rhs: RestActionParameters) -> Bool {
-        lhs.awaitStatus == rhs.awaitStatus &&
-        lhs.awaitTimeout == rhs.awaitTimeout &&
-        lhs.jsonParameters == rhs.jsonParameters &&
-        lhs.nodes == rhs.nodes &&
-        lhs.selectionUuid == rhs.selectionUuid &&
-        lhs.targetNode == rhs.targetNode
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(awaitStatus?.hashValue)
-        hasher.combine(awaitTimeout?.hashValue)
-        hasher.combine(jsonParameters?.hashValue)
-        hasher.combine(nodes?.hashValue)
-        hasher.combine(selectionUuid?.hashValue)
-        hasher.combine(targetNode?.hashValue)
-        
     }
 }
 

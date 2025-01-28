@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestRevisionMeta: Codable, JSONEncodable, Hashable {
+public struct RestRevisionMeta: Sendable, Codable, JSONEncodable, Hashable {
 
     public var description: String?
     public var uuid: String
@@ -28,18 +28,6 @@ public final class RestRevisionMeta: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(description, forKey: .description)
         try container.encode(uuid, forKey: .uuid)
-    }
-
-    public static func == (lhs: RestRevisionMeta, rhs: RestRevisionMeta) -> Bool {
-        lhs.description == rhs.description &&
-        lhs.uuid == rhs.uuid
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(description?.hashValue)
-        hasher.combine(uuid.hashValue)
-        
     }
 }
 

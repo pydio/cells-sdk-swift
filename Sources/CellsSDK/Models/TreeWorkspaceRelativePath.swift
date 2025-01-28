@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class TreeWorkspaceRelativePath: Codable, JSONEncodable, Hashable {
+public struct TreeWorkspaceRelativePath: Sendable, Codable, JSONEncodable, Hashable {
 
     public var path: String?
     public var wsLabel: String?
@@ -40,24 +40,6 @@ public final class TreeWorkspaceRelativePath: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(wsScope, forKey: .wsScope)
         try container.encodeIfPresent(wsSlug, forKey: .wsSlug)
         try container.encodeIfPresent(wsUuid, forKey: .wsUuid)
-    }
-
-    public static func == (lhs: TreeWorkspaceRelativePath, rhs: TreeWorkspaceRelativePath) -> Bool {
-        lhs.path == rhs.path &&
-        lhs.wsLabel == rhs.wsLabel &&
-        lhs.wsScope == rhs.wsScope &&
-        lhs.wsSlug == rhs.wsSlug &&
-        lhs.wsUuid == rhs.wsUuid
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(path?.hashValue)
-        hasher.combine(wsLabel?.hashValue)
-        hasher.combine(wsScope?.hashValue)
-        hasher.combine(wsSlug?.hashValue)
-        hasher.combine(wsUuid?.hashValue)
-        
     }
 }
 

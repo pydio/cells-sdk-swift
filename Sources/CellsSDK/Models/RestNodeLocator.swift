@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestNodeLocator: Codable, JSONEncodable, Hashable {
+public struct RestNodeLocator: Sendable, Codable, JSONEncodable, Hashable {
 
     public var path: String?
     public var uuid: String?
@@ -28,18 +28,6 @@ public final class RestNodeLocator: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(path, forKey: .path)
         try container.encodeIfPresent(uuid, forKey: .uuid)
-    }
-
-    public static func == (lhs: RestNodeLocator, rhs: RestNodeLocator) -> Bool {
-        lhs.path == rhs.path &&
-        lhs.uuid == rhs.uuid
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(path?.hashValue)
-        hasher.combine(uuid?.hashValue)
-        
     }
 }
 

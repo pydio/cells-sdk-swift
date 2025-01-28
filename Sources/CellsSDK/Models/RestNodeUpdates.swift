@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestNodeUpdates: Codable, JSONEncodable, Hashable {
+public struct RestNodeUpdates: Sendable, Codable, JSONEncodable, Hashable {
 
     public var bookmark: RestMetaToggle?
     public var contentLock: RestMetaToggle?
@@ -32,20 +32,6 @@ public final class RestNodeUpdates: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(bookmark, forKey: .bookmark)
         try container.encodeIfPresent(contentLock, forKey: .contentLock)
         try container.encodeIfPresent(metaUpdates, forKey: .metaUpdates)
-    }
-
-    public static func == (lhs: RestNodeUpdates, rhs: RestNodeUpdates) -> Bool {
-        lhs.bookmark == rhs.bookmark &&
-        lhs.contentLock == rhs.contentLock &&
-        lhs.metaUpdates == rhs.metaUpdates
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(bookmark?.hashValue)
-        hasher.combine(contentLock?.hashValue)
-        hasher.combine(metaUpdates?.hashValue)
-        
     }
 }
 

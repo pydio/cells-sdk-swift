@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestMetaToggle: Codable, JSONEncodable, Hashable {
+public struct RestMetaToggle: Sendable, Codable, JSONEncodable, Hashable {
 
     public var value: Bool
 
@@ -24,16 +24,6 @@ public final class RestMetaToggle: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(value, forKey: .value)
-    }
-
-    public static func == (lhs: RestMetaToggle, rhs: RestMetaToggle) -> Bool {
-        lhs.value == rhs.value
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(value.hashValue)
-        
     }
 }
 

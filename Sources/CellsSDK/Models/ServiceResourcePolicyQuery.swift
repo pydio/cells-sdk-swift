@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class ServiceResourcePolicyQuery: Codable, JSONEncodable, Hashable {
+public struct ServiceResourcePolicyQuery: Sendable, Codable, JSONEncodable, Hashable {
 
     public var action: ServiceResourcePolicyAction?
     public var any: Bool?
@@ -40,24 +40,6 @@ public final class ServiceResourcePolicyQuery: Codable, JSONEncodable, Hashable 
         try container.encodeIfPresent(empty, forKey: .empty)
         try container.encodeIfPresent(leftIdentifier, forKey: .leftIdentifier)
         try container.encodeIfPresent(subjects, forKey: .subjects)
-    }
-
-    public static func == (lhs: ServiceResourcePolicyQuery, rhs: ServiceResourcePolicyQuery) -> Bool {
-        lhs.action == rhs.action &&
-        lhs.any == rhs.any &&
-        lhs.empty == rhs.empty &&
-        lhs.leftIdentifier == rhs.leftIdentifier &&
-        lhs.subjects == rhs.subjects
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(action?.hashValue)
-        hasher.combine(any?.hashValue)
-        hasher.combine(empty?.hashValue)
-        hasher.combine(leftIdentifier?.hashValue)
-        hasher.combine(subjects?.hashValue)
-        
     }
 }
 

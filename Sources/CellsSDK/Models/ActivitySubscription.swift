@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class ActivitySubscription: Codable, JSONEncodable, Hashable {
+public struct ActivitySubscription: Sendable, Codable, JSONEncodable, Hashable {
 
     public var events: [String]?
     public var objectId: String?
@@ -36,22 +36,6 @@ public final class ActivitySubscription: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(objectId, forKey: .objectId)
         try container.encodeIfPresent(objectType, forKey: .objectType)
         try container.encodeIfPresent(userId, forKey: .userId)
-    }
-
-    public static func == (lhs: ActivitySubscription, rhs: ActivitySubscription) -> Bool {
-        lhs.events == rhs.events &&
-        lhs.objectId == rhs.objectId &&
-        lhs.objectType == rhs.objectType &&
-        lhs.userId == rhs.userId
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(events?.hashValue)
-        hasher.combine(objectId?.hashValue)
-        hasher.combine(objectType?.hashValue)
-        hasher.combine(userId?.hashValue)
-        
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class JobsCtrlCommand: Codable, JSONEncodable, Hashable {
+public struct JobsCtrlCommand: Sendable, Codable, JSONEncodable, Hashable {
 
     public var cmd: JobsCommand?
     public var jobId: String?
@@ -40,24 +40,6 @@ public final class JobsCtrlCommand: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(ownerId, forKey: .ownerId)
         try container.encodeIfPresent(runParameters, forKey: .runParameters)
         try container.encodeIfPresent(taskId, forKey: .taskId)
-    }
-
-    public static func == (lhs: JobsCtrlCommand, rhs: JobsCtrlCommand) -> Bool {
-        lhs.cmd == rhs.cmd &&
-        lhs.jobId == rhs.jobId &&
-        lhs.ownerId == rhs.ownerId &&
-        lhs.runParameters == rhs.runParameters &&
-        lhs.taskId == rhs.taskId
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(cmd?.hashValue)
-        hasher.combine(jobId?.hashValue)
-        hasher.combine(ownerId?.hashValue)
-        hasher.combine(runParameters?.hashValue)
-        hasher.combine(taskId?.hashValue)
-        
     }
 }
 

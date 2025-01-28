@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class TreeChangeLog: Codable, JSONEncodable, Hashable {
+public struct TreeChangeLog: Sendable, Codable, JSONEncodable, Hashable {
 
     public var data: Data?
     public var description: String?
@@ -52,30 +52,6 @@ public final class TreeChangeLog: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(ownerUuid, forKey: .ownerUuid)
         try container.encodeIfPresent(size, forKey: .size)
         try container.encodeIfPresent(uuid, forKey: .uuid)
-    }
-
-    public static func == (lhs: TreeChangeLog, rhs: TreeChangeLog) -> Bool {
-        lhs.data == rhs.data &&
-        lhs.description == rhs.description &&
-        lhs.event == rhs.event &&
-        lhs.location == rhs.location &&
-        lhs.mTime == rhs.mTime &&
-        lhs.ownerUuid == rhs.ownerUuid &&
-        lhs.size == rhs.size &&
-        lhs.uuid == rhs.uuid
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(data?.hashValue)
-        hasher.combine(description?.hashValue)
-        hasher.combine(event?.hashValue)
-        hasher.combine(location?.hashValue)
-        hasher.combine(mTime?.hashValue)
-        hasher.combine(ownerUuid?.hashValue)
-        hasher.combine(size?.hashValue)
-        hasher.combine(uuid?.hashValue)
-        
     }
 }
 

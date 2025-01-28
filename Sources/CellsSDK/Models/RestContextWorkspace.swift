@@ -8,7 +8,7 @@
 import Foundation
 
 /** Current workspace information, maybe published on the root node of a workspace */
-public final class RestContextWorkspace: Codable, JSONEncodable, Hashable {
+public struct RestContextWorkspace: Sendable, Codable, JSONEncodable, Hashable {
 
     public var description: String?
     public var isRoot: Bool?
@@ -69,38 +69,6 @@ public final class RestContextWorkspace: Codable, JSONEncodable, Hashable {
         try container.encode(slug, forKey: .slug)
         try container.encodeIfPresent(syncable, forKey: .syncable)
         try container.encode(uuid, forKey: .uuid)
-    }
-
-    public static func == (lhs: RestContextWorkspace, rhs: RestContextWorkspace) -> Bool {
-        lhs.description == rhs.description &&
-        lhs.isRoot == rhs.isRoot &&
-        lhs.isVirtualRoot == rhs.isVirtualRoot &&
-        lhs.label == rhs.label &&
-        lhs.permissions == rhs.permissions &&
-        lhs.quota == rhs.quota &&
-        lhs.quotaUsage == rhs.quotaUsage &&
-        lhs.scope == rhs.scope &&
-        lhs.skipRecycle == rhs.skipRecycle &&
-        lhs.slug == rhs.slug &&
-        lhs.syncable == rhs.syncable &&
-        lhs.uuid == rhs.uuid
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(description?.hashValue)
-        hasher.combine(isRoot?.hashValue)
-        hasher.combine(isVirtualRoot?.hashValue)
-        hasher.combine(label?.hashValue)
-        hasher.combine(permissions?.hashValue)
-        hasher.combine(quota?.hashValue)
-        hasher.combine(quotaUsage?.hashValue)
-        hasher.combine(scope?.hashValue)
-        hasher.combine(skipRecycle?.hashValue)
-        hasher.combine(slug.hashValue)
-        hasher.combine(syncable?.hashValue)
-        hasher.combine(uuid.hashValue)
-        
     }
 }
 

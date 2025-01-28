@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class TreeGeoQuery: Codable, JSONEncodable, Hashable {
+public struct TreeGeoQuery: Sendable, Codable, JSONEncodable, Hashable {
 
     public var bottomRight: TreeGeoPoint?
     public var center: TreeGeoPoint?
@@ -37,22 +37,6 @@ public final class TreeGeoQuery: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(center, forKey: .center)
         try container.encodeIfPresent(distance, forKey: .distance)
         try container.encodeIfPresent(topLeft, forKey: .topLeft)
-    }
-
-    public static func == (lhs: TreeGeoQuery, rhs: TreeGeoQuery) -> Bool {
-        lhs.bottomRight == rhs.bottomRight &&
-        lhs.center == rhs.center &&
-        lhs.distance == rhs.distance &&
-        lhs.topLeft == rhs.topLeft
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(bottomRight?.hashValue)
-        hasher.combine(center?.hashValue)
-        hasher.combine(distance?.hashValue)
-        hasher.combine(topLeft?.hashValue)
-        
     }
 }
 

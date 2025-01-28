@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestLookupRequest: Codable, JSONEncodable, Hashable {
+public struct RestLookupRequest: Sendable, Codable, JSONEncodable, Hashable {
 
     public var limit: String?
     public var locators: RestNodeLocators?
@@ -48,28 +48,6 @@ public final class RestLookupRequest: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(sortDirDesc, forKey: .sortDirDesc)
         try container.encodeIfPresent(sortField, forKey: .sortField)
         try container.encodeIfPresent(statFlags, forKey: .statFlags)
-    }
-
-    public static func == (lhs: RestLookupRequest, rhs: RestLookupRequest) -> Bool {
-        lhs.limit == rhs.limit &&
-        lhs.locators == rhs.locators &&
-        lhs.offset == rhs.offset &&
-        lhs.query == rhs.query &&
-        lhs.sortDirDesc == rhs.sortDirDesc &&
-        lhs.sortField == rhs.sortField &&
-        lhs.statFlags == rhs.statFlags
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(limit?.hashValue)
-        hasher.combine(locators?.hashValue)
-        hasher.combine(offset?.hashValue)
-        hasher.combine(query?.hashValue)
-        hasher.combine(sortDirDesc?.hashValue)
-        hasher.combine(sortField?.hashValue)
-        hasher.combine(statFlags?.hashValue)
-        
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestNamespaceValuesOperation: Codable, JSONEncodable, Hashable {
+public struct RestNamespaceValuesOperation: Sendable, Codable, JSONEncodable, Hashable {
 
     public var operation: RestNsOp
     public var values: [String]
@@ -28,18 +28,6 @@ public final class RestNamespaceValuesOperation: Codable, JSONEncodable, Hashabl
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(operation, forKey: .operation)
         try container.encode(values, forKey: .values)
-    }
-
-    public static func == (lhs: RestNamespaceValuesOperation, rhs: RestNamespaceValuesOperation) -> Bool {
-        lhs.operation == rhs.operation &&
-        lhs.values == rhs.values
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(operation.hashValue)
-        hasher.combine(values.hashValue)
-        
     }
 }
 

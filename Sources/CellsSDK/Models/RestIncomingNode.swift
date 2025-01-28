@@ -7,18 +7,20 @@
 
 import Foundation
 
-public final class RestIncomingNode: Codable, JSONEncodable, Hashable {
+public struct RestIncomingNode: Sendable, Codable, JSONEncodable, Hashable {
 
     public var contentType: String?
     public var knownSize: String?
     public var locator: RestNodeLocator
+    public var metadata: [RestUserMeta]?
     public var templateUuid: String?
     public var type: TreeNodeType
 
-    public init(contentType: String? = nil, knownSize: String? = nil, locator: RestNodeLocator, templateUuid: String? = nil, type: TreeNodeType) {
+    public init(contentType: String? = nil, knownSize: String? = nil, locator: RestNodeLocator, metadata: [RestUserMeta]? = nil, templateUuid: String? = nil, type: TreeNodeType) {
         self.contentType = contentType
         self.knownSize = knownSize
         self.locator = locator
+        self.metadata = metadata
         self.templateUuid = templateUuid
         self.type = type
     }
@@ -27,6 +29,7 @@ public final class RestIncomingNode: Codable, JSONEncodable, Hashable {
         case contentType = "ContentType"
         case knownSize = "KnownSize"
         case locator = "Locator"
+        case metadata = "Metadata"
         case templateUuid = "TemplateUuid"
         case type = "Type"
     }
@@ -38,26 +41,9 @@ public final class RestIncomingNode: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(contentType, forKey: .contentType)
         try container.encodeIfPresent(knownSize, forKey: .knownSize)
         try container.encode(locator, forKey: .locator)
+        try container.encodeIfPresent(metadata, forKey: .metadata)
         try container.encodeIfPresent(templateUuid, forKey: .templateUuid)
         try container.encode(type, forKey: .type)
-    }
-
-    public static func == (lhs: RestIncomingNode, rhs: RestIncomingNode) -> Bool {
-        lhs.contentType == rhs.contentType &&
-        lhs.knownSize == rhs.knownSize &&
-        lhs.locator == rhs.locator &&
-        lhs.templateUuid == rhs.templateUuid &&
-        lhs.type == rhs.type
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(contentType?.hashValue)
-        hasher.combine(knownSize?.hashValue)
-        hasher.combine(locator.hashValue)
-        hasher.combine(templateUuid?.hashValue)
-        hasher.combine(type.hashValue)
-        
     }
 }
 

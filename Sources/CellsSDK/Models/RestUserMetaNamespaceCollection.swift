@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestUserMetaNamespaceCollection: Codable, JSONEncodable, Hashable {
+public struct RestUserMetaNamespaceCollection: Sendable, Codable, JSONEncodable, Hashable {
 
     public var namespaces: [IdmUserMetaNamespace]?
 
@@ -24,16 +24,6 @@ public final class RestUserMetaNamespaceCollection: Codable, JSONEncodable, Hash
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(namespaces, forKey: .namespaces)
-    }
-
-    public static func == (lhs: RestUserMetaNamespaceCollection, rhs: RestUserMetaNamespaceCollection) -> Bool {
-        lhs.namespaces == rhs.namespaces
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(namespaces?.hashValue)
-        
     }
 }
 

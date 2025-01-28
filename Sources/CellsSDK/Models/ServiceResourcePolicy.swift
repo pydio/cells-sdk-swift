@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class ServiceResourcePolicy: Codable, JSONEncodable, Hashable {
+public struct ServiceResourcePolicy: Sendable, Codable, JSONEncodable, Hashable {
 
     public var action: ServiceResourcePolicyAction?
     public var effect: ServiceResourcePolicyPolicyEffect?
@@ -44,26 +44,6 @@ public final class ServiceResourcePolicy: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(resource, forKey: .resource)
         try container.encodeIfPresent(subject, forKey: .subject)
         try container.encodeIfPresent(id, forKey: .id)
-    }
-
-    public static func == (lhs: ServiceResourcePolicy, rhs: ServiceResourcePolicy) -> Bool {
-        lhs.action == rhs.action &&
-        lhs.effect == rhs.effect &&
-        lhs.jsonConditions == rhs.jsonConditions &&
-        lhs.resource == rhs.resource &&
-        lhs.subject == rhs.subject &&
-        lhs.id == rhs.id
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(action?.hashValue)
-        hasher.combine(effect?.hashValue)
-        hasher.combine(jsonConditions?.hashValue)
-        hasher.combine(resource?.hashValue)
-        hasher.combine(subject?.hashValue)
-        hasher.combine(id?.hashValue)
-        
     }
 }
 

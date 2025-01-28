@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 **contentType** | **String** |  | [optional] 
 **knownSize** | **String** |  | [optional] 
 **locator** | [**RestNodeLocator**](RestNodeLocator.md) |  | 
+**metadata** | [RestUserMeta] |  | [optional] 
 **templateUuid** | **String** |  | [optional] 
 **type** | [**TreeNodeType**](TreeNodeType.md) |  | 
 

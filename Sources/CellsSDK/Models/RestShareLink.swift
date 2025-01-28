@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestShareLink: Codable, JSONEncodable, Hashable {
+public struct RestShareLink: Sendable, Codable, JSONEncodable, Hashable {
 
     public var accessEnd: String?
     public var accessStart: String?
@@ -96,52 +96,6 @@ public final class RestShareLink: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(userUuid, forKey: .userUuid)
         try container.encodeIfPresent(uuid, forKey: .uuid)
         try container.encodeIfPresent(viewTemplateName, forKey: .viewTemplateName)
-    }
-
-    public static func == (lhs: RestShareLink, rhs: RestShareLink) -> Bool {
-        lhs.accessEnd == rhs.accessEnd &&
-        lhs.accessStart == rhs.accessStart &&
-        lhs.currentDownloads == rhs.currentDownloads &&
-        lhs.description == rhs.description &&
-        lhs.label == rhs.label &&
-        lhs.linkHash == rhs.linkHash &&
-        lhs.linkUrl == rhs.linkUrl &&
-        lhs.maxDownloads == rhs.maxDownloads &&
-        lhs.passwordRequired == rhs.passwordRequired &&
-        lhs.permissions == rhs.permissions &&
-        lhs.policies == rhs.policies &&
-        lhs.policiesContextEditable == rhs.policiesContextEditable &&
-        lhs.restrictToTargetUsers == rhs.restrictToTargetUsers &&
-        lhs.rootNodes == rhs.rootNodes &&
-        lhs.targetUsers == rhs.targetUsers &&
-        lhs.userLogin == rhs.userLogin &&
-        lhs.userUuid == rhs.userUuid &&
-        lhs.uuid == rhs.uuid &&
-        lhs.viewTemplateName == rhs.viewTemplateName
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(accessEnd?.hashValue)
-        hasher.combine(accessStart?.hashValue)
-        hasher.combine(currentDownloads?.hashValue)
-        hasher.combine(description?.hashValue)
-        hasher.combine(label?.hashValue)
-        hasher.combine(linkHash?.hashValue)
-        hasher.combine(linkUrl?.hashValue)
-        hasher.combine(maxDownloads?.hashValue)
-        hasher.combine(passwordRequired?.hashValue)
-        hasher.combine(permissions?.hashValue)
-        hasher.combine(policies?.hashValue)
-        hasher.combine(policiesContextEditable?.hashValue)
-        hasher.combine(restrictToTargetUsers?.hashValue)
-        hasher.combine(rootNodes?.hashValue)
-        hasher.combine(targetUsers?.hashValue)
-        hasher.combine(userLogin?.hashValue)
-        hasher.combine(userUuid?.hashValue)
-        hasher.combine(uuid?.hashValue)
-        hasher.combine(viewTemplateName?.hashValue)
-        
     }
 }
 

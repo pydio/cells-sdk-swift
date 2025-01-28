@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class TreeSearchFacet: Codable, JSONEncodable, Hashable {
+public struct TreeSearchFacet: Sendable, Codable, JSONEncodable, Hashable {
 
     public var count: Int?
     public var end: Int?
@@ -52,30 +52,6 @@ public final class TreeSearchFacet: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(min, forKey: .min)
         try container.encodeIfPresent(start, forKey: .start)
         try container.encodeIfPresent(term, forKey: .term)
-    }
-
-    public static func == (lhs: TreeSearchFacet, rhs: TreeSearchFacet) -> Bool {
-        lhs.count == rhs.count &&
-        lhs.end == rhs.end &&
-        lhs.fieldName == rhs.fieldName &&
-        lhs.label == rhs.label &&
-        lhs.max == rhs.max &&
-        lhs.min == rhs.min &&
-        lhs.start == rhs.start &&
-        lhs.term == rhs.term
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(count?.hashValue)
-        hasher.combine(end?.hashValue)
-        hasher.combine(fieldName?.hashValue)
-        hasher.combine(label?.hashValue)
-        hasher.combine(max?.hashValue)
-        hasher.combine(min?.hashValue)
-        hasher.combine(start?.hashValue)
-        hasher.combine(term?.hashValue)
-        
     }
 }
 

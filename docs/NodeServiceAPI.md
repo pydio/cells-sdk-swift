@@ -189,7 +189,7 @@ Create one or many files (empty or hydrated from a TemplateUuid) or folders
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import CellsSDK
 
-let body = restCreateRequest(inputs: [restIncomingNode(contentType: "contentType_example", knownSize: "knownSize_example", locator: restNodeLocator(path: "path_example", uuid: "uuid_example"), templateUuid: "templateUuid_example", type: treeNodeType())], recursive: false) // RestCreateRequest | 
+let body = restCreateRequest(inputs: [restIncomingNode(contentType: "contentType_example", knownSize: "knownSize_example", locator: restNodeLocator(path: "path_example", uuid: "uuid_example"), metadata: [restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example")], templateUuid: "templateUuid_example", type: treeNodeType())], recursive: false) // RestCreateRequest | 
 
 // Create one or many files (empty or hydrated from a TemplateUuid) or folders
 NodeServiceAPI.create(body: body) { (response, error) in
@@ -237,7 +237,7 @@ Apply some pre-validation checks on node name before sending an upload
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import CellsSDK
 
-let body = restCreateCheckRequest(findAvailablePath: false, inputs: [restIncomingNode(contentType: "contentType_example", knownSize: "knownSize_example", locator: restNodeLocator(path: "path_example", uuid: "uuid_example"), templateUuid: "templateUuid_example", type: treeNodeType())]) // RestCreateCheckRequest | Request for pre-checking nodes before uploading or creating them.
+let body = restCreateCheckRequest(findAvailablePath: false, inputs: [restIncomingNode(contentType: "contentType_example", knownSize: "knownSize_example", locator: restNodeLocator(path: "path_example", uuid: "uuid_example"), metadata: [restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example")], templateUuid: "templateUuid_example", type: treeNodeType())]) // RestCreateCheckRequest | Request for pre-checking nodes before uploading or creating them.
 
 // Apply some pre-validation checks on node name before sending an upload
 NodeServiceAPI.createCheck(body: body) { (response, error) in

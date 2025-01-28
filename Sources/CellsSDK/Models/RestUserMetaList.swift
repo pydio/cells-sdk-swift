@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestUserMetaList: Codable, JSONEncodable, Hashable {
+public struct RestUserMetaList: Sendable, Codable, JSONEncodable, Hashable {
 
     public var userMeta: [RestUserMeta]?
 
@@ -24,16 +24,6 @@ public final class RestUserMetaList: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(userMeta, forKey: .userMeta)
-    }
-
-    public static func == (lhs: RestUserMetaList, rhs: RestUserMetaList) -> Bool {
-        lhs.userMeta == rhs.userMeta
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(userMeta?.hashValue)
-        
     }
 }
 

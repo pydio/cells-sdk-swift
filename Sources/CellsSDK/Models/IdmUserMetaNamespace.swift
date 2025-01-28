@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class IdmUserMetaNamespace: Codable, JSONEncodable, Hashable {
+public struct IdmUserMetaNamespace: Sendable, Codable, JSONEncodable, Hashable {
 
     public var indexable: Bool?
     public var jsonDefinition: String?
@@ -48,28 +48,6 @@ public final class IdmUserMetaNamespace: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(order, forKey: .order)
         try container.encodeIfPresent(policies, forKey: .policies)
         try container.encodeIfPresent(policiesContextEditable, forKey: .policiesContextEditable)
-    }
-
-    public static func == (lhs: IdmUserMetaNamespace, rhs: IdmUserMetaNamespace) -> Bool {
-        lhs.indexable == rhs.indexable &&
-        lhs.jsonDefinition == rhs.jsonDefinition &&
-        lhs.label == rhs.label &&
-        lhs.namespace == rhs.namespace &&
-        lhs.order == rhs.order &&
-        lhs.policies == rhs.policies &&
-        lhs.policiesContextEditable == rhs.policiesContextEditable
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(indexable?.hashValue)
-        hasher.combine(jsonDefinition?.hashValue)
-        hasher.combine(label?.hashValue)
-        hasher.combine(namespace?.hashValue)
-        hasher.combine(order?.hashValue)
-        hasher.combine(policies?.hashValue)
-        hasher.combine(policiesContextEditable?.hashValue)
-        
     }
 }
 

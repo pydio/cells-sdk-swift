@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestShareLinkTargetUser: Codable, JSONEncodable, Hashable {
+public struct RestShareLinkTargetUser: Sendable, Codable, JSONEncodable, Hashable {
 
     public var display: String?
     public var downloadCount: Int?
@@ -28,18 +28,6 @@ public final class RestShareLinkTargetUser: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(display, forKey: .display)
         try container.encodeIfPresent(downloadCount, forKey: .downloadCount)
-    }
-
-    public static func == (lhs: RestShareLinkTargetUser, rhs: RestShareLinkTargetUser) -> Bool {
-        lhs.display == rhs.display &&
-        lhs.downloadCount == rhs.downloadCount
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(display?.hashValue)
-        hasher.combine(downloadCount?.hashValue)
-        
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestListTemplatesResponse: Codable, JSONEncodable, Hashable {
+public struct RestListTemplatesResponse: Sendable, Codable, JSONEncodable, Hashable {
 
     public var templates: [RestTemplate]?
 
@@ -24,16 +24,6 @@ public final class RestListTemplatesResponse: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(templates, forKey: .templates)
-    }
-
-    public static func == (lhs: RestListTemplatesResponse, rhs: RestListTemplatesResponse) -> Bool {
-        lhs.templates == rhs.templates
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(templates?.hashValue)
-        
     }
 }
 

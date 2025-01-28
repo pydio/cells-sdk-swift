@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestCreateCheckResponse: Codable, JSONEncodable, Hashable {
+public struct RestCreateCheckResponse: Sendable, Codable, JSONEncodable, Hashable {
 
     public var results: [RestCheckResult]
 
@@ -24,16 +24,6 @@ public final class RestCreateCheckResponse: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(results, forKey: .results)
-    }
-
-    public static func == (lhs: RestCreateCheckResponse, rhs: RestCreateCheckResponse) -> Bool {
-        lhs.results == rhs.results
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(results.hashValue)
-        
     }
 }
 

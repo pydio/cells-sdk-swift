@@ -8,7 +8,7 @@
 import Foundation
 
 /** Request for pre-checking nodes before uploading or creating them. */
-public final class RestCreateCheckRequest: Codable, JSONEncodable, Hashable {
+public struct RestCreateCheckRequest: Sendable, Codable, JSONEncodable, Hashable {
 
     public var findAvailablePath: Bool?
     public var inputs: [RestIncomingNode]
@@ -29,18 +29,6 @@ public final class RestCreateCheckRequest: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(findAvailablePath, forKey: .findAvailablePath)
         try container.encode(inputs, forKey: .inputs)
-    }
-
-    public static func == (lhs: RestCreateCheckRequest, rhs: RestCreateCheckRequest) -> Bool {
-        lhs.findAvailablePath == rhs.findAvailablePath &&
-        lhs.inputs == rhs.inputs
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(findAvailablePath?.hashValue)
-        hasher.combine(inputs.hashValue)
-        
     }
 }
 

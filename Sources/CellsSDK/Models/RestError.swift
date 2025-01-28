@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestError: Codable, JSONEncodable, Hashable {
+public struct RestError: Sendable, Codable, JSONEncodable, Hashable {
 
     public var code: String?
     public var detail: String?
@@ -40,24 +40,6 @@ public final class RestError: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(meta, forKey: .meta)
         try container.encodeIfPresent(source, forKey: .source)
         try container.encodeIfPresent(title, forKey: .title)
-    }
-
-    public static func == (lhs: RestError, rhs: RestError) -> Bool {
-        lhs.code == rhs.code &&
-        lhs.detail == rhs.detail &&
-        lhs.meta == rhs.meta &&
-        lhs.source == rhs.source &&
-        lhs.title == rhs.title
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(code?.hashValue)
-        hasher.combine(detail?.hashValue)
-        hasher.combine(meta?.hashValue)
-        hasher.combine(source?.hashValue)
-        hasher.combine(title?.hashValue)
-        
     }
 }
 

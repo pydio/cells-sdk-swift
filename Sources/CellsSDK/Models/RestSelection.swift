@@ -8,7 +8,7 @@
 import Foundation
 
 /** Request to create a selection from a list of nodes. */
-public final class RestSelection: Codable, JSONEncodable, Hashable {
+public struct RestSelection: Sendable, Codable, JSONEncodable, Hashable {
 
     public var nodes: [RestNode]
     public var uuid: String?
@@ -29,18 +29,6 @@ public final class RestSelection: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(nodes, forKey: .nodes)
         try container.encodeIfPresent(uuid, forKey: .uuid)
-    }
-
-    public static func == (lhs: RestSelection, rhs: RestSelection) -> Bool {
-        lhs.nodes == rhs.nodes &&
-        lhs.uuid == rhs.uuid
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(nodes.hashValue)
-        hasher.combine(uuid?.hashValue)
-        
     }
 }
 

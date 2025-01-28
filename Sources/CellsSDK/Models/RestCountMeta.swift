@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestCountMeta: Codable, JSONEncodable, Hashable {
+public struct RestCountMeta: Sendable, Codable, JSONEncodable, Hashable {
 
     public var namespace: String
     public var value: Int
@@ -28,18 +28,6 @@ public final class RestCountMeta: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(namespace, forKey: .namespace)
         try container.encode(value, forKey: .value)
-    }
-
-    public static func == (lhs: RestCountMeta, rhs: RestCountMeta) -> Bool {
-        lhs.namespace == rhs.namespace &&
-        lhs.value == rhs.value
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(namespace.hashValue)
-        hasher.combine(value.hashValue)
-        
     }
 }
 

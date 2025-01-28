@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestPublicLinkDeleteSuccess: Codable, JSONEncodable, Hashable {
+public struct RestPublicLinkDeleteSuccess: Sendable, Codable, JSONEncodable, Hashable {
 
     public var message: String?
     public var uuid: String?
@@ -28,18 +28,6 @@ public final class RestPublicLinkDeleteSuccess: Codable, JSONEncodable, Hashable
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(message, forKey: .message)
         try container.encodeIfPresent(uuid, forKey: .uuid)
-    }
-
-    public static func == (lhs: RestPublicLinkDeleteSuccess, rhs: RestPublicLinkDeleteSuccess) -> Bool {
-        lhs.message == rhs.message &&
-        lhs.uuid == rhs.uuid
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(message?.hashValue)
-        hasher.combine(uuid?.hashValue)
-        
     }
 }
 

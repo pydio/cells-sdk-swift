@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestPublicLinkRequest: Codable, JSONEncodable, Hashable {
+public struct RestPublicLinkRequest: Sendable, Codable, JSONEncodable, Hashable {
 
     public var createPassword: String?
     public var link: RestShareLink
@@ -40,24 +40,6 @@ public final class RestPublicLinkRequest: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(passwordEnabled, forKey: .passwordEnabled)
         try container.encodeIfPresent(updateCustomHash, forKey: .updateCustomHash)
         try container.encodeIfPresent(updatePassword, forKey: .updatePassword)
-    }
-
-    public static func == (lhs: RestPublicLinkRequest, rhs: RestPublicLinkRequest) -> Bool {
-        lhs.createPassword == rhs.createPassword &&
-        lhs.link == rhs.link &&
-        lhs.passwordEnabled == rhs.passwordEnabled &&
-        lhs.updateCustomHash == rhs.updateCustomHash &&
-        lhs.updatePassword == rhs.updatePassword
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(createPassword?.hashValue)
-        hasher.combine(link.hashValue)
-        hasher.combine(passwordEnabled?.hashValue)
-        hasher.combine(updateCustomHash?.hashValue)
-        hasher.combine(updatePassword?.hashValue)
-        
     }
 }
 

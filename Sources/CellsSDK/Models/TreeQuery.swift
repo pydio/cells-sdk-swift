@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class TreeQuery: Codable, JSONEncodable, Hashable {
+public struct TreeQuery: Sendable, Codable, JSONEncodable, Hashable {
 
     public var content: String?
     public var durationDate: String?
@@ -93,50 +93,6 @@ public final class TreeQuery: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(paths, forKey: .paths)
         try container.encodeIfPresent(type, forKey: .type)
         try container.encodeIfPresent(uUIDs, forKey: .uUIDs)
-    }
-
-    public static func == (lhs: TreeQuery, rhs: TreeQuery) -> Bool {
-        lhs.content == rhs.content &&
-        lhs.durationDate == rhs.durationDate &&
-        lhs.eTag == rhs.eTag &&
-        lhs._extension == rhs._extension &&
-        lhs.fileName == rhs.fileName &&
-        lhs.fileNameOrContent == rhs.fileNameOrContent &&
-        lhs.freeString == rhs.freeString &&
-        lhs.geoQuery == rhs.geoQuery &&
-        lhs.maxDate == rhs.maxDate &&
-        lhs.maxSize == rhs.maxSize &&
-        lhs.minDate == rhs.minDate &&
-        lhs.minSize == rhs.minSize &&
-        lhs.not == rhs.not &&
-        lhs.pathDepth == rhs.pathDepth &&
-        lhs.pathPrefix == rhs.pathPrefix &&
-        lhs.paths == rhs.paths &&
-        lhs.type == rhs.type &&
-        lhs.uUIDs == rhs.uUIDs
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(content?.hashValue)
-        hasher.combine(durationDate?.hashValue)
-        hasher.combine(eTag?.hashValue)
-        hasher.combine(_extension?.hashValue)
-        hasher.combine(fileName?.hashValue)
-        hasher.combine(fileNameOrContent?.hashValue)
-        hasher.combine(freeString?.hashValue)
-        hasher.combine(geoQuery?.hashValue)
-        hasher.combine(maxDate?.hashValue)
-        hasher.combine(maxSize?.hashValue)
-        hasher.combine(minDate?.hashValue)
-        hasher.combine(minSize?.hashValue)
-        hasher.combine(not?.hashValue)
-        hasher.combine(pathDepth?.hashValue)
-        hasher.combine(pathPrefix?.hashValue)
-        hasher.combine(paths?.hashValue)
-        hasher.combine(type?.hashValue)
-        hasher.combine(uUIDs?.hashValue)
-        
     }
 }
 

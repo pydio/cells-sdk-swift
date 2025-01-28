@@ -8,7 +8,7 @@
 import Foundation
 
 /** Representation of a file or folder */
-public final class RestNode: Codable, JSONEncodable, Hashable {
+public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
 
     public var activities: [ActivityObject]?
     public var contentLock: RestLockInfo?
@@ -122,64 +122,6 @@ public final class RestNode: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(type, forKey: .type)
         try container.encodeIfPresent(userMetadata, forKey: .userMetadata)
         try container.encode(uuid, forKey: .uuid)
-    }
-
-    public static func == (lhs: RestNode, rhs: RestNode) -> Bool {
-        lhs.activities == rhs.activities &&
-        lhs.contentLock == rhs.contentLock &&
-        lhs.contentType == rhs.contentType &&
-        lhs.contentsHash == rhs.contentsHash &&
-        lhs.contextWorkspace == rhs.contextWorkspace &&
-        lhs.dataSourceFeatures == rhs.dataSourceFeatures &&
-        lhs.folderMeta == rhs.folderMeta &&
-        lhs.hashingMethod == rhs.hashingMethod &&
-        lhs.imageMeta == rhs.imageMeta &&
-        lhs.isBookmarked == rhs.isBookmarked &&
-        lhs.isRecycleBin == rhs.isRecycleBin &&
-        lhs.isRecycled == rhs.isRecycled &&
-        lhs.metadata == rhs.metadata &&
-        lhs.mode == rhs.mode &&
-        lhs.modified == rhs.modified &&
-        lhs.path == rhs.path &&
-        lhs.previews == rhs.previews &&
-        lhs.revisionMeta == rhs.revisionMeta &&
-        lhs.shares == rhs.shares &&
-        lhs.size == rhs.size &&
-        lhs.storageETag == rhs.storageETag &&
-        lhs.subscriptions == rhs.subscriptions &&
-        lhs.type == rhs.type &&
-        lhs.userMetadata == rhs.userMetadata &&
-        lhs.uuid == rhs.uuid
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(activities?.hashValue)
-        hasher.combine(contentLock?.hashValue)
-        hasher.combine(contentType?.hashValue)
-        hasher.combine(contentsHash?.hashValue)
-        hasher.combine(contextWorkspace?.hashValue)
-        hasher.combine(dataSourceFeatures?.hashValue)
-        hasher.combine(folderMeta?.hashValue)
-        hasher.combine(hashingMethod?.hashValue)
-        hasher.combine(imageMeta?.hashValue)
-        hasher.combine(isBookmarked?.hashValue)
-        hasher.combine(isRecycleBin?.hashValue)
-        hasher.combine(isRecycled?.hashValue)
-        hasher.combine(metadata?.hashValue)
-        hasher.combine(mode?.hashValue)
-        hasher.combine(modified?.hashValue)
-        hasher.combine(path.hashValue)
-        hasher.combine(previews?.hashValue)
-        hasher.combine(revisionMeta?.hashValue)
-        hasher.combine(shares?.hashValue)
-        hasher.combine(size?.hashValue)
-        hasher.combine(storageETag?.hashValue)
-        hasher.combine(subscriptions?.hashValue)
-        hasher.combine(type?.hashValue)
-        hasher.combine(userMetadata?.hashValue)
-        hasher.combine(uuid.hashValue)
-        
     }
 }
 

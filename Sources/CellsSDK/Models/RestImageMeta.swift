@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestImageMeta: Codable, JSONEncodable, Hashable {
+public struct RestImageMeta: Sendable, Codable, JSONEncodable, Hashable {
 
     public var height: Int?
     public var jsonEXIF: String?
@@ -36,22 +36,6 @@ public final class RestImageMeta: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(jsonEXIF, forKey: .jsonEXIF)
         try container.encodeIfPresent(orientation, forKey: .orientation)
         try container.encodeIfPresent(width, forKey: .width)
-    }
-
-    public static func == (lhs: RestImageMeta, rhs: RestImageMeta) -> Bool {
-        lhs.height == rhs.height &&
-        lhs.jsonEXIF == rhs.jsonEXIF &&
-        lhs.orientation == rhs.orientation &&
-        lhs.width == rhs.width
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(height?.hashValue)
-        hasher.combine(jsonEXIF?.hashValue)
-        hasher.combine(orientation?.hashValue)
-        hasher.combine(width?.hashValue)
-        
     }
 }
 

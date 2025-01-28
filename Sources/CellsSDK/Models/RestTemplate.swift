@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestTemplate: Codable, JSONEncodable, Hashable {
+public struct RestTemplate: Sendable, Codable, JSONEncodable, Hashable {
 
     public var editable: Bool?
     public var label: String?
@@ -40,24 +40,6 @@ public final class RestTemplate: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(node, forKey: .node)
         try container.encodeIfPresent(policies, forKey: .policies)
         try container.encodeIfPresent(UUID, forKey: .UUID)
-    }
-
-    public static func == (lhs: RestTemplate, rhs: RestTemplate) -> Bool {
-        lhs.editable == rhs.editable &&
-        lhs.label == rhs.label &&
-        lhs.node == rhs.node &&
-        lhs.policies == rhs.policies &&
-        lhs.UUID == rhs.UUID
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(editable?.hashValue)
-        hasher.combine(label?.hashValue)
-        hasher.combine(node?.hashValue)
-        hasher.combine(policies?.hashValue)
-        hasher.combine(UUID?.hashValue)
-        
     }
 }
 

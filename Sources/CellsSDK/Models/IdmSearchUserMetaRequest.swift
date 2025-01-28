@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class IdmSearchUserMetaRequest: Codable, JSONEncodable, Hashable {
+public struct IdmSearchUserMetaRequest: Sendable, Codable, JSONEncodable, Hashable {
 
     public var metaUuids: [String]?
     public var namespace: String?
@@ -40,24 +40,6 @@ public final class IdmSearchUserMetaRequest: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(nodeUuids, forKey: .nodeUuids)
         try container.encodeIfPresent(resourceQuery, forKey: .resourceQuery)
         try container.encodeIfPresent(resourceSubjectOwner, forKey: .resourceSubjectOwner)
-    }
-
-    public static func == (lhs: IdmSearchUserMetaRequest, rhs: IdmSearchUserMetaRequest) -> Bool {
-        lhs.metaUuids == rhs.metaUuids &&
-        lhs.namespace == rhs.namespace &&
-        lhs.nodeUuids == rhs.nodeUuids &&
-        lhs.resourceQuery == rhs.resourceQuery &&
-        lhs.resourceSubjectOwner == rhs.resourceSubjectOwner
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(metaUuids?.hashValue)
-        hasher.combine(namespace?.hashValue)
-        hasher.combine(nodeUuids?.hashValue)
-        hasher.combine(resourceQuery?.hashValue)
-        hasher.combine(resourceSubjectOwner?.hashValue)
-        
     }
 }
 

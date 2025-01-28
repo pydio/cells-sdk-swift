@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestPagination: Codable, JSONEncodable, Hashable {
+public struct RestPagination: Sendable, Codable, JSONEncodable, Hashable {
 
     public var currentOffset: Int?
     public var currentPage: Int?
@@ -48,28 +48,6 @@ public final class RestPagination: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(prevOffset, forKey: .prevOffset)
         try container.encodeIfPresent(total, forKey: .total)
         try container.encodeIfPresent(totalPages, forKey: .totalPages)
-    }
-
-    public static func == (lhs: RestPagination, rhs: RestPagination) -> Bool {
-        lhs.currentOffset == rhs.currentOffset &&
-        lhs.currentPage == rhs.currentPage &&
-        lhs.limit == rhs.limit &&
-        lhs.nextOffset == rhs.nextOffset &&
-        lhs.prevOffset == rhs.prevOffset &&
-        lhs.total == rhs.total &&
-        lhs.totalPages == rhs.totalPages
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(currentOffset?.hashValue)
-        hasher.combine(currentPage?.hashValue)
-        hasher.combine(limit?.hashValue)
-        hasher.combine(nextOffset?.hashValue)
-        hasher.combine(prevOffset?.hashValue)
-        hasher.combine(total?.hashValue)
-        hasher.combine(totalPages?.hashValue)
-        
     }
 }
 

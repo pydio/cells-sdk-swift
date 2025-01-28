@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestCreateRequest: Codable, JSONEncodable, Hashable {
+public struct RestCreateRequest: Sendable, Codable, JSONEncodable, Hashable {
 
     public var inputs: [RestIncomingNode]
     public var recursive: Bool?
@@ -28,18 +28,6 @@ public final class RestCreateRequest: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(inputs, forKey: .inputs)
         try container.encodeIfPresent(recursive, forKey: .recursive)
-    }
-
-    public static func == (lhs: RestCreateRequest, rhs: RestCreateRequest) -> Bool {
-        lhs.inputs == rhs.inputs &&
-        lhs.recursive == rhs.recursive
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(inputs.hashValue)
-        hasher.combine(recursive?.hashValue)
-        
     }
 }
 

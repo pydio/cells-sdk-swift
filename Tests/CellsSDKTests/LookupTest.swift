@@ -43,9 +43,8 @@ class CellsSDKTests: XCTestCase {
  
         // Define an expectation for the async call
         let expectation = self.expectation(description: "Fetch resources from API")
-        let request = RestLookupRequest()
         let locator = RestNodeLocator(path:rootPath + "/*")
-        request.locators = RestNodeLocators(many: [locator])
+        let request = RestLookupRequest(locators:RestNodeLocators(many: [locator]))
         let requestBuilder = NodeServiceAPI.lookupWithRequestBuilder(body: request, apiConfiguration: apiConfig)
         
         requestBuilder.execute{ result in

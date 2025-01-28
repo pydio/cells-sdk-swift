@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class TreeGeoPoint: Codable, JSONEncodable, Hashable {
+public struct TreeGeoPoint: Sendable, Codable, JSONEncodable, Hashable {
 
     public var lat: Double?
     public var lon: Double?
@@ -28,18 +28,6 @@ public final class TreeGeoPoint: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(lat, forKey: .lat)
         try container.encodeIfPresent(lon, forKey: .lon)
-    }
-
-    public static func == (lhs: TreeGeoPoint, rhs: TreeGeoPoint) -> Bool {
-        lhs.lat == rhs.lat &&
-        lhs.lon == rhs.lon
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(lat?.hashValue)
-        hasher.combine(lon?.hashValue)
-        
     }
 }
 

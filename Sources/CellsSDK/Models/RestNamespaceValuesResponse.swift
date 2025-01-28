@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestNamespaceValuesResponse: Codable, JSONEncodable, Hashable {
+public struct RestNamespaceValuesResponse: Sendable, Codable, JSONEncodable, Hashable {
 
     public var values: [String]?
 
@@ -24,16 +24,6 @@ public final class RestNamespaceValuesResponse: Codable, JSONEncodable, Hashable
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(values, forKey: .values)
-    }
-
-    public static func == (lhs: RestNamespaceValuesResponse, rhs: RestNamespaceValuesResponse) -> Bool {
-        lhs.values == rhs.values
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(values?.hashValue)
-        
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestCheckResult: Codable, JSONEncodable, Hashable {
+public struct RestCheckResult: Sendable, Codable, JSONEncodable, Hashable {
 
     public var exists: Bool?
     public var inputLocator: RestNodeLocator?
@@ -36,22 +36,6 @@ public final class RestCheckResult: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(inputLocator, forKey: .inputLocator)
         try container.encodeIfPresent(nextPath, forKey: .nextPath)
         try container.encodeIfPresent(node, forKey: .node)
-    }
-
-    public static func == (lhs: RestCheckResult, rhs: RestCheckResult) -> Bool {
-        lhs.exists == rhs.exists &&
-        lhs.inputLocator == rhs.inputLocator &&
-        lhs.nextPath == rhs.nextPath &&
-        lhs.node == rhs.node
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(exists?.hashValue)
-        hasher.combine(inputLocator?.hashValue)
-        hasher.combine(nextPath?.hashValue)
-        hasher.combine(node?.hashValue)
-        
     }
 }
 

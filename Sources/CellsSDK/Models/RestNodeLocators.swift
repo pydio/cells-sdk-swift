@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestNodeLocators: Codable, JSONEncodable, Hashable {
+public struct RestNodeLocators: Sendable, Codable, JSONEncodable, Hashable {
 
     public var many: [RestNodeLocator]?
 
@@ -24,16 +24,6 @@ public final class RestNodeLocators: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(many, forKey: .many)
-    }
-
-    public static func == (lhs: RestNodeLocators, rhs: RestNodeLocators) -> Bool {
-        lhs.many == rhs.many
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(many?.hashValue)
-        
     }
 }
 

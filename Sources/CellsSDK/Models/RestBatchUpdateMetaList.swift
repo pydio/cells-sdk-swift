@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestBatchUpdateMetaList: Codable, JSONEncodable, Hashable {
+public struct RestBatchUpdateMetaList: Sendable, Codable, JSONEncodable, Hashable {
 
     public var updates: [RestMetaUpdate]
 
@@ -24,16 +24,6 @@ public final class RestBatchUpdateMetaList: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(updates, forKey: .updates)
-    }
-
-    public static func == (lhs: RestBatchUpdateMetaList, rhs: RestBatchUpdateMetaList) -> Bool {
-        lhs.updates == rhs.updates
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(updates.hashValue)
-        
     }
 }
 

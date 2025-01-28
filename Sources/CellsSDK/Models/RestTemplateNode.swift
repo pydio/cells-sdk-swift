@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestTemplateNode: Codable, JSONEncodable, Hashable {
+public struct RestTemplateNode: Sendable, Codable, JSONEncodable, Hashable {
 
     public var children: [String: TreeNode]?
     public var node: TreeNode?
@@ -28,18 +28,6 @@ public final class RestTemplateNode: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(children, forKey: .children)
         try container.encodeIfPresent(node, forKey: .node)
-    }
-
-    public static func == (lhs: RestTemplateNode, rhs: RestTemplateNode) -> Bool {
-        lhs.children == rhs.children &&
-        lhs.node == rhs.node
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(children?.hashValue)
-        hasher.combine(node?.hashValue)
-        
     }
 }
 

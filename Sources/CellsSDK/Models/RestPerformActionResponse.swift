@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestPerformActionResponse: Codable, JSONEncodable, Hashable {
+public struct RestPerformActionResponse: Sendable, Codable, JSONEncodable, Hashable {
 
     public var affectedNodes: [RestNode]?
     public var backgroundActions: [RestBackgroundAction]?
@@ -32,20 +32,6 @@ public final class RestPerformActionResponse: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(affectedNodes, forKey: .affectedNodes)
         try container.encodeIfPresent(backgroundActions, forKey: .backgroundActions)
         try container.encodeIfPresent(status, forKey: .status)
-    }
-
-    public static func == (lhs: RestPerformActionResponse, rhs: RestPerformActionResponse) -> Bool {
-        lhs.affectedNodes == rhs.affectedNodes &&
-        lhs.backgroundActions == rhs.backgroundActions &&
-        lhs.status == rhs.status
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(affectedNodes?.hashValue)
-        hasher.combine(backgroundActions?.hashValue)
-        hasher.combine(status?.hashValue)
-        
     }
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class RestLockInfo: Codable, JSONEncodable, Hashable {
+public struct RestLockInfo: Sendable, Codable, JSONEncodable, Hashable {
 
     public var isLocked: Bool?
     public var owner: String?
@@ -28,18 +28,6 @@ public final class RestLockInfo: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(isLocked, forKey: .isLocked)
         try container.encodeIfPresent(owner, forKey: .owner)
-    }
-
-    public static func == (lhs: RestLockInfo, rhs: RestLockInfo) -> Bool {
-        lhs.isLocked == rhs.isLocked &&
-        lhs.owner == rhs.owner
-        
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(isLocked?.hashValue)
-        hasher.combine(owner?.hashValue)
-        
     }
 }
 
