@@ -35,14 +35,17 @@ Class | Method | HTTP request | Description
 *NodeServiceAPI* | [**createPublicLink**](docs/NodeServiceAPI.md#createpubliclink) | **POST** /n/node/{Uuid}/link | Create a public link on a given node
 *NodeServiceAPI* | [**createSelection**](docs/NodeServiceAPI.md#createselection) | **POST** /n/selection | Create and persist a temporary selection of nodes, that can be used by other actions
 *NodeServiceAPI* | [**deletePublicLink**](docs/NodeServiceAPI.md#deletepubliclink) | **DELETE** /n/link/{LinkUuid} | Remove a public link
+*NodeServiceAPI* | [**deleteVersion**](docs/NodeServiceAPI.md#deleteversion) | **DELETE** /n/node/{Uuid}/versions/{VersionId} | Delete a version by its ID
 *NodeServiceAPI* | [**getByUuid**](docs/NodeServiceAPI.md#getbyuuid) | **GET** /n/node/{Uuid} | Load a node by its Uuid
 *NodeServiceAPI* | [**getPublicLink**](docs/NodeServiceAPI.md#getpubliclink) | **GET** /n/link/{LinkUuid} | Load public link information by Uuid
 *NodeServiceAPI* | [**listNamespaceValues**](docs/NodeServiceAPI.md#listnamespacevalues) | **GET** /n/meta/namespace/{Namespace} | List values for a given namespace
 *NodeServiceAPI* | [**listNamespaces**](docs/NodeServiceAPI.md#listnamespaces) | **GET** /n/meta/namespace | List defined meta namespaces
-*NodeServiceAPI* | [**listVersions**](docs/NodeServiceAPI.md#listversions) | **GET** /n/node/{Uuid}/versions | List all known versions of a node
 *NodeServiceAPI* | [**lookup**](docs/NodeServiceAPI.md#lookup) | **POST** /n/nodes | Generic request to either list (using Locators) or search (using Query) for nodes
-*NodeServiceAPI* | [**patchNode**](docs/NodeServiceAPI.md#patchnode) | **PATCH** /n/node/{Uuid} | PatchNode is used to update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
+*NodeServiceAPI* | [**nodeVersions**](docs/NodeServiceAPI.md#nodeversions) | **POST** /n/node/{Uuid}/versions | List all known versions of a node
+*NodeServiceAPI* | [**patchNode**](docs/NodeServiceAPI.md#patchnode) | **PATCH** /n/node/{Uuid} | Update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
 *NodeServiceAPI* | [**performAction**](docs/NodeServiceAPI.md#performaction) | **POST** /n/action/{Name} | Trigger an action on the tree. Returns a JobInfo describing a background task.
+*NodeServiceAPI* | [**promoteVersion**](docs/NodeServiceAPI.md#promoteversion) | **POST** /n/node/{Uuid}/versions/{VersionId}/promote | Promotes a version by ID to be the publicly available content of the node - files only
+*NodeServiceAPI* | [**publishNode**](docs/NodeServiceAPI.md#publishnode) | **POST** /n/node/{Uuid}/publish | Unset draft status of a resource, typically to publish a folder in draft mode
 *NodeServiceAPI* | [**searchMeta**](docs/NodeServiceAPI.md#searchmeta) | **POST** /n/meta/find | Search a list of meta by node Id or by User id and by namespace
 *NodeServiceAPI* | [**templates**](docs/NodeServiceAPI.md#templates) | **GET** /n/templates | List available templates for hydrating empty files
 *NodeServiceAPI* | [**updateNamespaceValues**](docs/NodeServiceAPI.md#updatenamespacevalues) | **PATCH** /n/meta/namespace/{Namespace} | Add/delete a values for a given namespace
@@ -75,6 +78,7 @@ Class | Method | HTTP request | Description
  - [RestCreateCheckResponse](docs/RestCreateCheckResponse.md)
  - [RestCreateRequest](docs/RestCreateRequest.md)
  - [RestDataSourceFeatures](docs/RestDataSourceFeatures.md)
+ - [RestDeleteVersionResponse](docs/RestDeleteVersionResponse.md)
  - [RestError](docs/RestError.md)
  - [RestFilePreview](docs/RestFilePreview.md)
  - [RestImageMeta](docs/RestImageMeta.md)
@@ -93,12 +97,17 @@ Class | Method | HTTP request | Description
  - [RestNodeLocator](docs/RestNodeLocator.md)
  - [RestNodeLocators](docs/RestNodeLocators.md)
  - [RestNodeUpdates](docs/RestNodeUpdates.md)
+ - [RestNodeVersionsFilter](docs/RestNodeVersionsFilter.md)
  - [RestNsOp](docs/RestNsOp.md)
  - [RestPagination](docs/RestPagination.md)
  - [RestPerformActionResponse](docs/RestPerformActionResponse.md)
+ - [RestPromoteParameters](docs/RestPromoteParameters.md)
+ - [RestPromoteVersionResponse](docs/RestPromoteVersionResponse.md)
  - [RestPublicLinkDeleteSuccess](docs/RestPublicLinkDeleteSuccess.md)
  - [RestPublicLinkRequest](docs/RestPublicLinkRequest.md)
- - [RestRevisionMeta](docs/RestRevisionMeta.md)
+ - [RestPublishCascadeResult](docs/RestPublishCascadeResult.md)
+ - [RestPublishNodeParameters](docs/RestPublishNodeParameters.md)
+ - [RestPublishNodeResponse](docs/RestPublishNodeResponse.md)
  - [RestSelection](docs/RestSelection.md)
  - [RestShareLink](docs/RestShareLink.md)
  - [RestShareLinkAccessType](docs/RestShareLinkAccessType.md)
@@ -109,6 +118,10 @@ Class | Method | HTTP request | Description
  - [RestUserMeta](docs/RestUserMeta.md)
  - [RestUserMetaList](docs/RestUserMetaList.md)
  - [RestUserMetaNamespaceCollection](docs/RestUserMetaNamespaceCollection.md)
+ - [RestVersion](docs/RestVersion.md)
+ - [RestVersionCollection](docs/RestVersionCollection.md)
+ - [RestVersionMeta](docs/RestVersionMeta.md)
+ - [RestVersionsTypes](docs/RestVersionsTypes.md)
  - [ServiceResourcePolicy](docs/ServiceResourcePolicy.md)
  - [ServiceResourcePolicyAction](docs/ServiceResourcePolicyAction.md)
  - [ServiceResourcePolicyPolicyEffect](docs/ServiceResourcePolicyPolicyEffect.md)

@@ -20,6 +20,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
     public var hashingMethod: String?
     public var imageMeta: RestImageMeta?
     public var isBookmarked: Bool?
+    public var isDraft: Bool?
     public var isRecycleBin: Bool?
     public var isRecycled: Bool?
     public var metadata: [RestJsonMeta]?
@@ -28,7 +29,6 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
     public var modified: String?
     public var path: String
     public var previews: [RestFilePreview]?
-    public var revisionMeta: RestRevisionMeta?
     public var shares: [RestShareLink]?
     public var size: String?
     public var storageETag: String?
@@ -36,8 +36,9 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
     public var type: TreeNodeType?
     public var userMetadata: [RestUserMeta]?
     public var uuid: String
+    public var versionMeta: RestVersionMeta?
 
-    public init(activities: [ActivityObject]? = nil, contentLock: RestLockInfo? = nil, contentType: String? = nil, contentsHash: String? = nil, contextWorkspace: RestContextWorkspace? = nil, dataSourceFeatures: RestDataSourceFeatures? = nil, folderMeta: [RestCountMeta]? = nil, hashingMethod: String? = nil, imageMeta: RestImageMeta? = nil, isBookmarked: Bool? = nil, isRecycleBin: Bool? = nil, isRecycled: Bool? = nil, metadata: [RestJsonMeta]? = nil, mode: RestMode? = nil, modified: String? = nil, path: String, previews: [RestFilePreview]? = nil, revisionMeta: RestRevisionMeta? = nil, shares: [RestShareLink]? = nil, size: String? = nil, storageETag: String? = nil, subscriptions: [ActivitySubscription]? = nil, type: TreeNodeType? = nil, userMetadata: [RestUserMeta]? = nil, uuid: String) {
+    public init(activities: [ActivityObject]? = nil, contentLock: RestLockInfo? = nil, contentType: String? = nil, contentsHash: String? = nil, contextWorkspace: RestContextWorkspace? = nil, dataSourceFeatures: RestDataSourceFeatures? = nil, folderMeta: [RestCountMeta]? = nil, hashingMethod: String? = nil, imageMeta: RestImageMeta? = nil, isBookmarked: Bool? = nil, isDraft: Bool? = nil, isRecycleBin: Bool? = nil, isRecycled: Bool? = nil, metadata: [RestJsonMeta]? = nil, mode: RestMode? = nil, modified: String? = nil, path: String, previews: [RestFilePreview]? = nil, shares: [RestShareLink]? = nil, size: String? = nil, storageETag: String? = nil, subscriptions: [ActivitySubscription]? = nil, type: TreeNodeType? = nil, userMetadata: [RestUserMeta]? = nil, uuid: String, versionMeta: RestVersionMeta? = nil) {
         self.activities = activities
         self.contentLock = contentLock
         self.contentType = contentType
@@ -48,6 +49,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         self.hashingMethod = hashingMethod
         self.imageMeta = imageMeta
         self.isBookmarked = isBookmarked
+        self.isDraft = isDraft
         self.isRecycleBin = isRecycleBin
         self.isRecycled = isRecycled
         self.metadata = metadata
@@ -55,7 +57,6 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         self.modified = modified
         self.path = path
         self.previews = previews
-        self.revisionMeta = revisionMeta
         self.shares = shares
         self.size = size
         self.storageETag = storageETag
@@ -63,6 +64,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         self.type = type
         self.userMetadata = userMetadata
         self.uuid = uuid
+        self.versionMeta = versionMeta
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -76,6 +78,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         case hashingMethod = "HashingMethod"
         case imageMeta = "ImageMeta"
         case isBookmarked = "IsBookmarked"
+        case isDraft = "IsDraft"
         case isRecycleBin = "IsRecycleBin"
         case isRecycled = "IsRecycled"
         case metadata = "Metadata"
@@ -83,7 +86,6 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         case modified = "Modified"
         case path = "Path"
         case previews = "Previews"
-        case revisionMeta = "RevisionMeta"
         case shares = "Shares"
         case size = "Size"
         case storageETag = "StorageETag"
@@ -91,6 +93,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         case type = "Type"
         case userMetadata = "UserMetadata"
         case uuid = "Uuid"
+        case versionMeta = "VersionMeta"
     }
 
     // Encodable protocol methods
@@ -107,6 +110,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(hashingMethod, forKey: .hashingMethod)
         try container.encodeIfPresent(imageMeta, forKey: .imageMeta)
         try container.encodeIfPresent(isBookmarked, forKey: .isBookmarked)
+        try container.encodeIfPresent(isDraft, forKey: .isDraft)
         try container.encodeIfPresent(isRecycleBin, forKey: .isRecycleBin)
         try container.encodeIfPresent(isRecycled, forKey: .isRecycled)
         try container.encodeIfPresent(metadata, forKey: .metadata)
@@ -114,7 +118,6 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(modified, forKey: .modified)
         try container.encode(path, forKey: .path)
         try container.encodeIfPresent(previews, forKey: .previews)
-        try container.encodeIfPresent(revisionMeta, forKey: .revisionMeta)
         try container.encodeIfPresent(shares, forKey: .shares)
         try container.encodeIfPresent(size, forKey: .size)
         try container.encodeIfPresent(storageETag, forKey: .storageETag)
@@ -122,6 +125,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(type, forKey: .type)
         try container.encodeIfPresent(userMetadata, forKey: .userMetadata)
         try container.encode(uuid, forKey: .uuid)
+        try container.encodeIfPresent(versionMeta, forKey: .versionMeta)
     }
 }
 

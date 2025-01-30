@@ -12,14 +12,17 @@ Method | HTTP request | Description
 [**createPublicLink**](NodeServiceAPI.md#createpubliclink) | **POST** /n/node/{Uuid}/link | Create a public link on a given node
 [**createSelection**](NodeServiceAPI.md#createselection) | **POST** /n/selection | Create and persist a temporary selection of nodes, that can be used by other actions
 [**deletePublicLink**](NodeServiceAPI.md#deletepubliclink) | **DELETE** /n/link/{LinkUuid} | Remove a public link
+[**deleteVersion**](NodeServiceAPI.md#deleteversion) | **DELETE** /n/node/{Uuid}/versions/{VersionId} | Delete a version by its ID
 [**getByUuid**](NodeServiceAPI.md#getbyuuid) | **GET** /n/node/{Uuid} | Load a node by its Uuid
 [**getPublicLink**](NodeServiceAPI.md#getpubliclink) | **GET** /n/link/{LinkUuid} | Load public link information by Uuid
 [**listNamespaceValues**](NodeServiceAPI.md#listnamespacevalues) | **GET** /n/meta/namespace/{Namespace} | List values for a given namespace
 [**listNamespaces**](NodeServiceAPI.md#listnamespaces) | **GET** /n/meta/namespace | List defined meta namespaces
-[**listVersions**](NodeServiceAPI.md#listversions) | **GET** /n/node/{Uuid}/versions | List all known versions of a node
 [**lookup**](NodeServiceAPI.md#lookup) | **POST** /n/nodes | Generic request to either list (using Locators) or search (using Query) for nodes
-[**patchNode**](NodeServiceAPI.md#patchnode) | **PATCH** /n/node/{Uuid} | PatchNode is used to update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
+[**nodeVersions**](NodeServiceAPI.md#nodeversions) | **POST** /n/node/{Uuid}/versions | List all known versions of a node
+[**patchNode**](NodeServiceAPI.md#patchnode) | **PATCH** /n/node/{Uuid} | Update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
 [**performAction**](NodeServiceAPI.md#performaction) | **POST** /n/action/{Name} | Trigger an action on the tree. Returns a JobInfo describing a background task.
+[**promoteVersion**](NodeServiceAPI.md#promoteversion) | **POST** /n/node/{Uuid}/versions/{VersionId}/promote | Promotes a version by ID to be the publicly available content of the node - files only
+[**publishNode**](NodeServiceAPI.md#publishnode) | **POST** /n/node/{Uuid}/publish | Unset draft status of a resource, typically to publish a folder in draft mode
 [**searchMeta**](NodeServiceAPI.md#searchmeta) | **POST** /n/meta/find | Search a list of meta by node Id or by User id and by namespace
 [**templates**](NodeServiceAPI.md#templates) | **GET** /n/templates | List available templates for hydrating empty files
 [**updateNamespaceValues**](NodeServiceAPI.md#updatenamespacevalues) | **PATCH** /n/meta/namespace/{Namespace} | Add/delete a values for a given namespace
@@ -189,7 +192,7 @@ Create one or many files (empty or hydrated from a TemplateUuid) or folders
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import CellsSDK
 
-let body = restCreateRequest(inputs: [restIncomingNode(contentType: "contentType_example", knownSize: "knownSize_example", locator: restNodeLocator(path: "path_example", uuid: "uuid_example"), metadata: [restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example")], templateUuid: "templateUuid_example", type: treeNodeType())], recursive: false) // RestCreateRequest | 
+let body = restCreateRequest(inputs: [restIncomingNode(contentType: "contentType_example", draftMode: false, knownSize: "knownSize_example", locator: restNodeLocator(path: "path_example", uuid: "uuid_example"), metadata: [restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example")], resourceUuid: "resourceUuid_example", templateUuid: "templateUuid_example", type: treeNodeType(), versionId: "versionId_example")], recursive: false) // RestCreateRequest | 
 
 // Create one or many files (empty or hydrated from a TemplateUuid) or folders
 NodeServiceAPI.create(body: body) { (response, error) in
@@ -237,7 +240,7 @@ Apply some pre-validation checks on node name before sending an upload
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import CellsSDK
 
-let body = restCreateCheckRequest(findAvailablePath: false, inputs: [restIncomingNode(contentType: "contentType_example", knownSize: "knownSize_example", locator: restNodeLocator(path: "path_example", uuid: "uuid_example"), metadata: [restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example")], templateUuid: "templateUuid_example", type: treeNodeType())]) // RestCreateCheckRequest | Request for pre-checking nodes before uploading or creating them.
+let body = restCreateCheckRequest(findAvailablePath: false, inputs: [restIncomingNode(contentType: "contentType_example", draftMode: false, knownSize: "knownSize_example", locator: restNodeLocator(path: "path_example", uuid: "uuid_example"), metadata: [restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example")], resourceUuid: "resourceUuid_example", templateUuid: "templateUuid_example", type: treeNodeType(), versionId: "versionId_example")]) // RestCreateCheckRequest | Request for pre-checking nodes before uploading or creating them.
 
 // Apply some pre-validation checks on node name before sending an upload
 NodeServiceAPI.createCheck(body: body) { (response, error) in
@@ -335,7 +338,7 @@ Create and persist a temporary selection of nodes, that can be used by other act
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import CellsSDK
 
-let body = restSelection(nodes: [restNode(activities: [activityObject(context: "context_example", accuracy: 123, actor: nil, altitude: 123, anyOf: nil, attachment: nil, attributedTo: nil, audience: nil, bcc: nil, bto: nil, cc: nil, closed: Date(), content: nil, current: nil, deleted: Date(), duration: Date(), endTime: Date(), first: nil, formerType: activityObjectType(), generator: nil, height: 123, href: "href_example", hreflang: "hreflang_example", icon: nil, id: "id_example", image: nil, inReplyTo: nil, instrument: nil, items: [nil], last: nil, latitude: 123, location: nil, longitude: 123, markdown: "markdown_example", mediaType: "mediaType_example", name: "name_example", next: nil, object: nil, oneOf: nil, origin: nil, partOf: nil, prev: nil, preview: nil, published: Date(), radius: 123, rel: "rel_example", relationship: nil, replies: nil, result: nil, startTime: Date(), subject: nil, summary: "summary_example", tag: nil, target: nil, to: nil, totalItems: 123, type: nil, units: "units_example", updated: Date(), url: nil, width: 123)], contentLock: restLockInfo(isLocked: false, owner: "owner_example"), contentType: "contentType_example", contentsHash: "contentsHash_example", contextWorkspace: restContextWorkspace(description: "description_example", isRoot: false, isVirtualRoot: false, label: "label_example", permissions: "permissions_example", quota: "quota_example", quotaUsage: "quotaUsage_example", scope: idmWorkspaceScope(), skipRecycle: false, slug: "slug_example", syncable: false, uuid: "uuid_example"), dataSourceFeatures: restDataSourceFeatures(encrypted: false, versioned: false), folderMeta: [restCountMeta(namespace: "namespace_example", value: 123)], hashingMethod: "hashingMethod_example", imageMeta: restImageMeta(height: 123, jsonEXIF: "jsonEXIF_example", orientation: 123, width: 123), isBookmarked: false, isRecycleBin: false, isRecycled: false, metadata: [restJsonMeta(namespace: "namespace_example", value: "value_example")], mode: restMode(), modified: "modified_example", path: "path_example", previews: [restFilePreview(bucket: "bucket_example", contentType: "contentType_example", dimension: 123, key: "key_example", processing: false, url: "url_example")], revisionMeta: restRevisionMeta(description: "description_example", uuid: "uuid_example"), shares: [restShareLink(accessEnd: "accessEnd_example", accessStart: "accessStart_example", currentDownloads: "currentDownloads_example", description: "description_example", label: "label_example", linkHash: "linkHash_example", linkUrl: "linkUrl_example", maxDownloads: "maxDownloads_example", passwordRequired: false, permissions: [restShareLinkAccessType()], policies: [serviceResourcePolicy(action: serviceResourcePolicyAction(), effect: serviceResourcePolicyPolicyEffect(), jsonConditions: "jsonConditions_example", resource: "resource_example", subject: "subject_example", id: "id_example")], policiesContextEditable: false, restrictToTargetUsers: false, rootNodes: [treeNode(appearsIn: [treeWorkspaceRelativePath(path: "path_example", wsLabel: "wsLabel_example", wsScope: "wsScope_example", wsSlug: "wsSlug_example", wsUuid: "wsUuid_example")], commits: [treeChangeLog(data: 123, description: "description_example", event: treeNodeChangeEvent(metadata: "TODO", optimistic: false, silent: false, source: nil, target: nil, type: treeNodeChangeEventEventType()), location: nil, mTime: "mTime_example", ownerUuid: "ownerUuid_example", size: "size_example", uuid: "uuid_example")], etag: "etag_example", mTime: "mTime_example", metaStore: "TODO", mode: 123, modeString: "modeString_example", path: "path_example", size: "size_example", type: treeNodeType(), uuid: "uuid_example")], targetUsers: "TODO", userLogin: "userLogin_example", userUuid: "userUuid_example", uuid: "uuid_example", viewTemplateName: "viewTemplateName_example")], size: "size_example", storageETag: "storageETag_example", subscriptions: [activitySubscription(events: ["events_example"], objectId: "objectId_example", objectType: activityOwnerType(), userId: "userId_example")], type: nil, userMetadata: [restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example")], uuid: "uuid_example")], uuid: "uuid_example") // RestSelection | Request to create a selection from a list of nodes.
+let body = restSelection(nodes: [restNode(activities: [activityObject(context: "context_example", accuracy: 123, actor: nil, altitude: 123, anyOf: nil, attachment: nil, attributedTo: nil, audience: nil, bcc: nil, bto: nil, cc: nil, closed: Date(), content: nil, current: nil, deleted: Date(), duration: Date(), endTime: Date(), first: nil, formerType: activityObjectType(), generator: nil, height: 123, href: "href_example", hreflang: "hreflang_example", icon: nil, id: "id_example", image: nil, inReplyTo: nil, instrument: nil, items: [nil], last: nil, latitude: 123, location: nil, longitude: 123, markdown: "markdown_example", mediaType: "mediaType_example", name: "name_example", next: nil, object: nil, oneOf: nil, origin: nil, partOf: nil, prev: nil, preview: nil, published: Date(), radius: 123, rel: "rel_example", relationship: nil, replies: nil, result: nil, startTime: Date(), subject: nil, summary: "summary_example", tag: nil, target: nil, to: nil, totalItems: 123, type: nil, units: "units_example", updated: Date(), url: nil, width: 123)], contentLock: restLockInfo(isLocked: false, owner: "owner_example"), contentType: "contentType_example", contentsHash: "contentsHash_example", contextWorkspace: restContextWorkspace(description: "description_example", isRoot: false, isVirtualRoot: false, label: "label_example", permissions: "permissions_example", quota: "quota_example", quotaUsage: "quotaUsage_example", scope: idmWorkspaceScope(), skipRecycle: false, slug: "slug_example", syncable: false, uuid: "uuid_example"), dataSourceFeatures: restDataSourceFeatures(encrypted: false, versioned: false), folderMeta: [restCountMeta(namespace: "namespace_example", value: 123)], hashingMethod: "hashingMethod_example", imageMeta: restImageMeta(height: 123, jsonEXIF: "jsonEXIF_example", orientation: 123, width: 123), isBookmarked: false, isDraft: false, isRecycleBin: false, isRecycled: false, metadata: [restJsonMeta(namespace: "namespace_example", value: "value_example")], mode: restMode(), modified: "modified_example", path: "path_example", previews: [restFilePreview(bucket: "bucket_example", contentType: "contentType_example", dimension: 123, key: "key_example", processing: false, url: "url_example")], shares: [restShareLink(accessEnd: "accessEnd_example", accessStart: "accessStart_example", currentDownloads: "currentDownloads_example", description: "description_example", label: "label_example", linkHash: "linkHash_example", linkUrl: "linkUrl_example", maxDownloads: "maxDownloads_example", passwordRequired: false, permissions: [restShareLinkAccessType()], policies: [serviceResourcePolicy(action: serviceResourcePolicyAction(), effect: serviceResourcePolicyPolicyEffect(), jsonConditions: "jsonConditions_example", resource: "resource_example", subject: "subject_example", id: "id_example")], policiesContextEditable: false, restrictToTargetUsers: false, rootNodes: [treeNode(appearsIn: [treeWorkspaceRelativePath(path: "path_example", wsLabel: "wsLabel_example", wsScope: "wsScope_example", wsSlug: "wsSlug_example", wsUuid: "wsUuid_example")], commits: [treeChangeLog(data: 123, description: "description_example", event: treeNodeChangeEvent(metadata: "TODO", optimistic: false, silent: false, source: nil, target: nil, type: treeNodeChangeEventEventType()), location: nil, mTime: "mTime_example", ownerUuid: "ownerUuid_example", size: "size_example", uuid: "uuid_example")], etag: "etag_example", mTime: "mTime_example", metaStore: "TODO", mode: 123, modeString: "modeString_example", path: "path_example", size: "size_example", type: treeNodeType(), uuid: "uuid_example")], targetUsers: "TODO", userLogin: "userLogin_example", userUuid: "userUuid_example", uuid: "uuid_example", viewTemplateName: "viewTemplateName_example")], size: "size_example", storageETag: "storageETag_example", subscriptions: [activitySubscription(events: ["events_example"], objectId: "objectId_example", objectType: activityOwnerType(), userId: "userId_example")], type: nil, userMetadata: [restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example")], uuid: "uuid_example", versionMeta: restVersionMeta(description: "description_example", isDraft: false, isHead: false, ownerUuid: "ownerUuid_example", versionId: "versionId_example"))], uuid: "uuid_example") // RestSelection | Request to create a selection from a list of nodes.
 
 // Create and persist a temporary selection of nodes, that can be used by other actions
 NodeServiceAPI.createSelection(body: body) { (response, error) in
@@ -407,6 +410,56 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**RestPublicLinkDeleteSuccess**](RestPublicLinkDeleteSuccess.md)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **deleteVersion**
+```swift
+    open class func deleteVersion(uuid: String, versionId: String, completion: @escaping (_ data: RestDeleteVersionResponse?, _ error: Error?) -> Void)
+```
+
+Delete a version by its ID
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import CellsSDK
+
+let uuid = "uuid_example" // String | 
+let versionId = "versionId_example" // String | 
+
+// Delete a version by its ID
+NodeServiceAPI.deleteVersion(uuid: uuid, versionId: versionId) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uuid** | **String** |  | 
+ **versionId** | **String** |  | 
+
+### Return type
+
+[**RestDeleteVersionResponse**](RestDeleteVersionResponse.md)
 
 ### Authorization
 
@@ -613,56 +666,6 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **listVersions**
-```swift
-    open class func listVersions(uuid: String, path: String? = nil, completion: @escaping (_ data: RestNodeCollection?, _ error: Error?) -> Void)
-```
-
-List all known versions of a node
-
-### Example
-```swift
-// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
-import CellsSDK
-
-let uuid = "uuid_example" // String | 
-let path = "path_example" // String |  (optional)
-
-// List all known versions of a node
-NodeServiceAPI.listVersions(uuid: uuid, path: path) { (response, error) in
-    guard error == nil else {
-        print(error)
-        return
-    }
-
-    if (response) {
-        dump(response)
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **uuid** | **String** |  | 
- **path** | **String** |  | [optional] 
-
-### Return type
-
-[**RestNodeCollection**](RestNodeCollection.md)
-
-### Authorization
-
-[Bearer](../README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **lookup**
 ```swift
     open class func lookup(body: RestLookupRequest, completion: @escaping (_ data: RestNodeCollection?, _ error: Error?) -> Void)
@@ -711,12 +714,62 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **nodeVersions**
+```swift
+    open class func nodeVersions(uuid: String, query: RestNodeVersionsFilter, completion: @escaping (_ data: RestVersionCollection?, _ error: Error?) -> Void)
+```
+
+List all known versions of a node
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import CellsSDK
+
+let uuid = "uuid_example" // String | The node Uuid
+let query = restNodeVersionsFilter(filterBy: restVersionsTypes(), limit: "limit_example", offset: "offset_example", sortDirDesc: false, sortField: "sortField_example") // RestNodeVersionsFilter | Additional parameters for filtering/sorting
+
+// List all known versions of a node
+NodeServiceAPI.nodeVersions(uuid: uuid, query: query) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uuid** | **String** | The node Uuid | 
+ **query** | [**RestNodeVersionsFilter**](RestNodeVersionsFilter.md) | Additional parameters for filtering/sorting | 
+
+### Return type
+
+[**RestVersionCollection**](RestVersionCollection.md)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **patchNode**
 ```swift
     open class func patchNode(uuid: String, nodeUpdates: RestNodeUpdates, completion: @escaping (_ data: RestNode?, _ error: Error?) -> Void)
 ```
 
-PatchNode is used to update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
+Update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
 
 ### Example
 ```swift
@@ -726,7 +779,7 @@ import CellsSDK
 let uuid = "uuid_example" // String | 
 let nodeUpdates = restNodeUpdates(bookmark: restMetaToggle(value: false), contentLock: nil, metaUpdates: [restMetaUpdate(operation: MetaUpdateOp(), userMeta: restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example"))]) // RestNodeUpdates | 
 
-// PatchNode is used to update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
+// Update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
 NodeServiceAPI.patchNode(uuid: uuid, nodeUpdates: nodeUpdates) { (response, error) in
     guard error == nil else {
         print(error)
@@ -801,6 +854,108 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**RestPerformActionResponse**](RestPerformActionResponse.md)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **promoteVersion**
+```swift
+    open class func promoteVersion(uuid: String, versionId: String, parameters: RestPromoteParameters, completion: @escaping (_ data: RestPromoteVersionResponse?, _ error: Error?) -> Void)
+```
+
+Promotes a version by ID to be the publicly available content of the node - files only
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import CellsSDK
+
+let uuid = "uuid_example" // String | 
+let versionId = "versionId_example" // String | 
+let parameters = restPromoteParameters(ignoreConflicts: false, publish: false) // RestPromoteParameters | 
+
+// Promotes a version by ID to be the publicly available content of the node - files only
+NodeServiceAPI.promoteVersion(uuid: uuid, versionId: versionId, parameters: parameters) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uuid** | **String** |  | 
+ **versionId** | **String** |  | 
+ **parameters** | [**RestPromoteParameters**](RestPromoteParameters.md) |  | 
+
+### Return type
+
+[**RestPromoteVersionResponse**](RestPromoteVersionResponse.md)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **publishNode**
+```swift
+    open class func publishNode(uuid: String, parameters: RestPublishNodeParameters, completion: @escaping (_ data: RestPublishNodeResponse?, _ error: Error?) -> Void)
+```
+
+Unset draft status of a resource, typically to publish a folder in draft mode
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import CellsSDK
+
+let uuid = "uuid_example" // String | 
+let parameters = restPublishNodeParameters(cascade: false, promoteLatest: false) // RestPublishNodeParameters | 
+
+// Unset draft status of a resource, typically to publish a folder in draft mode
+NodeServiceAPI.publishNode(uuid: uuid, parameters: parameters) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uuid** | **String** |  | 
+ **parameters** | [**RestPublishNodeParameters**](RestPublishNodeParameters.md) |  | 
+
+### Return type
+
+[**RestPublishNodeResponse**](RestPublishNodeResponse.md)
 
 ### Authorization
 

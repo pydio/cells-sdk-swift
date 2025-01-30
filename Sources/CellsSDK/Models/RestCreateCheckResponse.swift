@@ -9,9 +9,9 @@ import Foundation
 
 public struct RestCreateCheckResponse: Sendable, Codable, JSONEncodable, Hashable {
 
-    public var results: [RestCheckResult]
+    public var results: [RestCheckResult]?
 
-    public init(results: [RestCheckResult]) {
+    public init(results: [RestCheckResult]? = nil) {
         self.results = results
     }
 
@@ -23,7 +23,7 @@ public struct RestCreateCheckResponse: Sendable, Codable, JSONEncodable, Hashabl
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(results, forKey: .results)
+        try container.encodeIfPresent(results, forKey: .results)
     }
 }
 

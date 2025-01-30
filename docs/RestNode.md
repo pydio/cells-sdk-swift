@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **hashingMethod** | **String** |  | [optional] 
 **imageMeta** | [**RestImageMeta**](RestImageMeta.md) |  | [optional] 
 **isBookmarked** | **Bool** |  | [optional] 
+**isDraft** | **Bool** |  | [optional] 
 **isRecycleBin** | **Bool** |  | [optional] 
 **isRecycled** | **Bool** |  | [optional] 
 **metadata** | [RestJsonMeta] |  | [optional] 
@@ -20,7 +21,6 @@ Name | Type | Description | Notes
 **modified** | **String** | Date instead of TS ? | [optional] 
 **path** | **String** |  | 
 **previews** | [RestFilePreview] |  | [optional] 
-**revisionMeta** | [**RestRevisionMeta**](RestRevisionMeta.md) |  | [optional] 
 **shares** | [RestShareLink] |  | [optional] 
 **size** | **String** |  | [optional] 
 **storageETag** | **String** |  | [optional] 
@@ -28,6 +28,7 @@ Name | Type | Description | Notes
 **type** | [**TreeNodeType**](TreeNodeType.md) |  | [optional] 
 **userMetadata** | [RestUserMeta] |  | [optional] 
 **uuid** | **String** |  | 
+**versionMeta** | [**RestVersionMeta**](RestVersionMeta.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

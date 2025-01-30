@@ -380,6 +380,54 @@ open class NodeServiceAPI {
     }
 
     /**
+     Delete a version by its ID
+     
+     - parameter uuid: (path)  
+     - parameter versionId: (path)  
+     - parameter apiConfiguration: The configuration for the http request.
+     - returns: RestDeleteVersionResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteVersion(uuid: String, versionId: String, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestDeleteVersionResponse {
+        return try await deleteVersionWithRequestBuilder(uuid: uuid, versionId: versionId, apiConfiguration: apiConfiguration).execute().body
+    }
+
+    /**
+     Delete a version by its ID
+     - DELETE /n/node/{Uuid}/versions/{VersionId}
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
+     - parameter uuid: (path)  
+     - parameter versionId: (path)  
+     - parameter apiConfiguration: The configuration for the http request.
+     - returns: RequestBuilder<RestDeleteVersionResponse> 
+     */
+    open class func deleteVersionWithRequestBuilder(uuid: String, versionId: String, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestDeleteVersionResponse> {
+        var localVariablePath = "/n/node/{Uuid}/versions/{VersionId}"
+        let uuidPreEscape = "\(APIHelper.mapValueToPathItem(uuid))"
+        let uuidPostEscape = uuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{Uuid}", with: uuidPostEscape, options: .literal, range: nil)
+        let versionIdPreEscape = "\(APIHelper.mapValueToPathItem(versionId))"
+        let versionIdPostEscape = versionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{VersionId}", with: versionIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = apiConfiguration.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<RestDeleteVersionResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
+    }
+
+    /**
      Load a node by its Uuid
      
      - parameter uuid: (path)  
@@ -568,54 +616,6 @@ open class NodeServiceAPI {
     }
 
     /**
-     List all known versions of a node
-     
-     - parameter uuid: (path)  
-     - parameter path: (query)  (optional)
-     - parameter apiConfiguration: The configuration for the http request.
-     - returns: RestNodeCollection
-     */
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func listVersions(uuid: String, path: String? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNodeCollection {
-        return try await listVersionsWithRequestBuilder(uuid: uuid, path: path, apiConfiguration: apiConfiguration).execute().body
-    }
-
-    /**
-     List all known versions of a node
-     - GET /n/node/{Uuid}/versions
-     - API Key:
-       - type: apiKey Authorization (HEADER)
-       - name: Bearer
-     - parameter uuid: (path)  
-     - parameter path: (query)  (optional)
-     - parameter apiConfiguration: The configuration for the http request.
-     - returns: RequestBuilder<RestNodeCollection> 
-     */
-    open class func listVersionsWithRequestBuilder(uuid: String, path: String? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNodeCollection> {
-        var localVariablePath = "/n/node/{Uuid}/versions"
-        let uuidPreEscape = "\(APIHelper.mapValueToPathItem(uuid))"
-        let uuidPostEscape = uuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{Uuid}", with: uuidPostEscape, options: .literal, range: nil)
-        let localVariableURLString = apiConfiguration.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
-
-        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
-        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-            "Path": (wrappedValue: path?.encodeToJSON(codableHelper: apiConfiguration.codableHelper), isExplode: false),
-        ])
-
-        let localVariableNillableHeaders: [String: Any?] = [
-            :
-        ]
-
-        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
-
-        let localVariableRequestBuilder: RequestBuilder<RestNodeCollection>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
-
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
-    }
-
-    /**
      Generic request to either list (using Locators) or search (using Query) for nodes
      
      - parameter body: (body)  
@@ -656,7 +656,52 @@ open class NodeServiceAPI {
     }
 
     /**
-     PatchNode is used to update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
+     List all known versions of a node
+     
+     - parameter uuid: (path) The node Uuid 
+     - parameter query: (body) Additional parameters for filtering/sorting 
+     - parameter apiConfiguration: The configuration for the http request.
+     - returns: RestVersionCollection
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func nodeVersions(uuid: String, query: RestNodeVersionsFilter, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestVersionCollection {
+        return try await nodeVersionsWithRequestBuilder(uuid: uuid, query: query, apiConfiguration: apiConfiguration).execute().body
+    }
+
+    /**
+     List all known versions of a node
+     - POST /n/node/{Uuid}/versions
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
+     - parameter uuid: (path) The node Uuid 
+     - parameter query: (body) Additional parameters for filtering/sorting 
+     - parameter apiConfiguration: The configuration for the http request.
+     - returns: RequestBuilder<RestVersionCollection> 
+     */
+    open class func nodeVersionsWithRequestBuilder(uuid: String, query: RestNodeVersionsFilter, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestVersionCollection> {
+        var localVariablePath = "/n/node/{Uuid}/versions"
+        let uuidPreEscape = "\(APIHelper.mapValueToPathItem(uuid))"
+        let uuidPostEscape = uuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{Uuid}", with: uuidPostEscape, options: .literal, range: nil)
+        let localVariableURLString = apiConfiguration.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: query, codableHelper: apiConfiguration.codableHelper)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<RestVersionCollection>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
+    }
+
+    /**
+     Update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
      
      - parameter uuid: (path)  
      - parameter nodeUpdates: (body)  
@@ -669,7 +714,7 @@ open class NodeServiceAPI {
     }
 
     /**
-     PatchNode is used to update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
+     Update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
      - PATCH /n/node/{Uuid}
      - API Key:
        - type: apiKey Authorization (HEADER)
@@ -758,6 +803,101 @@ open class NodeServiceAPI {
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
         let localVariableRequestBuilder: RequestBuilder<RestPerformActionResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
+    }
+
+    /**
+     Promotes a version by ID to be the publicly available content of the node - files only
+     
+     - parameter uuid: (path)  
+     - parameter versionId: (path)  
+     - parameter parameters: (body)  
+     - parameter apiConfiguration: The configuration for the http request.
+     - returns: RestPromoteVersionResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func promoteVersion(uuid: String, versionId: String, parameters: RestPromoteParameters, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestPromoteVersionResponse {
+        return try await promoteVersionWithRequestBuilder(uuid: uuid, versionId: versionId, parameters: parameters, apiConfiguration: apiConfiguration).execute().body
+    }
+
+    /**
+     Promotes a version by ID to be the publicly available content of the node - files only
+     - POST /n/node/{Uuid}/versions/{VersionId}/promote
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
+     - parameter uuid: (path)  
+     - parameter versionId: (path)  
+     - parameter parameters: (body)  
+     - parameter apiConfiguration: The configuration for the http request.
+     - returns: RequestBuilder<RestPromoteVersionResponse> 
+     */
+    open class func promoteVersionWithRequestBuilder(uuid: String, versionId: String, parameters: RestPromoteParameters, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestPromoteVersionResponse> {
+        var localVariablePath = "/n/node/{Uuid}/versions/{VersionId}/promote"
+        let uuidPreEscape = "\(APIHelper.mapValueToPathItem(uuid))"
+        let uuidPostEscape = uuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{Uuid}", with: uuidPostEscape, options: .literal, range: nil)
+        let versionIdPreEscape = "\(APIHelper.mapValueToPathItem(versionId))"
+        let versionIdPostEscape = versionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{VersionId}", with: versionIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = apiConfiguration.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: parameters, codableHelper: apiConfiguration.codableHelper)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<RestPromoteVersionResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
+    }
+
+    /**
+     Unset draft status of a resource, typically to publish a folder in draft mode
+     
+     - parameter uuid: (path)  
+     - parameter parameters: (body)  
+     - parameter apiConfiguration: The configuration for the http request.
+     - returns: RestPublishNodeResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func publishNode(uuid: String, parameters: RestPublishNodeParameters, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestPublishNodeResponse {
+        return try await publishNodeWithRequestBuilder(uuid: uuid, parameters: parameters, apiConfiguration: apiConfiguration).execute().body
+    }
+
+    /**
+     Unset draft status of a resource, typically to publish a folder in draft mode
+     - POST /n/node/{Uuid}/publish
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: Bearer
+     - parameter uuid: (path)  
+     - parameter parameters: (body)  
+     - parameter apiConfiguration: The configuration for the http request.
+     - returns: RequestBuilder<RestPublishNodeResponse> 
+     */
+    open class func publishNodeWithRequestBuilder(uuid: String, parameters: RestPublishNodeParameters, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestPublishNodeResponse> {
+        var localVariablePath = "/n/node/{Uuid}/publish"
+        let uuidPreEscape = "\(APIHelper.mapValueToPathItem(uuid))"
+        let uuidPostEscape = uuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{Uuid}", with: uuidPostEscape, options: .literal, range: nil)
+        let localVariableURLString = apiConfiguration.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: parameters, codableHelper: apiConfiguration.codableHelper)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<RestPublishNodeResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }

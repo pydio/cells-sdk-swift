@@ -10,10 +10,10 @@ import Foundation
 public struct RestNodeCollection: Sendable, Codable, JSONEncodable, Hashable {
 
     public var facets: [TreeSearchFacet]?
-    public var nodes: [RestNode]
+    public var nodes: [RestNode]?
     public var pagination: RestPagination?
 
-    public init(facets: [TreeSearchFacet]? = nil, nodes: [RestNode], pagination: RestPagination? = nil) {
+    public init(facets: [TreeSearchFacet]? = nil, nodes: [RestNode]? = nil, pagination: RestPagination? = nil) {
         self.facets = facets
         self.nodes = nodes
         self.pagination = pagination
@@ -30,7 +30,7 @@ public struct RestNodeCollection: Sendable, Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(facets, forKey: .facets)
-        try container.encode(nodes, forKey: .nodes)
+        try container.encodeIfPresent(nodes, forKey: .nodes)
         try container.encodeIfPresent(pagination, forKey: .pagination)
     }
 }
