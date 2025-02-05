@@ -9,6 +9,7 @@ import Foundation
 
 public struct RestVersion: Sendable, Codable, JSONEncodable, Hashable {
 
+    public var contentHash: String?
     public var description: String?
     public var draft: Bool?
     public var eTag: String?
@@ -19,7 +20,8 @@ public struct RestVersion: Sendable, Codable, JSONEncodable, Hashable {
     public var size: String?
     public var versionId: String
 
-    public init(description: String? = nil, draft: Bool? = nil, eTag: String? = nil, isHead: Bool? = nil, mTime: String? = nil, ownerName: String? = nil, ownerUuid: String? = nil, size: String? = nil, versionId: String) {
+    public init(contentHash: String? = nil, description: String? = nil, draft: Bool? = nil, eTag: String? = nil, isHead: Bool? = nil, mTime: String? = nil, ownerName: String? = nil, ownerUuid: String? = nil, size: String? = nil, versionId: String) {
+        self.contentHash = contentHash
         self.description = description
         self.draft = draft
         self.eTag = eTag
@@ -32,6 +34,7 @@ public struct RestVersion: Sendable, Codable, JSONEncodable, Hashable {
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
+        case contentHash = "ContentHash"
         case description = "Description"
         case draft = "Draft"
         case eTag = "ETag"
@@ -47,6 +50,7 @@ public struct RestVersion: Sendable, Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(contentHash, forKey: .contentHash)
         try container.encodeIfPresent(description, forKey: .description)
         try container.encodeIfPresent(draft, forKey: .draft)
         try container.encodeIfPresent(eTag, forKey: .eTag)

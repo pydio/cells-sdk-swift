@@ -11,9 +11,9 @@ import Foundation
 public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
 
     public var activities: [ActivityObject]?
+    public var contentHash: String?
     public var contentLock: RestLockInfo?
     public var contentType: String?
-    public var contentsHash: String?
     public var contextWorkspace: RestContextWorkspace?
     public var dataSourceFeatures: RestDataSourceFeatures?
     public var folderMeta: [RestCountMeta]?
@@ -38,11 +38,11 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
     public var uuid: String
     public var versionMeta: RestVersionMeta?
 
-    public init(activities: [ActivityObject]? = nil, contentLock: RestLockInfo? = nil, contentType: String? = nil, contentsHash: String? = nil, contextWorkspace: RestContextWorkspace? = nil, dataSourceFeatures: RestDataSourceFeatures? = nil, folderMeta: [RestCountMeta]? = nil, hashingMethod: String? = nil, imageMeta: RestImageMeta? = nil, isBookmarked: Bool? = nil, isDraft: Bool? = nil, isRecycleBin: Bool? = nil, isRecycled: Bool? = nil, metadata: [RestJsonMeta]? = nil, mode: RestMode? = nil, modified: String? = nil, path: String, previews: [RestFilePreview]? = nil, shares: [RestShareLink]? = nil, size: String? = nil, storageETag: String? = nil, subscriptions: [ActivitySubscription]? = nil, type: TreeNodeType? = nil, userMetadata: [RestUserMeta]? = nil, uuid: String, versionMeta: RestVersionMeta? = nil) {
+    public init(activities: [ActivityObject]? = nil, contentHash: String? = nil, contentLock: RestLockInfo? = nil, contentType: String? = nil, contextWorkspace: RestContextWorkspace? = nil, dataSourceFeatures: RestDataSourceFeatures? = nil, folderMeta: [RestCountMeta]? = nil, hashingMethod: String? = nil, imageMeta: RestImageMeta? = nil, isBookmarked: Bool? = nil, isDraft: Bool? = nil, isRecycleBin: Bool? = nil, isRecycled: Bool? = nil, metadata: [RestJsonMeta]? = nil, mode: RestMode? = nil, modified: String? = nil, path: String, previews: [RestFilePreview]? = nil, shares: [RestShareLink]? = nil, size: String? = nil, storageETag: String? = nil, subscriptions: [ActivitySubscription]? = nil, type: TreeNodeType? = nil, userMetadata: [RestUserMeta]? = nil, uuid: String, versionMeta: RestVersionMeta? = nil) {
         self.activities = activities
+        self.contentHash = contentHash
         self.contentLock = contentLock
         self.contentType = contentType
-        self.contentsHash = contentsHash
         self.contextWorkspace = contextWorkspace
         self.dataSourceFeatures = dataSourceFeatures
         self.folderMeta = folderMeta
@@ -69,9 +69,9 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case activities = "Activities"
+        case contentHash = "ContentHash"
         case contentLock = "ContentLock"
         case contentType = "ContentType"
-        case contentsHash = "ContentsHash"
         case contextWorkspace = "ContextWorkspace"
         case dataSourceFeatures = "DataSourceFeatures"
         case folderMeta = "FolderMeta"
@@ -101,9 +101,9 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(activities, forKey: .activities)
+        try container.encodeIfPresent(contentHash, forKey: .contentHash)
         try container.encodeIfPresent(contentLock, forKey: .contentLock)
         try container.encodeIfPresent(contentType, forKey: .contentType)
-        try container.encodeIfPresent(contentsHash, forKey: .contentsHash)
         try container.encodeIfPresent(contextWorkspace, forKey: .contextWorkspace)
         try container.encodeIfPresent(dataSourceFeatures, forKey: .dataSourceFeatures)
         try container.encodeIfPresent(folderMeta, forKey: .folderMeta)

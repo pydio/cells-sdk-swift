@@ -4,9 +4,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **activities** | [ActivityObject] |  | [optional] 
+**contentHash** | **String** |  | [optional] 
 **contentLock** | [**RestLockInfo**](RestLockInfo.md) |  | [optional] 
 **contentType** | **String** |  | [optional] 
-**contentsHash** | **String** |  | [optional] 
 **contextWorkspace** | [**RestContextWorkspace**](RestContextWorkspace.md) |  | [optional] 
 **dataSourceFeatures** | [**RestDataSourceFeatures**](RestDataSourceFeatures.md) |  | [optional] 
 **folderMeta** | [RestCountMeta] |  | [optional] 

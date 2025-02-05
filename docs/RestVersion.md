@@ -3,6 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**contentHash** | **String** |  | [optional] 
 **description** | **String** |  | [optional] 
 **draft** | **Bool** |  | [optional] 
 **eTag** | **String** |  | [optional] 
