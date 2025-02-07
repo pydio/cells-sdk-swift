@@ -81,6 +81,7 @@ Class | Method | HTTP request | Description
  - [RestDeleteVersionResponse](docs/RestDeleteVersionResponse.md)
  - [RestError](docs/RestError.md)
  - [RestFilePreview](docs/RestFilePreview.md)
+ - [RestFlag](docs/RestFlag.md)
  - [RestImageMeta](docs/RestImageMeta.md)
  - [RestIncomingNode](docs/RestIncomingNode.md)
  - [RestJsonMeta](docs/RestJsonMeta.md)

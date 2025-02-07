@@ -9,6 +9,6 @@ import Foundation
 
 public enum RestVersionsTypes: String, Sendable, Codable, CaseIterable {
     case versionsAll = "VersionsAll"
-    case draftsOnly = "DraftsOnly"
-    case versionsOnly = "VersionsOnly"
+    case versionsDraft = "VersionsDraft"
+    case versionsPublished = "VersionsPublished"
 }

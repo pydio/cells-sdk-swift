@@ -41,6 +41,7 @@ Sources/CellsSDK/Models/RestDataSourceFeatures.swift
 Sources/CellsSDK/Models/RestDeleteVersionResponse.swift
 Sources/CellsSDK/Models/RestError.swift
 Sources/CellsSDK/Models/RestFilePreview.swift
+Sources/CellsSDK/Models/RestFlag.swift
 Sources/CellsSDK/Models/RestImageMeta.swift
 Sources/CellsSDK/Models/RestIncomingNode.swift
 Sources/CellsSDK/Models/RestJsonMeta.swift
@@ -123,6 +124,7 @@ docs/RestDataSourceFeatures.md
 docs/RestDeleteVersionResponse.md
 docs/RestError.md
 docs/RestFilePreview.md
+docs/RestFlag.md
 docs/RestImageMeta.md
 docs/RestIncomingNode.md
 docs/RestJsonMeta.md

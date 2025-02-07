@@ -29,6 +29,7 @@ Name | Type | Description | Notes
 **userMetadata** | [RestUserMeta] |  | [optional] 
 **uuid** | **String** |  | 
 **versionMeta** | [**RestVersionMeta**](RestVersionMeta.md) |  | [optional] 
+**versions** | [RestVersion] |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

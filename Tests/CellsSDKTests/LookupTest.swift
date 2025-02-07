@@ -52,7 +52,7 @@ class CellsSDKTests: XCTestCase {
             case .success(let value):
                 XCTAssertNotNil(value)
                 let collection = value.body
-                collection.nodes.forEach { node in
+                collection.nodes?.forEach { node in
                     XCTAssertNotNil(node.path)
                     printNodeAsJSON(node: node)
                 }

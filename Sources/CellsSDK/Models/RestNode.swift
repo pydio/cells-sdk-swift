@@ -37,8 +37,9 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
     public var userMetadata: [RestUserMeta]?
     public var uuid: String
     public var versionMeta: RestVersionMeta?
+    public var versions: [RestVersion]?
 
-    public init(activities: [ActivityObject]? = nil, contentHash: String? = nil, contentLock: RestLockInfo? = nil, contentType: String? = nil, contextWorkspace: RestContextWorkspace? = nil, dataSourceFeatures: RestDataSourceFeatures? = nil, folderMeta: [RestCountMeta]? = nil, hashingMethod: String? = nil, imageMeta: RestImageMeta? = nil, isBookmarked: Bool? = nil, isDraft: Bool? = nil, isRecycleBin: Bool? = nil, isRecycled: Bool? = nil, metadata: [RestJsonMeta]? = nil, mode: RestMode? = nil, modified: String? = nil, path: String, previews: [RestFilePreview]? = nil, shares: [RestShareLink]? = nil, size: String? = nil, storageETag: String? = nil, subscriptions: [ActivitySubscription]? = nil, type: TreeNodeType? = nil, userMetadata: [RestUserMeta]? = nil, uuid: String, versionMeta: RestVersionMeta? = nil) {
+    public init(activities: [ActivityObject]? = nil, contentHash: String? = nil, contentLock: RestLockInfo? = nil, contentType: String? = nil, contextWorkspace: RestContextWorkspace? = nil, dataSourceFeatures: RestDataSourceFeatures? = nil, folderMeta: [RestCountMeta]? = nil, hashingMethod: String? = nil, imageMeta: RestImageMeta? = nil, isBookmarked: Bool? = nil, isDraft: Bool? = nil, isRecycleBin: Bool? = nil, isRecycled: Bool? = nil, metadata: [RestJsonMeta]? = nil, mode: RestMode? = nil, modified: String? = nil, path: String, previews: [RestFilePreview]? = nil, shares: [RestShareLink]? = nil, size: String? = nil, storageETag: String? = nil, subscriptions: [ActivitySubscription]? = nil, type: TreeNodeType? = nil, userMetadata: [RestUserMeta]? = nil, uuid: String, versionMeta: RestVersionMeta? = nil, versions: [RestVersion]? = nil) {
         self.activities = activities
         self.contentHash = contentHash
         self.contentLock = contentLock
@@ -65,6 +66,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         self.userMetadata = userMetadata
         self.uuid = uuid
         self.versionMeta = versionMeta
+        self.versions = versions
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -94,6 +96,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         case userMetadata = "UserMetadata"
         case uuid = "Uuid"
         case versionMeta = "VersionMeta"
+        case versions = "Versions"
     }
 
     // Encodable protocol methods
@@ -126,6 +129,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(userMetadata, forKey: .userMetadata)
         try container.encode(uuid, forKey: .uuid)
         try container.encodeIfPresent(versionMeta, forKey: .versionMeta)
+        try container.encodeIfPresent(versions, forKey: .versions)
     }
 }
 
