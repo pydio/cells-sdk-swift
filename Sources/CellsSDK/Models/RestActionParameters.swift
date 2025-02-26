@@ -11,27 +11,33 @@ public struct RestActionParameters: Sendable, Codable, JSONEncodable, Hashable {
 
     public var awaitStatus: JobsTaskStatus?
     public var awaitTimeout: String?
+    public var copyMoveOptions: RestActionOptionsCopyMove?
+    public var deleteOptions: RestActionOptionsDelete?
+    public var extractCompressOptions: RestActionOptionsExtractCompress?
     public var jsonParameters: String?
     public var nodes: [RestNodeLocator]?
     public var selectionUuid: String?
-    public var targetNode: RestNodeLocator?
 
-    public init(awaitStatus: JobsTaskStatus? = nil, awaitTimeout: String? = nil, jsonParameters: String? = nil, nodes: [RestNodeLocator]? = nil, selectionUuid: String? = nil, targetNode: RestNodeLocator? = nil) {
+    public init(awaitStatus: JobsTaskStatus? = nil, awaitTimeout: String? = nil, copyMoveOptions: RestActionOptionsCopyMove? = nil, deleteOptions: RestActionOptionsDelete? = nil, extractCompressOptions: RestActionOptionsExtractCompress? = nil, jsonParameters: String? = nil, nodes: [RestNodeLocator]? = nil, selectionUuid: String? = nil) {
         self.awaitStatus = awaitStatus
         self.awaitTimeout = awaitTimeout
+        self.copyMoveOptions = copyMoveOptions
+        self.deleteOptions = deleteOptions
+        self.extractCompressOptions = extractCompressOptions
         self.jsonParameters = jsonParameters
         self.nodes = nodes
         self.selectionUuid = selectionUuid
-        self.targetNode = targetNode
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case awaitStatus = "AwaitStatus"
         case awaitTimeout = "AwaitTimeout"
+        case copyMoveOptions = "CopyMoveOptions"
+        case deleteOptions = "DeleteOptions"
+        case extractCompressOptions = "ExtractCompressOptions"
         case jsonParameters = "JsonParameters"
         case nodes = "Nodes"
         case selectionUuid = "SelectionUuid"
-        case targetNode = "TargetNode"
     }
 
     // Encodable protocol methods
@@ -40,10 +46,12 @@ public struct RestActionParameters: Sendable, Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(awaitStatus, forKey: .awaitStatus)
         try container.encodeIfPresent(awaitTimeout, forKey: .awaitTimeout)
+        try container.encodeIfPresent(copyMoveOptions, forKey: .copyMoveOptions)
+        try container.encodeIfPresent(deleteOptions, forKey: .deleteOptions)
+        try container.encodeIfPresent(extractCompressOptions, forKey: .extractCompressOptions)
         try container.encodeIfPresent(jsonParameters, forKey: .jsonParameters)
         try container.encodeIfPresent(nodes, forKey: .nodes)
         try container.encodeIfPresent(selectionUuid, forKey: .selectionUuid)
-        try container.encodeIfPresent(targetNode, forKey: .targetNode)
     }
 }
 

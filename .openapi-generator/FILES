@@ -27,6 +27,9 @@ Sources/CellsSDK/Models/JobsCtrlCommand.swift
 Sources/CellsSDK/Models/JobsTaskStatus.swift
 Sources/CellsSDK/Models/MetaUpdateOp.swift
 Sources/CellsSDK/Models/ProtobufAny.swift
+Sources/CellsSDK/Models/RestActionOptionsCopyMove.swift
+Sources/CellsSDK/Models/RestActionOptionsDelete.swift
+Sources/CellsSDK/Models/RestActionOptionsExtractCompress.swift
 Sources/CellsSDK/Models/RestActionParameters.swift
 Sources/CellsSDK/Models/RestActionStatus.swift
 Sources/CellsSDK/Models/RestBackgroundAction.swift
@@ -110,6 +113,9 @@ docs/JobsTaskStatus.md
 docs/MetaUpdateOp.md
 docs/NodeServiceAPI.md
 docs/ProtobufAny.md
+docs/RestActionOptionsCopyMove.md
+docs/RestActionOptionsDelete.md
+docs/RestActionOptionsExtractCompress.md
 docs/RestActionParameters.md
 docs/RestActionStatus.md
 docs/RestBackgroundAction.md

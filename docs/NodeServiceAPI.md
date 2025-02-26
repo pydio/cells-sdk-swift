@@ -827,7 +827,7 @@ Trigger an action on the tree. Returns a JobInfo describing a background task.
 import CellsSDK
 
 let name = "name_example" // String | 
-let parameters = restActionParameters(awaitStatus: jobsTaskStatus(), awaitTimeout: "awaitTimeout_example", jsonParameters: "jsonParameters_example", nodes: [restNodeLocator(path: "path_example", uuid: "uuid_example")], selectionUuid: "selectionUuid_example", targetNode: nil) // RestActionParameters | 
+let parameters = restActionParameters(awaitStatus: jobsTaskStatus(), awaitTimeout: "awaitTimeout_example", copyMoveOptions: restActionOptionsCopyMove(targetIsParent: false, targetPath: "targetPath_example"), deleteOptions: restActionOptionsDelete(permanentDelete: false), extractCompressOptions: restActionOptionsExtractCompress(archiveFormat: "archiveFormat_example", targetPath: "targetPath_example"), jsonParameters: "jsonParameters_example", nodes: [restNodeLocator(path: "path_example", uuid: "uuid_example")], selectionUuid: "selectionUuid_example") // RestActionParameters | 
 let jobUuid = "jobUuid_example" // String |  (optional)
 
 // Trigger an action on the tree. Returns a JobInfo describing a background task.

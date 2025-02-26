@@ -28,7 +28,7 @@ func printNodeAsJSON(node: RestNode) {
 
 class CellsSDKTests: XCTestCase {
     @MainActor func testLookup() throws {
-        let baseURL = (ProcessInfo.processInfo.environment["API_URL"] ?? "") + "/a"
+        let baseURL = (ProcessInfo.processInfo.environment["API_URL"] ?? "") + "/v2"
         let secretKey = ProcessInfo.processInfo.environment["API_TOKEN"] ?? ""
         let rootPath = ProcessInfo.processInfo.environment["API_ROOT_PATH"] ?? "common-files"
         
