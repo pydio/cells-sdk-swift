@@ -28,6 +28,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
     /** Date instead of TS ? */
     public var modified: String?
     public var path: String
+    public var preSignedGET: RestPreSignedURL?
     public var previews: [RestFilePreview]?
     public var shares: [RestShareLink]?
     public var size: String?
@@ -39,7 +40,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
     public var versionMeta: RestVersionMeta?
     public var versions: [RestVersion]?
 
-    public init(activities: [ActivityObject]? = nil, contentHash: String? = nil, contentLock: RestLockInfo? = nil, contentType: String? = nil, contextWorkspace: RestContextWorkspace? = nil, dataSourceFeatures: RestDataSourceFeatures? = nil, folderMeta: [RestCountMeta]? = nil, hashingMethod: String? = nil, imageMeta: RestImageMeta? = nil, isBookmarked: Bool? = nil, isDraft: Bool? = nil, isRecycleBin: Bool? = nil, isRecycled: Bool? = nil, metadata: [RestJsonMeta]? = nil, mode: RestMode? = nil, modified: String? = nil, path: String, previews: [RestFilePreview]? = nil, shares: [RestShareLink]? = nil, size: String? = nil, storageETag: String? = nil, subscriptions: [ActivitySubscription]? = nil, type: TreeNodeType? = nil, userMetadata: [RestUserMeta]? = nil, uuid: String, versionMeta: RestVersionMeta? = nil, versions: [RestVersion]? = nil) {
+    public init(activities: [ActivityObject]? = nil, contentHash: String? = nil, contentLock: RestLockInfo? = nil, contentType: String? = nil, contextWorkspace: RestContextWorkspace? = nil, dataSourceFeatures: RestDataSourceFeatures? = nil, folderMeta: [RestCountMeta]? = nil, hashingMethod: String? = nil, imageMeta: RestImageMeta? = nil, isBookmarked: Bool? = nil, isDraft: Bool? = nil, isRecycleBin: Bool? = nil, isRecycled: Bool? = nil, metadata: [RestJsonMeta]? = nil, mode: RestMode? = nil, modified: String? = nil, path: String, preSignedGET: RestPreSignedURL? = nil, previews: [RestFilePreview]? = nil, shares: [RestShareLink]? = nil, size: String? = nil, storageETag: String? = nil, subscriptions: [ActivitySubscription]? = nil, type: TreeNodeType? = nil, userMetadata: [RestUserMeta]? = nil, uuid: String, versionMeta: RestVersionMeta? = nil, versions: [RestVersion]? = nil) {
         self.activities = activities
         self.contentHash = contentHash
         self.contentLock = contentLock
@@ -57,6 +58,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         self.mode = mode
         self.modified = modified
         self.path = path
+        self.preSignedGET = preSignedGET
         self.previews = previews
         self.shares = shares
         self.size = size
@@ -87,6 +89,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         case mode = "Mode"
         case modified = "Modified"
         case path = "Path"
+        case preSignedGET = "PreSignedGET"
         case previews = "Previews"
         case shares = "Shares"
         case size = "Size"
@@ -120,6 +123,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(mode, forKey: .mode)
         try container.encodeIfPresent(modified, forKey: .modified)
         try container.encode(path, forKey: .path)
+        try container.encodeIfPresent(preSignedGET, forKey: .preSignedGET)
         try container.encodeIfPresent(previews, forKey: .previews)
         try container.encodeIfPresent(shares, forKey: .shares)
         try container.encodeIfPresent(size, forKey: .size)

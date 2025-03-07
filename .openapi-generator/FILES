@@ -65,6 +65,7 @@ Sources/CellsSDK/Models/RestNodeVersionsFilter.swift
 Sources/CellsSDK/Models/RestNsOp.swift
 Sources/CellsSDK/Models/RestPagination.swift
 Sources/CellsSDK/Models/RestPerformActionResponse.swift
+Sources/CellsSDK/Models/RestPreSignedURL.swift
 Sources/CellsSDK/Models/RestPromoteParameters.swift
 Sources/CellsSDK/Models/RestPromoteVersionResponse.swift
 Sources/CellsSDK/Models/RestPublicLinkDeleteSuccess.swift
@@ -151,6 +152,7 @@ docs/RestNodeVersionsFilter.md
 docs/RestNsOp.md
 docs/RestPagination.md
 docs/RestPerformActionResponse.md
+docs/RestPreSignedURL.md
 docs/RestPromoteParameters.md
 docs/RestPromoteVersionResponse.md
 docs/RestPublicLinkDeleteSuccess.md

@@ -13,16 +13,16 @@ public struct RestFilePreview: Sendable, Codable, JSONEncodable, Hashable {
     public var contentType: String?
     public var dimension: Int?
     public var key: String?
+    public var preSignedGET: RestPreSignedURL?
     public var processing: Bool?
-    public var url: String?
 
-    public init(bucket: String? = nil, contentType: String? = nil, dimension: Int? = nil, key: String? = nil, processing: Bool? = nil, url: String? = nil) {
+    public init(bucket: String? = nil, contentType: String? = nil, dimension: Int? = nil, key: String? = nil, preSignedGET: RestPreSignedURL? = nil, processing: Bool? = nil) {
         self.bucket = bucket
         self.contentType = contentType
         self.dimension = dimension
         self.key = key
+        self.preSignedGET = preSignedGET
         self.processing = processing
-        self.url = url
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -30,8 +30,8 @@ public struct RestFilePreview: Sendable, Codable, JSONEncodable, Hashable {
         case contentType = "ContentType"
         case dimension = "Dimension"
         case key = "Key"
+        case preSignedGET = "PreSignedGET"
         case processing = "Processing"
-        case url = "Url"
     }
 
     // Encodable protocol methods
@@ -42,8 +42,8 @@ public struct RestFilePreview: Sendable, Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(contentType, forKey: .contentType)
         try container.encodeIfPresent(dimension, forKey: .dimension)
         try container.encodeIfPresent(key, forKey: .key)
+        try container.encodeIfPresent(preSignedGET, forKey: .preSignedGET)
         try container.encodeIfPresent(processing, forKey: .processing)
-        try container.encodeIfPresent(url, forKey: .url)
     }
 }
 

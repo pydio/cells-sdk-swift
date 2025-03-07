@@ -105,6 +105,7 @@ Class | Method | HTTP request | Description
  - [RestNsOp](docs/RestNsOp.md)
  - [RestPagination](docs/RestPagination.md)
  - [RestPerformActionResponse](docs/RestPerformActionResponse.md)
+ - [RestPreSignedURL](docs/RestPreSignedURL.md)
  - [RestPromoteParameters](docs/RestPromoteParameters.md)
  - [RestPromoteVersionResponse](docs/RestPromoteVersionResponse.md)
  - [RestPublicLinkDeleteSuccess](docs/RestPublicLinkDeleteSuccess.md)

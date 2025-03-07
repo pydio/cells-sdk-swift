@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **mode** | [**RestMode**](RestMode.md) |  | [optional] 
 **modified** | **String** | Date instead of TS ? | [optional] 
 **path** | **String** |  | 
+**preSignedGET** | [**RestPreSignedURL**](RestPreSignedURL.md) |  | [optional] 
 **previews** | [RestFilePreview] |  | [optional] 
 **shares** | [RestShareLink] |  | [optional] 
 **size** | **String** |  | [optional] 
