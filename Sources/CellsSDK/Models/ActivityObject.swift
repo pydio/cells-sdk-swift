@@ -397,3 +397,6 @@ public final class ActivityObject: Codable, JSONEncodable, Hashable, Sendable {
     }
 }
 
+
+@available(iOS 13, tvOS 13, watchOS 6, macOS 10.15, *)
+extension ActivityObject: Identifiable {}

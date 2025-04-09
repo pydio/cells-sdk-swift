@@ -12,14 +12,16 @@ public struct RestFilePreview: Sendable, Codable, JSONEncodable, Hashable {
     public var bucket: String?
     public var contentType: String?
     public var dimension: Int?
+    public var error: Bool?
     public var key: String?
     public var preSignedGET: RestPreSignedURL?
     public var processing: Bool?
 
-    public init(bucket: String? = nil, contentType: String? = nil, dimension: Int? = nil, key: String? = nil, preSignedGET: RestPreSignedURL? = nil, processing: Bool? = nil) {
+    public init(bucket: String? = nil, contentType: String? = nil, dimension: Int? = nil, error: Bool? = nil, key: String? = nil, preSignedGET: RestPreSignedURL? = nil, processing: Bool? = nil) {
         self.bucket = bucket
         self.contentType = contentType
         self.dimension = dimension
+        self.error = error
         self.key = key
         self.preSignedGET = preSignedGET
         self.processing = processing
@@ -29,6 +31,7 @@ public struct RestFilePreview: Sendable, Codable, JSONEncodable, Hashable {
         case bucket = "Bucket"
         case contentType = "ContentType"
         case dimension = "Dimension"
+        case error = "Error"
         case key = "Key"
         case preSignedGET = "PreSignedGET"
         case processing = "Processing"
@@ -41,6 +44,7 @@ public struct RestFilePreview: Sendable, Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(bucket, forKey: .bucket)
         try container.encodeIfPresent(contentType, forKey: .contentType)
         try container.encodeIfPresent(dimension, forKey: .dimension)
+        try container.encodeIfPresent(error, forKey: .error)
         try container.encodeIfPresent(key, forKey: .key)
         try container.encodeIfPresent(preSignedGET, forKey: .preSignedGET)
         try container.encodeIfPresent(processing, forKey: .processing)

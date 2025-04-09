@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 **bucket** | **String** |  | [optional] 
 **contentType** | **String** |  | [optional] 
 **dimension** | **Int** |  | [optional] 
+**error** | **Bool** |  | [optional] 
 **key** | **String** |  | [optional] 
 **preSignedGET** | [**RestPreSignedURL**](RestPreSignedURL.md) |  | [optional] 
 **processing** | **Bool** |  | [optional] 
