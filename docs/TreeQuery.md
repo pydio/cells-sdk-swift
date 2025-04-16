@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 **content** | **String** |  | [optional] 
 **durationDate** | **String** |  | [optional] 
 **eTag** | **String** |  | [optional] 
+**excludedPathPrefix** | **[String]** |  | [optional] 
 **_extension** | **String** |  | [optional] 
 **fileName** | **String** |  | [optional] 
 **fileNameOrContent** | **String** |  | [optional] 

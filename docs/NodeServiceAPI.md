@@ -92,7 +92,7 @@ Update/delete user meta in batch. Passed UserMetas must contain a NodeUuid
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import CellsSDK
 
-let body = restBatchUpdateMetaList(updates: [restMetaUpdate(operation: MetaUpdateOp(), userMeta: restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example"))]) // RestBatchUpdateMetaList | 
+let body = restBatchUpdateMetaList(updates: [restMetaUpdate(operation: restMetaUpdateOp(), userMeta: restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example"))]) // RestBatchUpdateMetaList | 
 
 // Update/delete user meta in batch. Passed UserMetas must contain a NodeUuid
 NodeServiceAPI.batchUpdateMeta(body: body) { (response, error) in
@@ -678,7 +678,7 @@ Generic request to either list (using Locators) or search (using Query) for node
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import CellsSDK
 
-let body = restLookupRequest(flags: [restFlag()], limit: "limit_example", locators: restNodeLocators(many: [restNodeLocator(path: "path_example", uuid: "uuid_example")]), offset: "offset_example", query: treeQuery(content: "content_example", durationDate: "durationDate_example", eTag: "eTag_example", _extension: "_extension_example", fileName: "fileName_example", fileNameOrContent: "fileNameOrContent_example", freeString: "freeString_example", geoQuery: treeGeoQuery(bottomRight: treeGeoPoint(lat: 123, lon: 123), center: nil, distance: "distance_example", topLeft: nil), maxDate: "maxDate_example", maxSize: "maxSize_example", minDate: "minDate_example", minSize: "minSize_example", not: false, pathDepth: 123, pathPrefix: ["pathPrefix_example"], paths: ["paths_example"], type: treeNodeType(), uUIDs: ["uUIDs_example"]), sortDirDesc: false, sortField: "sortField_example") // RestLookupRequest | 
+let body = restLookupRequest(filters: restLookupFilter(date: LookupFilterDateRange(max: "max_example", min: "min_example", relativeDuration: "relativeDuration_example"), extensions: ["extensions_example"], freeExpression: "freeExpression_example", metadata: [LookupFilterMetaFilter(namespace: "namespace_example", operation: LookupFilterMetaFilterOp(), term: "term_example")], prefixes: [LookupFilterPathPrefix(exclude: false, _prefix: "_prefix_example")], size: LookupFilterSizeRange(max: "max_example", min: "min_example"), status: LookupFilterStatusFilter(deleted: StatusFilterDeletedStatus(), hasPublicLink: false, isBookmarked: false, isDraft: false), text: LookupFilterTextSearch(searchIn: LookupFilterTextSearchIn(), term: "term_example"), type: treeNodeType()), flags: [restFlag()], limit: "limit_example", locators: restNodeLocators(many: [restNodeLocator(path: "path_example", uuid: "uuid_example")]), offset: "offset_example", query: treeQuery(content: "content_example", durationDate: "durationDate_example", eTag: "eTag_example", excludedPathPrefix: ["excludedPathPrefix_example"], _extension: "_extension_example", fileName: "fileName_example", fileNameOrContent: "fileNameOrContent_example", freeString: "freeString_example", geoQuery: treeGeoQuery(bottomRight: treeGeoPoint(lat: 123, lon: 123), center: nil, distance: "distance_example", topLeft: nil), maxDate: "maxDate_example", maxSize: "maxSize_example", minDate: "minDate_example", minSize: "minSize_example", not: false, pathDepth: 123, pathPrefix: ["pathPrefix_example"], paths: ["paths_example"], type: nil, uUIDs: ["uUIDs_example"]), scope: restLookupScope(nodes: [nil], recursive: false, root: nil), sortDirDesc: false, sortField: "sortField_example") // RestLookupRequest | 
 
 // Generic request to either list (using Locators) or search (using Query) for nodes
 NodeServiceAPI.lookup(body: body) { (response, error) in
@@ -777,7 +777,7 @@ Update a node specific meta. It is used for reserved meta as well (bookmarks, co
 import CellsSDK
 
 let uuid = "uuid_example" // String | 
-let nodeUpdates = restNodeUpdates(bookmark: restMetaToggle(value: false), contentLock: nil, metaUpdates: [restMetaUpdate(operation: MetaUpdateOp(), userMeta: restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example"))]) // RestNodeUpdates | 
+let nodeUpdates = restNodeUpdates(bookmark: restMetaToggle(value: false), contentLock: nil, metaUpdates: [restMetaUpdate(operation: restMetaUpdateOp(), userMeta: restUserMeta(editable: false, jsonValue: "jsonValue_example", namespace: "namespace_example", nodeUuid: "nodeUuid_example"))]) // RestNodeUpdates | 
 
 // Update a node specific meta. It is used for reserved meta as well (bookmarks, contentLock)
 NodeServiceAPI.patchNode(uuid: uuid, nodeUpdates: nodeUpdates) { (response, error) in

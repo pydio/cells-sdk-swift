@@ -9,10 +9,10 @@ import Foundation
 
 public struct RestMetaUpdate: Sendable, Codable, JSONEncodable, Hashable {
 
-    public var operation: MetaUpdateOp
+    public var operation: RestMetaUpdateOp
     public var userMeta: RestUserMeta
 
-    public init(operation: MetaUpdateOp, userMeta: RestUserMeta) {
+    public init(operation: RestMetaUpdateOp, userMeta: RestUserMeta) {
         self.operation = operation
         self.userMeta = userMeta
     }

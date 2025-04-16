@@ -12,6 +12,7 @@ public struct TreeQuery: Sendable, Codable, JSONEncodable, Hashable {
     public var content: String?
     public var durationDate: String?
     public var eTag: String?
+    public var excludedPathPrefix: [String]?
     public var _extension: String?
     public var fileName: String?
     public var fileNameOrContent: String?
@@ -29,10 +30,11 @@ public struct TreeQuery: Sendable, Codable, JSONEncodable, Hashable {
     public var type: TreeNodeType?
     public var uUIDs: [String]?
 
-    public init(content: String? = nil, durationDate: String? = nil, eTag: String? = nil, _extension: String? = nil, fileName: String? = nil, fileNameOrContent: String? = nil, freeString: String? = nil, geoQuery: TreeGeoQuery? = nil, maxDate: String? = nil, maxSize: String? = nil, minDate: String? = nil, minSize: String? = nil, not: Bool? = nil, pathDepth: Int? = nil, pathPrefix: [String]? = nil, paths: [String]? = nil, type: TreeNodeType? = nil, uUIDs: [String]? = nil) {
+    public init(content: String? = nil, durationDate: String? = nil, eTag: String? = nil, excludedPathPrefix: [String]? = nil, _extension: String? = nil, fileName: String? = nil, fileNameOrContent: String? = nil, freeString: String? = nil, geoQuery: TreeGeoQuery? = nil, maxDate: String? = nil, maxSize: String? = nil, minDate: String? = nil, minSize: String? = nil, not: Bool? = nil, pathDepth: Int? = nil, pathPrefix: [String]? = nil, paths: [String]? = nil, type: TreeNodeType? = nil, uUIDs: [String]? = nil) {
         self.content = content
         self.durationDate = durationDate
         self.eTag = eTag
+        self.excludedPathPrefix = excludedPathPrefix
         self._extension = _extension
         self.fileName = fileName
         self.fileNameOrContent = fileNameOrContent
@@ -54,6 +56,7 @@ public struct TreeQuery: Sendable, Codable, JSONEncodable, Hashable {
         case content = "Content"
         case durationDate = "DurationDate"
         case eTag = "ETag"
+        case excludedPathPrefix = "ExcludedPathPrefix"
         case _extension = "Extension"
         case fileName = "FileName"
         case fileNameOrContent = "FileNameOrContent"
@@ -78,6 +81,7 @@ public struct TreeQuery: Sendable, Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(content, forKey: .content)
         try container.encodeIfPresent(durationDate, forKey: .durationDate)
         try container.encodeIfPresent(eTag, forKey: .eTag)
+        try container.encodeIfPresent(excludedPathPrefix, forKey: .excludedPathPrefix)
         try container.encodeIfPresent(_extension, forKey: ._extension)
         try container.encodeIfPresent(fileName, forKey: .fileName)
         try container.encodeIfPresent(fileNameOrContent, forKey: .fileNameOrContent)

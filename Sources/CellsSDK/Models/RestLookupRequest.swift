@@ -9,30 +9,36 @@ import Foundation
 
 public struct RestLookupRequest: Sendable, Codable, JSONEncodable, Hashable {
 
+    public var filters: RestLookupFilter?
     public var flags: [RestFlag]?
     public var limit: String?
     public var locators: RestNodeLocators?
     public var offset: String?
     public var query: TreeQuery?
+    public var scope: RestLookupScope?
     public var sortDirDesc: Bool?
     public var sortField: String?
 
-    public init(flags: [RestFlag]? = nil, limit: String? = nil, locators: RestNodeLocators? = nil, offset: String? = nil, query: TreeQuery? = nil, sortDirDesc: Bool? = nil, sortField: String? = nil) {
+    public init(filters: RestLookupFilter? = nil, flags: [RestFlag]? = nil, limit: String? = nil, locators: RestNodeLocators? = nil, offset: String? = nil, query: TreeQuery? = nil, scope: RestLookupScope? = nil, sortDirDesc: Bool? = nil, sortField: String? = nil) {
+        self.filters = filters
         self.flags = flags
         self.limit = limit
         self.locators = locators
         self.offset = offset
         self.query = query
+        self.scope = scope
         self.sortDirDesc = sortDirDesc
         self.sortField = sortField
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
+        case filters = "Filters"
         case flags = "Flags"
         case limit = "Limit"
         case locators = "Locators"
         case offset = "Offset"
         case query = "Query"
+        case scope = "Scope"
         case sortDirDesc = "SortDirDesc"
         case sortField = "SortField"
     }
@@ -41,11 +47,13 @@ public struct RestLookupRequest: Sendable, Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(filters, forKey: .filters)
         try container.encodeIfPresent(flags, forKey: .flags)
         try container.encodeIfPresent(limit, forKey: .limit)
         try container.encodeIfPresent(locators, forKey: .locators)
         try container.encodeIfPresent(offset, forKey: .offset)
         try container.encodeIfPresent(query, forKey: .query)
+        try container.encodeIfPresent(scope, forKey: .scope)
         try container.encodeIfPresent(sortDirDesc, forKey: .sortDirDesc)
         try container.encodeIfPresent(sortField, forKey: .sortField)
     }
