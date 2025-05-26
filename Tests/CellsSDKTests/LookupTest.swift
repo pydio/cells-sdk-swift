@@ -26,7 +26,45 @@ func printNodeAsJSON(node: RestNode) {
     }
 }
 
+actor OneTimeSetup {
+    static private var complete = false
+
+    static let shared = OneTimeSetup()
+
+    static func perform() async {
+        guard !complete else { return }
+        complete = true
+
+        await SDKLoggingSystem().initialize(logLevel: .trace)
+    }
+}
+
 class CellsSDKTests: XCTestCase {
+    enum Constants {
+        /// The threshold in bytes when the AWS SDK uses chunked encoding for uploads.
+        static let awsChunkedEncodingThreshold = 65_536 * 16
+        static let smallFileURL = URL.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).txt")
+        static let largeFileURL = URL.temporaryDirectory.appendingPathComponent("\(UUID().uuidString).txt")
+    }
+
+    override func setUp() async throws {
+        await OneTimeSetup.perform()
+
+        // Create a small file with random data
+        let smallData = String(repeating: "a", count: Constants.awsChunkedEncodingThreshold - 1).data(using: .utf8)!
+        try smallData.write(to: Constants.smallFileURL)
+
+        // Create a large file with random data
+        let largeData = String(repeating: "b", count: Constants.awsChunkedEncodingThreshold).data(using: .utf8)!
+        try largeData.write(to: Constants.largeFileURL)
+    }
+
+    override func tearDown() async throws {
+        for url in [Constants.smallFileURL, Constants.largeFileURL] {
+            try FileManager.default.removeItem(at: url)
+        }
+    }
+
     @MainActor func testLookup() throws {
         let baseURL = (ProcessInfo.processInfo.environment["API_URL"] ?? "") + "/v2"
         let secretKey = ProcessInfo.processInfo.environment["API_TOKEN"] ?? ""
@@ -67,15 +105,25 @@ class CellsSDKTests: XCTestCase {
         // Wait for the async call to complete
         waitForExpectations(timeout: 3) // Adjust timeout as needed
     }
-    
+
+
     @MainActor func testUpload() throws {
+        struct TestCase {
+            let key: String
+            let stream: ByteStream
+        }
+
+        let testCases: [TestCase] = [
+            TestCase(key: "random-ios-small.txt", stream: .from(fileHandle: try FileHandle(forReadingFrom: Constants.smallFileURL))),
+            TestCase(key: "random-ios-large.txt", stream: .from(fileHandle: try FileHandle(forReadingFrom: Constants.largeFileURL))),
+        ]
+
         let baseURL = (ProcessInfo.processInfo.environment["API_URL"] ?? "")
         let secretKey = ProcessInfo.processInfo.environment["API_TOKEN"] ?? ""
         let rootPath = ProcessInfo.processInfo.environment["API_ROOT_PATH"] ?? "common-files"
 
         let identity = try StaticAWSCredentialIdentityResolver(AWSCredentialIdentity(accessKey: secretKey, secret: "gatewaysecret"))
         let BUCKET = "io"
-        let TEST_KEY = "random-ios.txt"
 
         let configuration = try S3Client.S3ClientConfiguration()
         configuration.region = "us-east-1"
@@ -86,32 +134,27 @@ class CellsSDKTests: XCTestCase {
         configuration.awsCredentialIdentityResolver = identity
 
         let client = S3Client(config: configuration)
-        
 
-        let data: Data? = "The random data contents".data(using: .utf8)
-        let dataStream = ByteStream.data(data)
+        for testCase in testCases {
+            let input = PutObjectInput(
+                body: testCase.stream,
+                bucket: BUCKET,
+                key: rootPath + "/" + testCase.key
+            )
+            let expectation = self.expectation(description: "Upload \(testCase.key)")
 
-        let input = PutObjectInput(
-            body: dataStream,
-            bucket: BUCKET,
-            key: rootPath + "/" + TEST_KEY
-        )
-        let expectation = self.expectation(description: "Upload a basic file")
-
-        Task {
-            do {
-                await SDKLoggingSystem().initialize(logLevel: .trace)
-                _ = try await client.putObject(input: input)
+            Task {
+                do {
+                    _ = try await client.putObject(input: input)
+                } catch {
+                    print("ERROR: ", dump(error, name: "Putting an object."))
+                    XCTFail("Failed to put object: \(testCase.key), \(error)")
+                }
+                expectation.fulfill()
             }
-            catch {
-                print("ERROR: ", dump(error, name: "Putting an object."))
-                XCTFail("Error: \(error)")
-            }
-            expectation.fulfill()
+
+            // Wait for the async call to complete
+            waitForExpectations(timeout: 5) // Adjust timeout as needed
         }
-
-        // Wait for the async call to complete
-        waitForExpectations(timeout: 5) // Adjust timeout as needed
-
     }
 }
