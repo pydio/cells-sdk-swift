@@ -110,12 +110,13 @@ class CellsSDKTests: XCTestCase {
     @MainActor func testUpload() throws {
         struct TestCase {
             let key: String
-            let stream: ByteStream
+            let size: Int
+            let fileHandle: FileHandle
         }
 
         let testCases: [TestCase] = [
-            TestCase(key: "random-ios-small.txt", stream: .from(fileHandle: try FileHandle(forReadingFrom: Constants.smallFileURL))),
-            TestCase(key: "random-ios-large.txt", stream: .from(fileHandle: try FileHandle(forReadingFrom: Constants.largeFileURL))),
+          TestCase(key: "random-ios-small.txt", size: Constants.awsChunkedEncodingThreshold-1, fileHandle: try FileHandle(forReadingFrom: Constants.smallFileURL)),
+          TestCase(key: "random-ios-large.txt", size: Constants.awsChunkedEncodingThreshold, fileHandle: try FileHandle(forReadingFrom: Constants.largeFileURL)),
         ]
 
         let baseURL = (ProcessInfo.processInfo.environment["API_URL"] ?? "")
@@ -130,31 +131,45 @@ class CellsSDKTests: XCTestCase {
         configuration.signingRegion = "us-east-1"
         configuration.forcePathStyle = true
         configuration.endpoint = baseURL
+        configuration.clientLogMode = ClientLogMode.requestWithBody
+        configuration.requestChecksumCalculation = .whenSupported
+        configuration.responseChecksumValidation = .whenSupported
         
         configuration.awsCredentialIdentityResolver = identity
 
         let client = S3Client(config: configuration)
 
+        
         for testCase in testCases {
-            let input = PutObjectInput(
-                body: testCase.stream,
-                bucket: BUCKET,
-                key: rootPath + "/" + testCase.key
-            )
-            let expectation = self.expectation(description: "Upload \(testCase.key)")
+            var statBuf = stat()
+            if fstat(testCase.fileHandle.fileDescriptor, &statBuf) == 0 {
+                let fileSize = statBuf.st_size
+                print("File size: \(fileSize) bytes")
+                let input = PutObjectInput(
+                    body: .from(fileHandle: testCase.fileHandle),
+                    bucket: BUCKET,
+                    //contentLength: Int(fileSize),
+                    
+                    key: rootPath + "/" + testCase.key
+                )
+                let expectation = self.expectation(description: "Upload \(testCase.key)")
 
-            Task {
-                do {
-                    _ = try await client.putObject(input: input)
-                } catch {
-                    print("ERROR: ", dump(error, name: "Putting an object."))
-                    XCTFail("Failed to put object: \(testCase.key), \(error)")
+                Task {
+                    do {
+                        _ = try await client.putObject(input: input)
+                    } catch {
+                        print("ERROR: ", dump(error, name: "Putting an object."))
+                        XCTFail("Failed to put object: \(testCase.key), \(error)")
+                    }
+                    expectation.fulfill()
                 }
-                expectation.fulfill()
+
+                // Wait for the async call to complete
+                waitForExpectations(timeout: 5) // Adjust timeout as needed
+            } else {
+                perror("fstat failed")
             }
 
-            // Wait for the async call to complete
-            waitForExpectations(timeout: 5) // Adjust timeout as needed
         }
     }
 }

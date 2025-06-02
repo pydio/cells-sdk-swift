@@ -1,5 +1,5 @@
 {
-  "originHash" : "1caa6f85102d92e5a548d682dacc4835129b069fce41a7c9c0b74639e521f7ac",
+  "originHash" : "d301c21a542605922293b107eec743cc8ba0e24ce613d4085555fba9070bdd2c",
   "pins" : [
     {
       "identity" : "aws-crt-swift",

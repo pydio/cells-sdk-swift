@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "CellsSDK",
     platforms: [
-        .iOS(.v12),
+        .iOS(.v16),
         .macOS(.v10_13),
         .tvOS(.v12),
         .watchOS(.v4),

@@ -572,7 +572,7 @@ Name | Type | Description  | Notes
 
 # **listNamespaceValues**
 ```swift
-    open class func listNamespaceValues(namespace: String, operationOperation: OperationOperation_listNamespaceValues, operationValues: [String], completion: @escaping (_ data: RestNamespaceValuesResponse?, _ error: Error?) -> Void)
+    open class func listNamespaceValues(namespace: String, completion: @escaping (_ data: RestNamespaceValuesResponse?, _ error: Error?) -> Void)
 ```
 
 List values for a given namespace
@@ -583,11 +583,9 @@ List values for a given namespace
 import CellsSDK
 
 let namespace = "namespace_example" // String | List persisted values for this namespace
-let operationOperation = "operationOperation_example" // String |  (default to .put)
-let operationValues = ["inner_example"] // [String] | 
 
 // List values for a given namespace
-NodeServiceAPI.listNamespaceValues(namespace: namespace, operationOperation: operationOperation, operationValues: operationValues) { (response, error) in
+NodeServiceAPI.listNamespaceValues(namespace: namespace) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -604,8 +602,6 @@ NodeServiceAPI.listNamespaceValues(namespace: namespace, operationOperation: ope
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **namespace** | **String** | List persisted values for this namespace | 
- **operationOperation** | **String** |  | [default to .put]
- **operationValues** | [**[String]**](String.md) |  | 
 
 ### Return type
 

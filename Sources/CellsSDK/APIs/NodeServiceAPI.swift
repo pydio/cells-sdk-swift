@@ -519,25 +519,15 @@ open class NodeServiceAPI {
     }
 
     /**
-     * enum for parameter operationOperation
-     */
-    public enum OperationOperation_listNamespaceValues: String, Sendable, CaseIterable {
-        case put = "PUT"
-        case delete = "DELETE"
-    }
-
-    /**
      List values for a given namespace
      
      - parameter namespace: (path) List persisted values for this namespace 
-     - parameter operationOperation: (query)  
-     - parameter operationValues: (query)  
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RestNamespaceValuesResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func listNamespaceValues(namespace: String, operationOperation: OperationOperation_listNamespaceValues, operationValues: [String], apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNamespaceValuesResponse {
-        return try await listNamespaceValuesWithRequestBuilder(namespace: namespace, operationOperation: operationOperation, operationValues: operationValues, apiConfiguration: apiConfiguration).execute().body
+    open class func listNamespaceValues(namespace: String, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNamespaceValuesResponse {
+        return try await listNamespaceValuesWithRequestBuilder(namespace: namespace, apiConfiguration: apiConfiguration).execute().body
     }
 
     /**
@@ -547,12 +537,10 @@ open class NodeServiceAPI {
        - type: apiKey Authorization (HEADER)
        - name: Bearer
      - parameter namespace: (path) List persisted values for this namespace 
-     - parameter operationOperation: (query)  
-     - parameter operationValues: (query)  
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNamespaceValuesResponse> 
      */
-    open class func listNamespaceValuesWithRequestBuilder(namespace: String, operationOperation: OperationOperation_listNamespaceValues, operationValues: [String], apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNamespaceValuesResponse> {
+    open class func listNamespaceValuesWithRequestBuilder(namespace: String, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNamespaceValuesResponse> {
         var localVariablePath = "/n/meta/namespace/{Namespace}"
         let namespacePreEscape = "\(APIHelper.mapValueToPathItem(namespace))"
         let namespacePostEscape = namespacePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -560,11 +548,7 @@ open class NodeServiceAPI {
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
-        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-            "Operation.Operation": (wrappedValue: operationOperation.encodeToJSON(codableHelper: apiConfiguration.codableHelper), isExplode: false),
-            "Operation.Values": (wrappedValue: operationValues.encodeToJSON(codableHelper: apiConfiguration.codableHelper), isExplode: true),
-        ])
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
             :
