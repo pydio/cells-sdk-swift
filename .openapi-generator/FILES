@@ -102,6 +102,7 @@ Sources/CellsSDK/Models/ServiceResourcePolicyAction.swift
 Sources/CellsSDK/Models/ServiceResourcePolicyPolicyEffect.swift
 Sources/CellsSDK/Models/ServiceResourcePolicyQuery.swift
 Sources/CellsSDK/Models/StatusFilterDeletedStatus.swift
+Sources/CellsSDK/Models/StatusFilterDraftStatus.swift
 Sources/CellsSDK/Models/TreeChangeLog.swift
 Sources/CellsSDK/Models/TreeGeoPoint.swift
 Sources/CellsSDK/Models/TreeGeoQuery.swift
@@ -200,6 +201,7 @@ docs/ServiceResourcePolicyAction.md
 docs/ServiceResourcePolicyPolicyEffect.md
 docs/ServiceResourcePolicyQuery.md
 docs/StatusFilterDeletedStatus.md
+docs/StatusFilterDraftStatus.md
 docs/TreeChangeLog.md
 docs/TreeGeoPoint.md
 docs/TreeGeoQuery.md

@@ -428,16 +428,30 @@ open class NodeServiceAPI {
     }
 
     /**
+     * enum for parameter flags
+     */
+    public enum Flags_getByUuid: String, Sendable, CaseIterable {
+        case withMetaDefaults = "WithMetaDefaults"
+        case withMetaCoreOnly = "WithMetaCoreOnly"
+        case withMetaNone = "WithMetaNone"
+        case withVersionsAll = "WithVersionsAll"
+        case withVersionsDraft = "WithVersionsDraft"
+        case withVersionsPublished = "WithVersionsPublished"
+        case withPreSignedURLs = "WithPreSignedURLs"
+        case withEditorURLs = "WithEditorURLs"
+    }
+
+    /**
      Load a node by its Uuid
      
      - parameter uuid: (path)  
-     - parameter path: (query)  (optional)
+     - parameter flags: (query)  (optional)
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RestNode
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getByUuid(uuid: String, path: String? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNode {
-        return try await getByUuidWithRequestBuilder(uuid: uuid, path: path, apiConfiguration: apiConfiguration).execute().body
+    open class func getByUuid(uuid: String, flags: [Flags_getByUuid]? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) async throws(ErrorResponse) -> RestNode {
+        return try await getByUuidWithRequestBuilder(uuid: uuid, flags: flags, apiConfiguration: apiConfiguration).execute().body
     }
 
     /**
@@ -447,11 +461,11 @@ open class NodeServiceAPI {
        - type: apiKey Authorization (HEADER)
        - name: Bearer
      - parameter uuid: (path)  
-     - parameter path: (query)  (optional)
+     - parameter flags: (query)  (optional)
      - parameter apiConfiguration: The configuration for the http request.
      - returns: RequestBuilder<RestNode> 
      */
-    open class func getByUuidWithRequestBuilder(uuid: String, path: String? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNode> {
+    open class func getByUuidWithRequestBuilder(uuid: String, flags: [Flags_getByUuid]? = nil, apiConfiguration: CellsSDKAPIConfiguration = CellsSDKAPIConfiguration.shared) -> RequestBuilder<RestNode> {
         var localVariablePath = "/n/node/{Uuid}"
         let uuidPreEscape = "\(APIHelper.mapValueToPathItem(uuid))"
         let uuidPostEscape = uuidPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -461,7 +475,7 @@ open class NodeServiceAPI {
 
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-            "Path": (wrappedValue: path?.encodeToJSON(codableHelper: apiConfiguration.codableHelper), isExplode: false),
+            "Flags": (wrappedValue: flags?.encodeToJSON(codableHelper: apiConfiguration.codableHelper), isExplode: true),
         ])
 
         let localVariableNillableHeaders: [String: Any?] = [

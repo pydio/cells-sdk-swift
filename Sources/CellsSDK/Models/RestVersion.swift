@@ -13,22 +13,28 @@ public struct RestVersion: Sendable, Codable, JSONEncodable, Hashable {
     public var description: String?
     public var draft: Bool?
     public var eTag: String?
+    public var editorURLs: [String: RestPreSignedURL]?
+    public var filePreviews: [RestFilePreview]?
     public var isHead: Bool?
     public var mTime: String?
     public var ownerName: String?
     public var ownerUuid: String?
+    public var preSignedGET: RestPreSignedURL?
     public var size: String?
     public var versionId: String
 
-    public init(contentHash: String? = nil, description: String? = nil, draft: Bool? = nil, eTag: String? = nil, isHead: Bool? = nil, mTime: String? = nil, ownerName: String? = nil, ownerUuid: String? = nil, size: String? = nil, versionId: String) {
+    public init(contentHash: String? = nil, description: String? = nil, draft: Bool? = nil, eTag: String? = nil, editorURLs: [String: RestPreSignedURL]? = nil, filePreviews: [RestFilePreview]? = nil, isHead: Bool? = nil, mTime: String? = nil, ownerName: String? = nil, ownerUuid: String? = nil, preSignedGET: RestPreSignedURL? = nil, size: String? = nil, versionId: String) {
         self.contentHash = contentHash
         self.description = description
         self.draft = draft
         self.eTag = eTag
+        self.editorURLs = editorURLs
+        self.filePreviews = filePreviews
         self.isHead = isHead
         self.mTime = mTime
         self.ownerName = ownerName
         self.ownerUuid = ownerUuid
+        self.preSignedGET = preSignedGET
         self.size = size
         self.versionId = versionId
     }
@@ -38,10 +44,13 @@ public struct RestVersion: Sendable, Codable, JSONEncodable, Hashable {
         case description = "Description"
         case draft = "Draft"
         case eTag = "ETag"
+        case editorURLs = "EditorURLs"
+        case filePreviews = "FilePreviews"
         case isHead = "IsHead"
         case mTime = "MTime"
         case ownerName = "OwnerName"
         case ownerUuid = "OwnerUuid"
+        case preSignedGET = "PreSignedGET"
         case size = "Size"
         case versionId = "VersionId"
     }
@@ -54,10 +63,13 @@ public struct RestVersion: Sendable, Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(description, forKey: .description)
         try container.encodeIfPresent(draft, forKey: .draft)
         try container.encodeIfPresent(eTag, forKey: .eTag)
+        try container.encodeIfPresent(editorURLs, forKey: .editorURLs)
+        try container.encodeIfPresent(filePreviews, forKey: .filePreviews)
         try container.encodeIfPresent(isHead, forKey: .isHead)
         try container.encodeIfPresent(mTime, forKey: .mTime)
         try container.encodeIfPresent(ownerName, forKey: .ownerName)
         try container.encodeIfPresent(ownerUuid, forKey: .ownerUuid)
+        try container.encodeIfPresent(preSignedGET, forKey: .preSignedGET)
         try container.encodeIfPresent(size, forKey: .size)
         try container.encode(versionId, forKey: .versionId)
     }

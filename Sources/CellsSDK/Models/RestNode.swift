@@ -16,6 +16,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
     public var contentType: String?
     public var contextWorkspace: RestContextWorkspace?
     public var dataSourceFeatures: RestDataSourceFeatures?
+    public var editorURLs: [String: RestPreSignedURL]?
     public var folderMeta: [RestCountMeta]?
     public var hashingMethod: String?
     public var imageMeta: RestImageMeta?
@@ -40,13 +41,14 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
     public var versionMeta: RestVersionMeta?
     public var versions: [RestVersion]?
 
-    public init(activities: [ActivityObject]? = nil, contentHash: String? = nil, contentLock: RestLockInfo? = nil, contentType: String? = nil, contextWorkspace: RestContextWorkspace? = nil, dataSourceFeatures: RestDataSourceFeatures? = nil, folderMeta: [RestCountMeta]? = nil, hashingMethod: String? = nil, imageMeta: RestImageMeta? = nil, isBookmarked: Bool? = nil, isDraft: Bool? = nil, isRecycleBin: Bool? = nil, isRecycled: Bool? = nil, metadata: [RestJsonMeta]? = nil, mode: RestMode? = nil, modified: String? = nil, path: String, preSignedGET: RestPreSignedURL? = nil, previews: [RestFilePreview]? = nil, shares: [RestShareLink]? = nil, size: String? = nil, storageETag: String? = nil, subscriptions: [ActivitySubscription]? = nil, type: TreeNodeType? = nil, userMetadata: [RestUserMeta]? = nil, uuid: String, versionMeta: RestVersionMeta? = nil, versions: [RestVersion]? = nil) {
+    public init(activities: [ActivityObject]? = nil, contentHash: String? = nil, contentLock: RestLockInfo? = nil, contentType: String? = nil, contextWorkspace: RestContextWorkspace? = nil, dataSourceFeatures: RestDataSourceFeatures? = nil, editorURLs: [String: RestPreSignedURL]? = nil, folderMeta: [RestCountMeta]? = nil, hashingMethod: String? = nil, imageMeta: RestImageMeta? = nil, isBookmarked: Bool? = nil, isDraft: Bool? = nil, isRecycleBin: Bool? = nil, isRecycled: Bool? = nil, metadata: [RestJsonMeta]? = nil, mode: RestMode? = nil, modified: String? = nil, path: String, preSignedGET: RestPreSignedURL? = nil, previews: [RestFilePreview]? = nil, shares: [RestShareLink]? = nil, size: String? = nil, storageETag: String? = nil, subscriptions: [ActivitySubscription]? = nil, type: TreeNodeType? = nil, userMetadata: [RestUserMeta]? = nil, uuid: String, versionMeta: RestVersionMeta? = nil, versions: [RestVersion]? = nil) {
         self.activities = activities
         self.contentHash = contentHash
         self.contentLock = contentLock
         self.contentType = contentType
         self.contextWorkspace = contextWorkspace
         self.dataSourceFeatures = dataSourceFeatures
+        self.editorURLs = editorURLs
         self.folderMeta = folderMeta
         self.hashingMethod = hashingMethod
         self.imageMeta = imageMeta
@@ -78,6 +80,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         case contentType = "ContentType"
         case contextWorkspace = "ContextWorkspace"
         case dataSourceFeatures = "DataSourceFeatures"
+        case editorURLs = "EditorURLs"
         case folderMeta = "FolderMeta"
         case hashingMethod = "HashingMethod"
         case imageMeta = "ImageMeta"
@@ -112,6 +115,7 @@ public struct RestNode: Sendable, Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(contentType, forKey: .contentType)
         try container.encodeIfPresent(contextWorkspace, forKey: .contextWorkspace)
         try container.encodeIfPresent(dataSourceFeatures, forKey: .dataSourceFeatures)
+        try container.encodeIfPresent(editorURLs, forKey: .editorURLs)
         try container.encodeIfPresent(folderMeta, forKey: .folderMeta)
         try container.encodeIfPresent(hashingMethod, forKey: .hashingMethod)
         try container.encodeIfPresent(imageMeta, forKey: .imageMeta)

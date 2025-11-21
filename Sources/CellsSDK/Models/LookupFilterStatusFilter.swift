@@ -10,12 +10,14 @@ import Foundation
 public struct LookupFilterStatusFilter: Sendable, Codable, JSONEncodable, Hashable {
 
     public var deleted: StatusFilterDeletedStatus?
+    public var draft: StatusFilterDraftStatus?
     public var hasPublicLink: Bool?
     public var isBookmarked: Bool?
     public var isDraft: Bool?
 
-    public init(deleted: StatusFilterDeletedStatus? = nil, hasPublicLink: Bool? = nil, isBookmarked: Bool? = nil, isDraft: Bool? = nil) {
+    public init(deleted: StatusFilterDeletedStatus? = nil, draft: StatusFilterDraftStatus? = nil, hasPublicLink: Bool? = nil, isBookmarked: Bool? = nil, isDraft: Bool? = nil) {
         self.deleted = deleted
+        self.draft = draft
         self.hasPublicLink = hasPublicLink
         self.isBookmarked = isBookmarked
         self.isDraft = isDraft
@@ -23,6 +25,7 @@ public struct LookupFilterStatusFilter: Sendable, Codable, JSONEncodable, Hashab
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case deleted = "Deleted"
+        case draft = "Draft"
         case hasPublicLink = "HasPublicLink"
         case isBookmarked = "IsBookmarked"
         case isDraft = "IsDraft"
@@ -33,6 +36,7 @@ public struct LookupFilterStatusFilter: Sendable, Codable, JSONEncodable, Hashab
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(deleted, forKey: .deleted)
+        try container.encodeIfPresent(draft, forKey: .draft)
         try container.encodeIfPresent(hasPublicLink, forKey: .hasPublicLink)
         try container.encodeIfPresent(isBookmarked, forKey: .isBookmarked)
         try container.encodeIfPresent(isDraft, forKey: .isDraft)

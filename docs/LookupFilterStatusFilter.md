@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **deleted** | [**StatusFilterDeletedStatus**](StatusFilterDeletedStatus.md) |  | [optional] 
+**draft** | [**StatusFilterDraftStatus**](StatusFilterDraftStatus.md) |  | [optional] 
 **hasPublicLink** | **Bool** |  | [optional] 
 **isBookmarked** | **Bool** |  | [optional] 
 **isDraft** | **Bool** |  | [optional] 

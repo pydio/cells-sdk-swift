@@ -7,10 +7,13 @@ Name | Type | Description | Notes
 **description** | **String** |  | [optional] 
 **draft** | **Bool** |  | [optional] 
 **eTag** | **String** |  | [optional] 
+**editorURLs** | [String: RestPreSignedURL] |  | [optional] 
+**filePreviews** | [RestFilePreview] |  | [optional] 
 **isHead** | **Bool** |  | [optional] 
 **mTime** | **String** |  | [optional] 
 **ownerName** | **String** |  | [optional] 
 **ownerUuid** | **String** |  | [optional] 
+**preSignedGET** | [**RestPreSignedURL**](RestPreSignedURL.md) |  | [optional] 
 **size** | **String** |  | [optional] 
 **versionId** | **String** |  | 
 

@@ -142,6 +142,7 @@ Class | Method | HTTP request | Description
  - [ServiceResourcePolicyPolicyEffect](docs/ServiceResourcePolicyPolicyEffect.md)
  - [ServiceResourcePolicyQuery](docs/ServiceResourcePolicyQuery.md)
  - [StatusFilterDeletedStatus](docs/StatusFilterDeletedStatus.md)
+ - [StatusFilterDraftStatus](docs/StatusFilterDraftStatus.md)
  - [TreeChangeLog](docs/TreeChangeLog.md)
  - [TreeGeoPoint](docs/TreeGeoPoint.md)
  - [TreeGeoQuery](docs/TreeGeoQuery.md)

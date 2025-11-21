@@ -15,4 +15,5 @@ public enum RestFlag: String, Sendable, Codable, CaseIterable {
     case withVersionsDraft = "WithVersionsDraft"
     case withVersionsPublished = "WithVersionsPublished"
     case withPreSignedURLs = "WithPreSignedURLs"
+    case withEditorURLs = "WithEditorURLs"
 }

@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **contentType** | **String** |  | [optional] 
 **contextWorkspace** | [**RestContextWorkspace**](RestContextWorkspace.md) |  | [optional] 
 **dataSourceFeatures** | [**RestDataSourceFeatures**](RestDataSourceFeatures.md) |  | [optional] 
+**editorURLs** | [String: RestPreSignedURL] |  | [optional] 
 **folderMeta** | [RestCountMeta] |  | [optional] 
 **hashingMethod** | **String** |  | [optional] 
 **imageMeta** | [**RestImageMeta**](RestImageMeta.md) |  | [optional] 
