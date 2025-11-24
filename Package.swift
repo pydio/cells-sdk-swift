@@ -6,7 +6,7 @@ let package = Package(
     name: "CellsSDK",
     platforms: [
         .iOS(.v16),
-        .macOS(.v10_13),
+        .macOS(.v10_15),
         .tvOS(.v12),
         .watchOS(.v4),
     ],
@@ -35,7 +35,15 @@ let package = Package(
         .testTarget(
             name: "CellsSDKTests",
             dependencies: ["CellsSDK", .product(name: "AWSS3", package: "aws-sdk-swift")],
-            path: "Tests/CellsSDKTests"
+            path: "Tests/CellsSDKTests",
+            linkerSettings: [
+                // Add framework search paths for XCTest
+                // Try Xcode.app first, then fall back to xcode-select path
+                .unsafeFlags([
+                    "-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+                    "-F/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+                ])
+            ]
         ),
     ],
     swiftLanguageModes: [.v6]
