@@ -58,15 +58,6 @@ jobs:
         run: |
           nix develop --command bash scripts/generate-sdk.sh "${{ inputs.cells_branch }}" .
 
-      - name: Setup Swift
-        uses: swift-actions/setup-swift@v2
-        with:
-          swift-version: "6.2"
-
-      - name: Build Swift SDK
-        run: |
-          swift build
-
       - name: Check for changes
         id: check-changes
         run: |
