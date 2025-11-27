@@ -1,5 +1,5 @@
 {
-  description = "Cells SDK TypeScript - Auto-generated from OpenAPI spec";
+  description = "Cells SDK Swift - Auto-generated from OpenAPI spec";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -23,7 +23,7 @@
             pkgs.git
           ];
           shellHook = ''
-            echo "Cells SDK TypeScript Development Shell"
+            echo "Cells SDK Swift Development Shell"
             echo "OpenAPI Generator CLI version: $(openapi-generator-cli version)"
           '';
         };
