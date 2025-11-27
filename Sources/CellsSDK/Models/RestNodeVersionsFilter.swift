@@ -10,13 +10,15 @@ import Foundation
 public struct RestNodeVersionsFilter: Sendable, Codable, JSONEncodable, Hashable {
 
     public var filterBy: RestVersionsTypes?
+    public var flags: [RestFlag]?
     public var limit: String?
     public var offset: String?
     public var sortDirDesc: Bool?
     public var sortField: String?
 
-    public init(filterBy: RestVersionsTypes? = nil, limit: String? = nil, offset: String? = nil, sortDirDesc: Bool? = nil, sortField: String? = nil) {
+    public init(filterBy: RestVersionsTypes? = nil, flags: [RestFlag]? = nil, limit: String? = nil, offset: String? = nil, sortDirDesc: Bool? = nil, sortField: String? = nil) {
         self.filterBy = filterBy
+        self.flags = flags
         self.limit = limit
         self.offset = offset
         self.sortDirDesc = sortDirDesc
@@ -25,6 +27,7 @@ public struct RestNodeVersionsFilter: Sendable, Codable, JSONEncodable, Hashable
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case filterBy = "FilterBy"
+        case flags = "Flags"
         case limit = "Limit"
         case offset = "Offset"
         case sortDirDesc = "SortDirDesc"
@@ -36,6 +39,7 @@ public struct RestNodeVersionsFilter: Sendable, Codable, JSONEncodable, Hashable
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(filterBy, forKey: .filterBy)
+        try container.encodeIfPresent(flags, forKey: .flags)
         try container.encodeIfPresent(limit, forKey: .limit)
         try container.encodeIfPresent(offset, forKey: .offset)
         try container.encodeIfPresent(sortDirDesc, forKey: .sortDirDesc)
